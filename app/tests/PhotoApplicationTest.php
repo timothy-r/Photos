@@ -1,13 +1,12 @@
 <?php
 
-class ExampleTest extends TestCase {
+class PhotoApplicationTest extends TestCase {
 
 	/**
-	 * A basic functional test example.
-	 *
+	 * Test listing photos works
 	 * @return void
 	 */
-	public function testBasicExample()
+	public function testCanListPhotos()
 	{
 		$crawler = $this->client->request('GET', '/');
 
