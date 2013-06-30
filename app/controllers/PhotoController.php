@@ -9,7 +9,7 @@ class PhotoController extends \BaseController {
 	 */
 	public function index()
 	{
-        return 'A list of photos';
+        return 'A list of photos ***';
 	}
 
 	/**
