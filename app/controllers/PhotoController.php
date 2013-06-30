@@ -20,6 +20,7 @@ class PhotoController extends \BaseController {
 	public function create()
 	{
 		//
+        return 'a web form';
 	}
 
 	/**
