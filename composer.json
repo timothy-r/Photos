@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "timothy-r/Photos"
+    "description": "Photos",
+    "keywords": ["photos"],
 	"require": {
 		"laravel/framework": "4.0.*",
         "doctrine/mongodb": "1.0.*@dev",
