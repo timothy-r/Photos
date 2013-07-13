@@ -3,13 +3,17 @@ use Ace\Photos\IImageStore;
 
 class PhotoController extends \BaseController
 {
-    
+    /**
+    * @var Ace\Photos\IImageStore
+    */
+    protected $store;
+
     /**
     * @param IImageStore $store
     */
     public function __construct(IImageStore $store)
     {
-
+        $this->store = $store;
     }
 
 	/**
@@ -20,8 +24,7 @@ class PhotoController extends \BaseController
 	public function index()
 	{
         // inject a photos store into this controller
-        // $photos = $this->store->all();
-        $photos = array();
+        $photos = $this->store->all();
         return View::make('photos', array('photos' => $photos));
 	}
 
