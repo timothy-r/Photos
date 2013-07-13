@@ -9,7 +9,11 @@ class ImageStore
     
     public function add(Image $image)
     {
-
+        return true;
     }
 
+    public function all()
+    {
+        return array();
+    }
 }

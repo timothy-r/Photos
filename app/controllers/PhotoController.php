@@ -1,6 +1,16 @@
 <?php
+use Ace\Photos\ImageStore;
 
-class PhotoController extends \BaseController {
+class PhotoController extends \BaseController
+{
+    
+    /**
+    * should accept an interface not an implementation
+    */
+    public function __construct(ImageStore $store)
+    {
+
+    }
 
 	/**
 	 * Display a listing of photos
