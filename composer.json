@@ -22,11 +22,11 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
+        "psr-0":{
+            "Ace": "app/lib/"
+        },
         "files":[
-            "app/helpers.php",
-            "app/models/Image.php",
-            "app/models/IImageStore.php",
-            "app/models/ImageStore.php"
+            "app/helpers.php"
         ]
 	},
 	"scripts": {
