@@ -13,6 +13,7 @@
     <testsuites>
         <testsuite name="All">
             <directory>./app/tests/</directory>
+            <file>*Test.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
