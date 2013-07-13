@@ -25,6 +25,7 @@
         "files":[
             "app/helpers.php",
             "app/models/Image.php",
+            "app/models/IImageStore.php",
             "app/models/ImageStore.php"
         ]
 	},
