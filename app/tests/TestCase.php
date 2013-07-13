@@ -1,6 +1,8 @@
 <?php
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
+class TestCase extends BaseTestCase
+{
 
 	/**
 	 * Creates the application.
@@ -15,8 +17,6 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
 		return require __DIR__.'/../../bootstrap/start.php';
 	}
-
-    public function testIt(){}
 
     public function __call($method, $args)
     {
