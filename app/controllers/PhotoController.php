@@ -1,13 +1,13 @@
 <?php
-use Ace\Photos\ImageStore;
+use Ace\Photos\IImageStore;
 
 class PhotoController extends \BaseController
 {
     
     /**
-    * should accept an interface not an implementation
+    * @param IImageStore $store
     */
-    public function __construct(ImageStore $store)
+    public function __construct(IImageStore $store)
     {
 
     }

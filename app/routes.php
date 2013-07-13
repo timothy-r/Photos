@@ -1,5 +1,10 @@
 <?php
 
+App::bind(
+    'Ace\Photos\IImageStore',
+    'Ace\Photos\ImageStore'
+);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
