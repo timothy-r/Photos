@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
 
 	/**

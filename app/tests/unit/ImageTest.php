@@ -11,4 +11,10 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $image->setName($name);
         $this->assertSame($name, $image->getName());
     }
+
+    public function testGetHash()
+    {
+        $image = new Image;
+        $hash = $image->getHash();
+    }
 }

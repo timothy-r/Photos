@@ -17,5 +17,9 @@ class Image
     {
         $this->name = $name;
     }
+
+    public function getHash()
+    {
+    }
 }
 
