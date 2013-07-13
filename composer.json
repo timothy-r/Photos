@@ -24,7 +24,8 @@
 		],
         "files":[
             "app/helpers.php",
-            "app/models/Image.php"
+            "app/models/Image.php",
+            "app/models/ImageStore.php"
         ]
 	},
 	"scripts": {
