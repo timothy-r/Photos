@@ -8,14 +8,20 @@ class PhotoApplicationTest extends TestCase {
 	 */
 	public function testCanListPhotos()
 	{
-		$crawler = $this->client->request('GET', '/photos');
-
-		$this->assertTrue($this->client->getResponse()->isOk());
+		$response = $this->get('/photos');
+		$this->assertTrue($response->isOk());
 	}
 
 	public function testCanCreatePhoto()
 	{
 		$crawler = $this->client->request('GET', '/photos/create');
+
+		$this->assertTrue($this->client->getResponse()->isOk());
+	}
+
+	public function testCanStorePhoto()
+	{
+		$crawler = $this->client->request('POST', '/photos');
 
 		$this->assertTrue($this->client->getResponse()->isOk());
 	}

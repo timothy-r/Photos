@@ -18,4 +18,13 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
     public function testIt(){}
 
+    public function __call($method, $args)
+    {
+        if (in_array($method, array('get', 'post', 'put', 'head', 'delete'))){
+            return $this->call($method, $args[0]);
+        }
+        throw new BadMethodCallException("'$method' not supported");
+
+    }
+
 }
