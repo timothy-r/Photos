@@ -1,5 +1,5 @@
 {
-    "name": "timothy-r/Photos"
+    "name": "timothy-r/Photos",
     "description": "Photos",
     "keywords": ["photos"],
 	"require": {
@@ -23,7 +23,8 @@
 			"app/tests/TestCase.php"
 		],
         "files":[
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/models/Image.php"
         ]
 	},
 	"scripts": {

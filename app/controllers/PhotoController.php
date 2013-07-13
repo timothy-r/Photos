@@ -9,7 +9,10 @@ class PhotoController extends \BaseController {
 	 */
 	public function index()
 	{
-        return 'A list of photos ***';
+        // inject a photos store into this controller
+        // $photos = $this->store->all();
+        $photos = array();
+        return View::make('photos', array('photos' => $photos));
 	}
 
 	/**

@@ -10,6 +10,7 @@ class PhotoApplicationTest extends TestCase {
 	{
 		$response = $this->get('/photos');
 		$this->assertTrue($response->isOk());
+        $this->assertViewHas('photos');
 	}
 
 	public function testCanCreatePhoto()
