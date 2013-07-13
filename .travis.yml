@@ -3,6 +3,8 @@ php:
   - 5.3
   - 5.4
 
+services: mongodb
+
 before_script: composer install
 
 script: phpunit
