@@ -1,5 +1,11 @@
 language: php
 php:
-  - 5.3
+  - 5.4
+
+services: mongodb
+
+before_script: 
+    - phpenv config-add travis.ini
+    - composer install
 
 script: phpunit
