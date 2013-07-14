@@ -26,14 +26,12 @@ class PhotoApplicationTest extends TestCase {
 
 		$response = $this->get('/photos');
        
-        $data = $response->original->getData();
-        $actual_photos = $data['photos'];
-
 		$this->assertTrue($response->isOk());
         $this->assertViewHas('photos');
+
+        $data = $response->original->getData();
+        $actual_photos = $data['photos'];
         $this->assertInstanceOf('Ace\Photos\Image', current($actual_photos));
-       # $photos = 0;
-       # $this->assertTrue(is_array($photos));
 	}
 
 	public function testCanCreatePhoto()

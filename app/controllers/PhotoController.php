@@ -9,7 +9,7 @@ class PhotoController extends \BaseController
     protected $store;
 
     /**
-    * @param IImageStore $store
+    * @param Ace\Photos\IImageStore $store
     */
     public function __construct(IImageStore $store)
     {
