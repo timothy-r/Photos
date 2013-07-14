@@ -1,6 +1,7 @@
 <?php
 namespace Ace\Photos;
 use Ace\Photos\IImageStore;
+use Ace\Photos\Image;
 
 /**
 * A null repository for Images
