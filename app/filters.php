@@ -80,8 +80,15 @@ Route::filter('csrf', function()
 });
 
 
-Route::filter('photo-validate', function()
+Route::filter('photo-validate-store', function()
 {
     $name = Input::get('name');
-    
+    $validator = Validator::make(
+        array('name' => $name),
+        array('name' => 'required')
+    );
+        
+    if (!$validator->passes()) {
+        return Redirect::action('PhotoController@create');
+    }
 });

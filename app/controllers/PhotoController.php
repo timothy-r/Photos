@@ -16,8 +16,8 @@ class PhotoController extends \BaseController
     {
         $this->store = $store;
         $this->beforeFilter(
-            'photo-validate', 
-            array('only' => array('store', 'update'))
+            'photo-validate-store', 
+            array('only' => array('store'))
         );
     }
 
@@ -53,10 +53,10 @@ class PhotoController extends \BaseController
 		// get the input data
         $name = Input::get('name');
         // validate
-        if (!$this->validatePhotoData(array('name' => $name))) {
-            // send request back ?
-            return Redirect::action('PhotoController@create');
-        }
+        #if (!$this->validatePhotoData(array('name' => $name))) {
+         #   // send request back ?
+          #  return Redirect::action('PhotoController@create');
+        #}
 
         // @todo use a factory
         // create an Image instance
