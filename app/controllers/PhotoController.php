@@ -23,7 +23,8 @@ class PhotoController extends \BaseController
 
 	/**
 	 * Display a listing of photos
-	 *
+	 * @todo base output Content-Type on the Request headers
+     *
 	 * @return Response
 	 */
 	public function index()
