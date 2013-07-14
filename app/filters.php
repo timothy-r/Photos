@@ -89,6 +89,7 @@ Route::filter('photo-validate-store', function()
     );
         
     if (!$validator->passes()) {
+        // redirect depends on caller / output type
         return Redirect::action('PhotoController@create');
     }
 });

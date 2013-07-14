@@ -53,18 +53,6 @@ class PhotoApplicationTest extends TestCase {
         $this->assertRedirectedToAction('PhotoController@index');
 	}
 
-	public function testCannotStorePhotoWithoutName()
-	{
-        $this->mock_store->expects($this->never())
-            ->method('add');
-        
-        $data = array('name' => '');
-		$crawler = $this->client->request('POST', '/photos', $data);
-
-        $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@create');
-	}
-
     protected function mock($class, $methods)
     {
         $mock = $this->getMock($class, $methods);
