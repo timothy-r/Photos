@@ -15,6 +15,10 @@ class PhotoController extends \BaseController
     public function __construct(IImageStore $store)
     {
         $this->store = $store;
+        $this->beforeFilter(
+            'photo-validate', 
+            array('only' => array('store', 'update'))
+        );
     }
 
 	/**

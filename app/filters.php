@@ -78,3 +78,10 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+
+Route::filter('photo-validate', function()
+{
+    $name = Input::get('name');
+    
+});
