@@ -35,8 +35,7 @@ class PhotoController extends \BaseController
 	 */
 	public function create()
 	{
-		//
-        return 'a web form';
+        return View::make('photos-create');
 	}
 
 	/**
