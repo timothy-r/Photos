@@ -51,7 +51,7 @@ class PhotoController extends \BaseController
         // validate
         if (!$this->validatePhotoData(array('name' => $name))) {
             // send request back ?
-            return Redirect::to('PhotoController@create');
+            return Redirect::action('PhotoController@create');
         }
 
         // @todo use a factory
@@ -61,8 +61,8 @@ class PhotoController extends \BaseController
         $image->setName($name);
         // add Image to Store
         $this->store->add($image);
-        // redirect to view Image
-        return Redirect::to('PhotoController@show');
+        // redirect to view all Photos
+        return Redirect::action('PhotoController@index');
 	}
 
 	/**

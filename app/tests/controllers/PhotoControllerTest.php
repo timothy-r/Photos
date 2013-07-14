@@ -50,7 +50,7 @@ class PhotoApplicationTest extends TestCase {
 		$crawler = $this->client->request('POST', '/photos', $data);
 
         $this->assertResponseStatus(302);
-        $this->assertRedirectedTo('PhotoController@show');
+        $this->assertRedirectedToAction('PhotoController@index');
 	}
 
 	public function testCannotStorePhotoWithoutName()
@@ -62,7 +62,7 @@ class PhotoApplicationTest extends TestCase {
 		$crawler = $this->client->request('POST', '/photos', $data);
 
         $this->assertResponseStatus(302);
-        $this->assertRedirectedTo('PhotoController@create');
+        $this->assertRedirectedToAction('PhotoController@create');
 	}
 
     protected function mock($class, $methods)
