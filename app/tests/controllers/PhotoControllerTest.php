@@ -41,11 +41,28 @@ class PhotoApplicationTest extends TestCase {
 		$this->assertTrue($this->client->getResponse()->isOk());
 	}
 
-	public function testCanStorePhoto()
+	public function testCanStorePhotoWithValidData()
 	{
-		$crawler = $this->client->request('POST', '/photos');
+        $this->mock_store->expects($this->once())
+            ->method('add');
+        
+        $data = array('name' => 'Test photo');
+		$crawler = $this->client->request('POST', '/photos', $data);
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedTo('PhotoController@show');
+	}
+
+	public function testCannotStorePhotoWithoutName()
+	{
+        $this->mock_store->expects($this->never())
+            ->method('add');
+        
+        $data = array('name' => '');
+		$crawler = $this->client->request('POST', '/photos', $data);
+
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedTo('PhotoController@create');
 	}
 
     protected function mock($class, $methods)

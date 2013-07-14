@@ -1,5 +1,6 @@
 <?php
 use Ace\Photos\IImageStore;
+use Ace\Photos\Image;
 
 class PhotoController extends \BaseController
 {
@@ -45,7 +46,23 @@ class PhotoController extends \BaseController
 	 */
 	public function store()
 	{
-		//
+		// get the input data
+        $name = Input::get('name');
+        // validate
+        if (!$this->validatePhotoData(array('name' => $name))) {
+            // send request back ?
+            return Redirect::to('PhotoController@create');
+        }
+
+        // @todo use a factory
+        // create an Image instance
+        $image = new Image;
+        // set its members
+        $image->setName($name);
+        // add Image to Store
+        $this->store->add($image);
+        // redirect to view Image
+        return Redirect::to('PhotoController@show');
 	}
 
 	/**
@@ -92,4 +109,17 @@ class PhotoController extends \BaseController
 		//
 	}
 
+    /**
+    * test if data is valid
+    * @return boolean
+    */
+    protected function validatePhotoData(array $data)
+    {
+        $validator = Validator::make(
+            array('name' => $data['name']),
+            array('name' => 'required')
+        );
+        
+        return $validator->passes();
+    }
 }
