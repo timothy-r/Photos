@@ -6,10 +6,10 @@
 </head>
 <body>
 <h1>Photos</h1>
-<!-- list photos here -->
+<!-- list images here -->
 <ul>
 <?php foreach ($photos as $photo) : ?>
-    <li><?php $photo->getName() ?></li>
+    <li><?php echo $photo->getName(); ?></li>
 <?php endforeach ?>
 
 </ul>
