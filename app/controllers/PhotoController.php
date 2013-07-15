@@ -53,11 +53,6 @@ class PhotoController extends \BaseController
 	{
 		// get the input data
         $name = Input::get('name');
-        // validate
-        #if (!$this->validatePhotoData(array('name' => $name))) {
-         #   // send request back ?
-          #  return Redirect::action('PhotoController@create');
-        #}
 
         // @todo use a factory
         // create an Image instance
@@ -113,18 +108,4 @@ class PhotoController extends \BaseController
 	{
 		//
 	}
-
-    /**
-    * test if data is valid
-    * @return boolean
-    */
-    protected function validatePhotoData(array $data)
-    {
-        $validator = Validator::make(
-            array('name' => $data['name']),
-            array('name' => 'required')
-        );
-        
-        return $validator->passes();
-    }
 }
