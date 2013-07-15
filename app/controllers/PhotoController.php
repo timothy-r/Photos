@@ -36,7 +36,8 @@ class PhotoController extends \BaseController
 
 	/**
 	 * Show the form for creating a new photo
-	 *
+	 * not needed if a backbone app presents the ui
+     *
 	 * @return Response
 	 */
 	public function create()
@@ -59,6 +60,7 @@ class PhotoController extends \BaseController
         $image = new Image;
         // set its members
         $image->setName($name);
+
         // add Image to Store
         $this->store->add($image);
         // redirect to view all Photos
