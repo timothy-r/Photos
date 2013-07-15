@@ -29,8 +29,12 @@ class PhotoController extends \BaseController
 	 */
 	public function index()
 	{
-        // inject a photos store into this controller
+        // obtain an array of Image objects to display
         $photos = $this->store->all();
+        // get target Content-Type based on Accept header
+        // eg. application/json, text/hml. text/xml
+        // set reponse Content-Type from what it will be
+        // generate response based on requested Content-Type
         return View::make('photos', array('photos' => $photos));
 	}
 
