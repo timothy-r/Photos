@@ -1,4 +1,5 @@
 <?php
+use Ace\Photos\PhotoValidator;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,4 +78,16 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+
+Route::filter('photo-validate-store', function()
+{
+    $validator = new PhotoValidator;
+    $name = Input::get('name');
+        
+    if (!$validator->validate($name)) {
+        // redirect depends on caller / output type?
+        return Redirect::action('PhotoController@create');
+    }
 });

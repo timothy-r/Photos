@@ -1,6 +1,8 @@
 <?php
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
+abstract class TestCase extends BaseTestCase
+{
 
 	/**
 	 * Creates the application.
@@ -16,6 +18,13 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase {
 		return require __DIR__.'/../../bootstrap/start.php';
 	}
 
-    public function testIt(){}
+    public function __call($method, $args)
+    {
+        if (in_array($method, array('get', 'post', 'put', 'head', 'delete'))){
+            return $this->call($method, $args[0]);
+        }
+        throw new BadMethodCallException("'$method' not supported");
+
+    }
 
 }
