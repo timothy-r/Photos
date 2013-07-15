@@ -1,4 +1,3 @@
 Photos
 ======
-
-An online photo viewer app 
+A photo viewer app built with Laravel
