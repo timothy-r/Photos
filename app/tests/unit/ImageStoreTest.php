@@ -4,7 +4,6 @@ use Ace\Photos\Image;
 
 class ImageStoreTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $image_store;
 
     public function setUp()
@@ -27,7 +26,6 @@ class ImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetImage()
     {
-        $image = $this->image_store->get();
-        #$this->assertTrue(is_array($images));
+        $image = $this->image_store->get(1);
     }
 }
