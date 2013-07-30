@@ -10,4 +10,6 @@ interface IImageStore
     public function add(Image $image);
 
     public function all();
+
+    public function get($id);
 }

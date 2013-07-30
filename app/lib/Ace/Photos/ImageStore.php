@@ -17,4 +17,9 @@ class ImageStore implements IImageStore
     {
         return array();
     }
+
+    public function get($id)
+    {
+
+    }
 }

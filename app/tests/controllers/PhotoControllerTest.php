@@ -10,7 +10,7 @@ class PhotoApplicationTest extends TestCase {
         parent::setUp();
         $this->mock_store = $this->mock(
             'Ace\Photos\IImageStore',
-            array('all', 'add')
+            array('all', 'add', 'get')
         );
     }
 
@@ -52,6 +52,11 @@ class PhotoApplicationTest extends TestCase {
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@index');
 	}
+
+	public function testCanViewPhoto()
+    {
+
+    }
 
     protected function mock($class, $methods)
     {

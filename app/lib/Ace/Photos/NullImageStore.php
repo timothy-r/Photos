@@ -18,4 +18,9 @@ class NullImageStore implements IImageStore
     {
         return array();
     }
+
+    public function get($id)
+    {
+        return null;
+    }
 }

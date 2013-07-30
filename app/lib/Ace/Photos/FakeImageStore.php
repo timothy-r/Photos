@@ -25,4 +25,11 @@ class FakeImageStore implements IImageStore
         }
         return $all;
     }
+
+    public function get($id)
+    {
+        $image = new Image;
+        $image->setName('Special Effects');
+        return $image;
+    }
 }

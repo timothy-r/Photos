@@ -16,4 +16,16 @@
             <file>*Test.php</file>
         </testsuite>
     </testsuites>
+    <!--
+    problem with codeception classes not being found
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app</directory>
+        </whitelist>
+        <blacklist>
+            <directory suffix=".php">./app/tests</directory>
+        </blacklist>
+    </filter>
+    -->
 </phpunit>

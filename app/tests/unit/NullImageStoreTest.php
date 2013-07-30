@@ -4,19 +4,30 @@ use Ace\Photos\Image;
 
 class NullImageStoreTest extends \PHPUnit_Framework_TestCase
 {
+    protected $image_store;
+
+    public function setUp()
+    {
+        $this->image_store = new NullImageStore;
+    }
 
     public function testCanAddAnImage()
     {
         $image = new Image;
-        $image_store = new NullImageStore;
-        $result = $image_store->add($image);
+        $result = $this->image_store->add($image);
         $this->assertSame(true, $result);
     }
 
     public function testCanListImages()
     {
-        $image_store = new NullImageStore;
-        $images = $image_store->all();
+        $images = $this->image_store->all();
         $this->assertTrue(is_array($images));
+    }
+
+    public function testCanGetAnImage()
+    {
+        $id = 1;
+        $image = $this->image_store->get($id);
+        $this->assertNull($image);
     }
 }
