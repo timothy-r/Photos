@@ -75,9 +75,8 @@ class PhotoController extends \BaseController
 	 */
 	public function show($id)
 	{
-        $this->mock_store->expects($this->once())
-            ->method('get');
-        
+        $photo = $this->store->get($id);
+        return View::make('photo', array('photo' => $photo));
 	}
 
 	/**

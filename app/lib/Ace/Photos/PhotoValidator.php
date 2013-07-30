@@ -16,4 +16,9 @@ class PhotoValidator
         
         return $validator->passes();
     }
+
+    public function validateExists($id)
+    {
+        
+    }
 }

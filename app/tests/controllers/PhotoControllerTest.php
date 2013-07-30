@@ -1,8 +1,8 @@
 <?php
 use Ace\Photos\Image;
 
-class PhotoApplicationTest extends TestCase {
-
+class PhotoApplicationTest extends TestCase
+{
     protected $mock_store;
 
     public function setUp()
@@ -55,7 +55,15 @@ class PhotoApplicationTest extends TestCase {
 
 	public function testCanViewPhoto()
     {
+        $photo = new Image;
+        $id = 1;
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($photo));
+		$crawler = $this->client->request('GET', '/photos/' . $id);
 
+		$this->assertTrue($this->client->getResponse()->isOk());
     }
 
     protected function mock($class, $methods)

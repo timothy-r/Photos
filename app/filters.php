@@ -91,3 +91,14 @@ Route::filter('photo-validate-store', function()
         return Redirect::action('PhotoController@create');
     }
 });
+
+Route::filter('photo-validate-show', function()
+{
+    $validator = new PhotoValidator;
+    $id = Input::get('id');
+        
+    if (!$validator->validateExists($id)) {
+        // redirect depends on caller / output type?
+        return Redirect::action('PhotoController@create');
+    }
+});
