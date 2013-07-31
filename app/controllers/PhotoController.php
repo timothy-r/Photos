@@ -76,6 +76,7 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = $this->store->get($id);
+        // add validation here ?
         return View::make('photo', array('photo' => $photo));
 	}
 
