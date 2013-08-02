@@ -1,5 +1,4 @@
 <?php
-use Ace\Photos\PhotoValidator;
 use Ace\Photos\Image;
 
 /*
@@ -88,7 +87,7 @@ Route::filter('photo-validate-store', function()
         'name' => 'required'
     );
     // @todo use array keys from $rules as params to only
-    $validator = \Validator::make(Input::only('name'), $rules);
+    $validator = Validator::make(Input::only('name'), $rules);
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
@@ -103,11 +102,8 @@ Validator::extend('image_exists', 'Ace\Photos\PhotoExistsValidator@validate');
 
 Route::filter('photo-validate-show', function()
 {
-    /**
-    * @todo apply a custom validator
-    */
     $rules = array('id' => 'image_exists');
-    $validator = \Validator::make(Input::only('id'), $rules);
+    $validator = Validator::make(Input::only('id'), $rules);
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?

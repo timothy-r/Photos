@@ -25,12 +25,12 @@ class FakeImageStore implements IImageStore
             return null;
         }
 
-        $all = $this->createImages();
-        foreach($all as $image){
+        foreach($this->createImages() as $image){
             if ($image->getId() == $id){
                 return $image;
             }
         }
+
         // create a new Image
         $image = new Image;
         $image->setId($id);
