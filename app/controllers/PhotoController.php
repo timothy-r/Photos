@@ -68,7 +68,7 @@ class PhotoController extends \BaseController
 	}
 
 	/**
-	 * Display the specified photo
+	 * View the photo
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -81,7 +81,7 @@ class PhotoController extends \BaseController
 	}
 
 	/**
-	 * Show the form for editing the specified photo
+	 * Show the form for editing the photo
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -92,7 +92,7 @@ class PhotoController extends \BaseController
 	}
 
 	/**
-	 * Update the specified photo in storage
+	 * Update the photo 
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -103,7 +103,7 @@ class PhotoController extends \BaseController
 	}
 
 	/**
-	 * Remove the specified photo from storage
+	 * Remove the specified photo
 	 *
 	 * @param  int  $id
 	 * @return Response

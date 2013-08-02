@@ -5,6 +5,7 @@ use Illuminate\Support\ServiceProvider;
 
 /**
 * Binds the FakeImageStore class to the IImageStore interface
+* This is how IImageStore is resolved by the dic
 */
 class FakeImageStoreServiceProvider extends ServiceProvider
 {

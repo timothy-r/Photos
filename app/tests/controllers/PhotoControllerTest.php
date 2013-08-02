@@ -1,6 +1,9 @@
 <?php
 use Ace\Photos\Image;
 
+/**
+* @group controller
+*/
 class PhotoApplicationTest extends TestCase
 {
     protected $mock_store;
@@ -34,7 +37,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertInstanceOf('Ace\Photos\Image', current($actual_photos));
 	}
 
-	public function testCanCreatePhoto()
+	public function testCanViewCreatePhotoForm()
 	{
 		$crawler = $this->client->request('GET', '/photos/create');
 
