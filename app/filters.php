@@ -101,6 +101,10 @@ Route::filter('photo-validate-store', function()
 
 Route::filter('photo-validate-show', function()
 {
+    /**
+    * @todo apply a custom validator
+    * $rules = array('id' => 'image_exists');
+    */
     $store = App::make('Ace\Photos\IImageStore');
     $id = Input::get('id');
 
