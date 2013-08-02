@@ -9,7 +9,7 @@
 <!-- list images here -->
 <ul>
 <?php foreach ($photos as $photo) : ?>
-    <li><?php echo $photo->getName(); ?></li>
+    <li><a href="/photos/<?php echo $photo->getId(); ?>"><?php echo $photo->getName(); ?></a></li>
 <?php endforeach ?>
 
 </ul>
