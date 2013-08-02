@@ -18,8 +18,10 @@ class FakeImageStore implements IImageStore
     {
         $all = array();
         $names = array('Grand Canyon', 'Eifle Tower', 'Sunset');
+        $id = 1;
         foreach($names as $name) {
             $image = new Image;
+            $image->setId($id++);
             $image->setName($name);
             $all []= $image;
         }
@@ -29,6 +31,7 @@ class FakeImageStore implements IImageStore
     public function get($id)
     {
         $image = new Image;
+        $image->setId($id);
         $image->setName('Special Effects');
         return $image;
     }
