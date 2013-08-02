@@ -20,6 +20,13 @@ class Image
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        if (!isset($this->id)){
+            $this->id = $id;
+        }
+    }
+
     public function getName()
     {
         return $this->name;    
