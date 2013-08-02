@@ -9,6 +9,7 @@
 <div><?php echo $photo->getName(); ?></div>
 
 <a href="/photos/create">Add</a>
+<a href="/photos">List</a>
 
 </body>
 </html>

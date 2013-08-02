@@ -10,6 +10,7 @@
 <input name="name" type="text" placeholder="Name:"></input>
 <input name="submit" type="submit" value="Add"></input>
 </form>
+<a href="/photos">List</a>
 </body>
 </html>
 
