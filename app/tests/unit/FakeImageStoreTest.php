@@ -34,4 +34,11 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Ace\Photos\Image', $image);
         $this->assertSame($id, $image->getId());
     }
+
+    public function testCantGetAMissingImage()
+    {
+        $id = 0;
+        $image = $this->image_store->get($id);
+        $this->assertSame(null, $image);
+    }
 }

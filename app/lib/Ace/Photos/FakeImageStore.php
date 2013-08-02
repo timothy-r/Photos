@@ -21,6 +21,10 @@ class FakeImageStore implements IImageStore
 
     public function get($id)
     {
+        if (0 == $id){
+            return null;
+        }
+
         $all = $this->createImages();
         foreach($all as $image){
             if ($image->getId() == $id){
