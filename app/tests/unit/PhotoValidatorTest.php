@@ -49,4 +49,15 @@ class PhotoValidatorTest extends \PHPUnit_Framework_TestCase
         $result = $this->validator->validateExists($id);
         $this->assertFalse($result, "Expected validateExists() to return false for missing Photo");
     }
+
+    public function testAnExistingPhotoIsValid()
+    {
+        $mock_image = $this->getMock('Ace\Photos\Image');
+        $this->mock_store->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue($mock_image));
+        $id = 0;
+        $result = $this->validator->validateExists($id);
+        $this->assertTrue($result, "Expected validateExists() to return true for existing Photo");
+    }
 }

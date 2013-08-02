@@ -1,6 +1,7 @@
 <?php
 namespace Ace\Photos;
 use Ace\Photos\IImageStore;
+use Ace\Photos\Image;
 
 /**
 * Validates incoming Photo data
@@ -20,6 +21,12 @@ class PhotoValidator
         $this->store = $store;
     }
 
+    /**
+    * Test that name is a valid name for an Image
+    *
+    * @param string $name 
+    * @return boolean
+    */
     public function validate($name)
     {
         $validator = \Validator::make(
@@ -30,8 +37,12 @@ class PhotoValidator
         return $validator->passes();
     }
 
+    /**
+    * Test that an Image identified by $id exists
+    * @return boolean
+    */
     public function validateExists($id)
     {
-        return false;        
+        return $this->store->get($id) instanceof Image;
     }
 }
