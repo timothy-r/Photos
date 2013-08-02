@@ -87,7 +87,8 @@ Route::filter('photo-validate-store', function()
     $rules = array(
         'name' => 'required'
     );
-    $validator = \Validator::make(Input::all(), $rules);
+    // @todo use array keys from $rules as params to only
+    $validator = \Validator::make(Input::only('name'), $rules);
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
