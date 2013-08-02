@@ -17,4 +17,10 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $image = new Image;
         $hash = $image->getHash();
     }
+
+    public function testGetId()
+    {
+        $image = new Image;
+        $id = $image->getId();
+    }
 }

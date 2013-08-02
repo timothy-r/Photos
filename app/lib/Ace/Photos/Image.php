@@ -6,7 +6,19 @@ namespace Ace\Photos;
 */
 class Image
 {
+    /**
+    * A unique identifier for this instance
+    *
+    * @var string
+    */
+    protected $id;
+
     protected $name;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getName()
     {
