@@ -84,15 +84,17 @@ Route::filter('csrf', function()
 
 Route::filter('photo-validate-store', function()
 {
-    $name = Input::get('name');
-    $validator = \Validator::make(
-            array('name' => $name),
-            array('name' => 'required')
+    $rules = array(
+        'name' => 'required'
     );
+    $validator = \Validator::make(Input::all(), $rules);
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
-        return Redirect::action('PhotoController@create');
+        return Redirect::action('PhotoController@create')
+            ->withInput()
+            ->withErrors($validator->messages()
+        );
     }
 });
 
