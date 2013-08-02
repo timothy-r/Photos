@@ -1,5 +1,6 @@
 <?php
 use Ace\Photos\PhotoValidator;
+use Ace\Photos\Image;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,10 +84,13 @@ Route::filter('csrf', function()
 
 Route::filter('photo-validate-store', function()
 {
-    $validator = App::make('Ace\Photos\PhotoValidator');
     $name = Input::get('name');
-        
-    if (!$validator->validate($name)) {
+    $validator = \Validator::make(
+            array('name' => $name),
+            array('name' => 'required')
+    );
+
+    if (!$validator->passes()) {
         // redirect depends on caller / output type?
         return Redirect::action('PhotoController@create');
     }
@@ -94,10 +98,10 @@ Route::filter('photo-validate-store', function()
 
 Route::filter('photo-validate-show', function()
 {
-    $validator = App::make('Ace\Photos\PhotoValidator');
+    $store = App::make('IImageStore');
     $id = Input::get('id');
-        
-    if (!$validator->validateExists($id)) {
+
+    if (!$store->get($id) instanceof Image) {
         // redirect depends on caller / output type?
         return Redirect::action('PhotoController@Index');
     }

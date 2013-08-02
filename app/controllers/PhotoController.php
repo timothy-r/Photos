@@ -19,6 +19,11 @@ class PhotoController extends \BaseController
             'photo-validate-store', 
             array('only' => array('store'))
         );
+
+        $this->beforeFilter(
+            'photo-validate-show', 
+            array('only' => array('show', 'edit', 'update', 'destroy'))
+        );
     }
 
 	/**
