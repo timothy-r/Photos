@@ -32,6 +32,6 @@ class PhotoValidator
 
     public function validateExists($id)
     {
-        
+        return false;        
     }
 }
