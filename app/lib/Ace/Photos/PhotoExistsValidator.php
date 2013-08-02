@@ -1,5 +1,7 @@
 <?php namespace Ace\Photos;
 
+use Ace\Photos\Image;
+
 /**
 * Validates $id parameter
 */
@@ -14,6 +16,6 @@ class PhotoExistsValidator
 
     public function validate($id)
     {
-
+        return $this->store->get($id) instanceof Image;
     }
 }
