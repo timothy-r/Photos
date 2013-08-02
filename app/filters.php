@@ -83,7 +83,7 @@ Route::filter('csrf', function()
 
 Route::filter('photo-validate-store', function()
 {
-    $validator = new PhotoValidator;
+    $validator = App::make('Ace\Photos\PhotoValidator');
     $name = Input::get('name');
         
     if (!$validator->validate($name)) {
@@ -94,11 +94,11 @@ Route::filter('photo-validate-store', function()
 
 Route::filter('photo-validate-show', function()
 {
-    $validator = new PhotoValidator;
+    $validator = App::make('Ace\Photos\PhotoValidator');
     $id = Input::get('id');
         
     if (!$validator->validateExists($id)) {
         // redirect depends on caller / output type?
-        return Redirect::action('PhotoController@create');
+        return Redirect::action('PhotoController@Index');
     }
 });

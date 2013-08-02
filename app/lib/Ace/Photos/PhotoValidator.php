@@ -1,11 +1,24 @@
 <?php
 namespace Ace\Photos;
+use Ace\Photos\IImageStore;
 
 /**
 * Validates incoming Photo data
 */
 class PhotoValidator
 {
+    /**
+    * @var Ace\Photos\IImageStore
+    */
+    protected $store;
+
+    /**
+    * @param Ace\Photos\IImageStore $store
+    */
+    public function __construct(IImageStore $store)
+    {
+        $this->store = $store;
+    }
 
     public function validate($name)
     {

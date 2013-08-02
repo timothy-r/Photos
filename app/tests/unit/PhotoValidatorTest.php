@@ -7,7 +7,11 @@ class PhotoValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->validator = new PhotoValidator;
+        $mock_store = $this->getMock(
+            '\Ace\Photos\IImageStore', 
+            array('get', 'add', 'all')
+        );
+        $this->validator = new PhotoValidator($mock_store);
     }
 
     /**
@@ -29,7 +33,7 @@ class PhotoValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testNamePassesValidation()
     {
-        $name = 'A photo of my holoidays';
+        $name = 'A photo of my holidays';
         $result = $this->validator->validate($name);
         $this->assertTrue($result, "Expected '$name' to be valid");
     }
