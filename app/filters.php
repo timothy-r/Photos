@@ -98,7 +98,7 @@ Route::filter('photo-validate-store', function()
 
 Route::filter('photo-validate-show', function()
 {
-    $store = App::make('IImageStore');
+    $store = App::make('Ace\Photos\IImageStore');
     $id = Input::get('id');
 
     if (!$store->get($id) instanceof Image) {
