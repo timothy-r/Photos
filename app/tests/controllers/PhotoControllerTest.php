@@ -22,7 +22,10 @@ class PhotoApplicationTest extends TestCase
 	 */
 	public function testCanListPhotos()
 	{
-        $photos = array('1' => new Image);
+        $name = 'A fantastic panorama';
+        $image = new Image;
+        $image->setName($name);
+        $photos = array('1' => $image);
         $this->mock_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
@@ -34,8 +37,9 @@ class PhotoApplicationTest extends TestCase
         $this->assertViewHas('photos');
 
         $data = $response->original->getData();
-        $actual_photos = $data['photos'];
-        $this->assertInstanceOf('Ace\Photos\Image', current($actual_photos));
+        $photo = current($data['photos']);
+        $this->assertSame($name, $photo['name']);
+        // test uri property
 	}
 
 	/**

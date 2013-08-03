@@ -31,14 +31,28 @@ class PhotoController extends \BaseController
 	{
         // obtain an array of Image objects to display
         $photos = $this->store->all();
-        return $this->createResponse('photos', array('photos' => $photos));
+        // convert $photos to an array of data for presentation
+        $data = $this->imageData($photos);
+        return $this->createResponse('photos', array('photos' => $data));
+    }
+
+    protected function imageData($images)
+    {
+        $data = array();
+        foreach ($images as $image) {
+            $data[] = array(
+                'name' => $image->getName(),
+                'uri' => 
+                    URL::action('PhotoController@show', array('photos'=>$image->getId())),
+                );
+        }
+        return $data;
     }
 
     /**
     * Get target Content-Type based on Accept header
     * eg. application/json, text/hml, application/xml
-    * set reponse Content-Type from what it will be
-    * generate response based on requested Content-Type
+    * set reponse Content-Type and content body
     */
     protected function createResponse($name, $data)
     {
