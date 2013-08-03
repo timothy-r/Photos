@@ -27,17 +27,37 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testCanGetAnImage()
+    public function getImageIds()
     {
-        $id = 1;
+        return array(
+            array(1),
+            array(5)
+        );
+    }
+    
+    /**
+    * @dataProvider getImageIds
+    */
+    public function testCanGetAnImage($id)
+    {
         $image = $this->image_store->get($id);
         $this->assertInstanceOf('Ace\Photos\Image', $image);
         $this->assertSame($id, $image->getId());
     }
 
-    public function testCantGetAMissingImage()
+    public function getInvalidImageIds()
     {
-        $id = 0;
+        return array(
+            array(0),
+            array(null)
+        );
+    }
+    
+    /**
+    * @dataProvider getInvalidImageIds
+    */
+    public function testCantGetAMissingImage($id)
+    {
         $image = $this->image_store->get($id);
         $this->assertSame(null, $image);
     }
