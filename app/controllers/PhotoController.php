@@ -32,7 +32,7 @@ class PhotoController extends \BaseController
         // obtain an array of Image objects to display
         $photos = $this->store->all();
         // get target Content-Type based on Accept header
-        // eg. application/json, text/hml. text/xml
+        // eg. application/json, text/hml, application/xml
         // set reponse Content-Type from what it will be
         // generate response based on requested Content-Type
         return View::make('photos', array('photos' => $photos));
