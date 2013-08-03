@@ -42,8 +42,8 @@ class PhotoController extends \BaseController
         foreach ($images as $image) {
             $data[] = array(
                 'name' => $image->getName(),
-                'uri' => 
-                    URL::action('PhotoController@show', array('photos'=>$image->getId())),
+                'uri' => ''
+                    #URL::action('PhotoController@show', array('photos'=>$image->getId())),
                 );
         }
         return $data;
