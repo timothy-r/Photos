@@ -98,7 +98,6 @@ Route::filter('photo-validate-store', function()
     }
 });
 
-Validator::extend('image_exists', 'Ace\Photos\PhotoExistsValidator@validate');
 
 Route::filter('photo-validate-show', function()
 {
@@ -107,7 +106,7 @@ Route::filter('photo-validate-show', function()
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
-        return Redirect::action('PhotoController@Index')
+        return Redirect::action('PhotoController@index')
             ->withInput()
             ->withErrors($validator->messages()
         );

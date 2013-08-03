@@ -63,6 +63,7 @@ return array(
 	),
 	"unique"           => "The :attribute has already been taken.",
 	"url"              => "The :attribute format is invalid.",
+    
 
 	/*
 	|--------------------------------------------------------------------------
@@ -75,7 +76,11 @@ return array(
 	|
 	*/
 
-	'custom' => array(),
+	'custom' => array(
+        'image_exists' => array(
+            "This image doesn't exist"
+         )
+    ),
 
 	/*
 	|--------------------------------------------------------------------------

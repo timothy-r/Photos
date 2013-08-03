@@ -3,7 +3,7 @@
 use Ace\Photos\Image;
 
 /**
-* Validates $id parameter
+* Validates $id parameter;
 */
 class PhotoExistsValidator
 {
