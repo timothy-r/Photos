@@ -60,11 +60,12 @@ class PhotoController extends \BaseController
         if (in_array('text/html', $types)) { 
             return View::make($name, $data);
         } else if (in_array('application/json', $types)) { 
-            return Response::make(
-                Response::json($data),
-                200, 
-                array('Content-Type' => 'application/json')
-            );
+            return View::make($name.'-json', $data);
+            #return Response::make(
+            #    Response::json($data),
+            #    200, 
+            #    array('Content-Type' => 'application/json')
+            #);
         }
 	}
 
