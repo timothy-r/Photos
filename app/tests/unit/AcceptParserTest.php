@@ -8,8 +8,8 @@ class AcceptParserTest extends \PHPUnit_Framework_TestCase
     */
     public function testIsAcceptable($type, $header)
     {
-        $parser = new AcceptParser;
-        $result = $parser->isAcceptable($type, $header);
+        $parser = new AcceptParser($header);
+        $result = $parser->isAcceptable($type);
         $this->assertTrue($result, "Expected '$type' to be acceptable from '$header'");
     }
 
