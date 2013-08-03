@@ -52,11 +52,14 @@ class PhotoController extends \BaseController
     */
     protected function createResponse($name, $data)
     {
-        $types = explode(',', Request::header('Accept'));
-        if (in_array('text/html', $types)) { 
+        $accept_header = Request::header('Accept');
+        $parser = new Ace\AcceptParser;
+        if ($parser->isAcceptable('text/html', $accept_header)) { 
             return View::make($name, $data);
-        } else if (in_array('application/json', $types)) { 
+        } else if ($parser->isAcceptable('application/json', $accept_header)) { 
             return Response::json($data);
+        } else {
+            // return Not Acceptable status 406
         }
 	}
 
@@ -87,7 +90,7 @@ class PhotoController extends \BaseController
         // set its members
         $image->setName($name);
 
-        // add Image to Store
+        // store Image
         $this->store->add($image);
         // redirect to view all Photos
         return Redirect::action('PhotoController@index');
