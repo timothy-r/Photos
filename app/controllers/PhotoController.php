@@ -31,11 +31,27 @@ class PhotoController extends \BaseController
 	{
         // obtain an array of Image objects to display
         $photos = $this->store->all();
-        // get target Content-Type based on Accept header
-        // eg. application/json, text/hml, application/xml
-        // set reponse Content-Type from what it will be
-        // generate response based on requested Content-Type
-        return View::make('photos', array('photos' => $photos));
+        return $this->createResponse('photos', array('photos' => $photos));
+    }
+
+    /**
+    * Get target Content-Type based on Accept header
+    * eg. application/json, text/hml, application/xml
+    * set reponse Content-Type from what it will be
+    * generate response based on requested Content-Type
+    */
+    protected function createResponse($name, $data)
+    {
+        $types = explode(',', Request::header('Accept'));
+        if (in_array('text/html', $types)) { 
+            return View::make($name, $data);
+        } else if (in_array('application/json', $types)) { 
+            return Response::make(
+                'view for type ' . print_r($types,1), 
+                200, 
+                array('Content-Type' => 'application/json')
+            );
+        }
 	}
 
 	/**

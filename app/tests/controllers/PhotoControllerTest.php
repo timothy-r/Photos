@@ -30,13 +30,30 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->get('/photos');
        
 		$this->assertTrue($response->isOk());
-        // assert content type is text/html
         $this->assertContentType($response, 'text/html; charset=UTF-8');
         $this->assertViewHas('photos');
 
         $data = $response->original->getData();
         $actual_photos = $data['photos'];
         $this->assertInstanceOf('Ace\Photos\Image', current($actual_photos));
+	}
+
+	/**
+	 * Test listing photos works with json
+	 */
+	public function testCanListPhotosInJson()
+	{
+        $photos = array('1' => new Image);
+        $this->mock_store->expects($this->any())
+            ->method('all')
+            ->will($this->returnValue($photos));
+
+		$response = $this->call('get', '/photos', array(), array(), array('HTTP_Accept' => 'application/json'));
+       
+		$this->assertTrue($response->isOk());
+        $this->assertContentType($response, 'application/json');
+        $content = $response->getContent();
+
 	}
 
 	public function testCanViewCreatePhotoForm()
