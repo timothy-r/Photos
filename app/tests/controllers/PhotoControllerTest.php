@@ -45,7 +45,7 @@ class PhotoApplicationTest extends TestCase
 	/**
 	 * Test listing photos works with json
 	 */
-	public function testCanListPhotosInJson()
+	public function testCanListPhotosAsJson()
 	{
         $photos = array('1' => new Image);
         $this->mock_store->expects($this->any())
@@ -99,6 +99,33 @@ class PhotoApplicationTest extends TestCase
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'text/html; charset=UTF-8');
     }
+
+	/**
+	 * Test listing photos works with json
+	 */
+	public function testCanViewPhotoAsJson()
+	{
+        $photo = new Image;
+        $id =1;
+        $this->mock_store->expects($this->any())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($photo));
+
+		$response = $this->call(
+            'get', 
+            '/photos/'.$id, 
+            array(), 
+            array(), 
+            array('HTTP_Accept' => 'application/json')
+        );
+       
+		$this->assertTrue($response->isOk());
+        $this->assertContentType($response, 'application/json');
+        $data = json_decode($response->getContent());
+        $this->assertInstanceOf('StdClass', $data);
+	}
+
 
 	public function testCantViewMissingPhoto()
     {

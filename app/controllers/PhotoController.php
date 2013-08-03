@@ -19,6 +19,13 @@ class PhotoController extends \BaseController
             'photo-validate-store', 
             array('only' => array('store'))
         );
+
+        $this->get_photo_data = function($image){
+            return array(
+                'name' => $image->getName(),
+                'uri' => ''
+            );
+        };
     }
 
 	/**
@@ -32,24 +39,8 @@ class PhotoController extends \BaseController
         // obtain an array of Image objects to display
         $photos = $this->store->all();
         // convert $photos to an array of data for presentation
-        $data = $this->imageData($photos);
+        $data = array_map($this->get_photo_data, $photos);
         return $this->createResponse('photos', array('photos' => $data));
-    }
-
-    /**
-    * @todo move to a view helper
-    */
-    protected function imageData($images)
-    {
-        $data = array();
-        foreach ($images as $image) {
-            $data[] = array(
-                'name' => $image->getName(),
-                'uri' => ''
-                    #URL::action('PhotoController@show', array('photos'=>$image->getId())),
-                );
-        }
-        return $data;
     }
 
     /**
@@ -111,9 +102,9 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = $this->store->get($id);
-        // add validation here
         if ($photo) {
-            return View::make('photo', array('photo' => $photo));
+            $data = call_user_func($this->get_photo_data, $photo);
+            return $this->createResponse('photo', array('photo' => $data));
         } else {
             return Redirect::action('PhotoController@index')
                 ->withInput()
