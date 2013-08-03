@@ -30,6 +30,8 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->get('/photos');
        
 		$this->assertTrue($response->isOk());
+        // assert content type is text/html
+        $this->assertContentType($response, 'text/html; charset=UTF-8');
         $this->assertViewHas('photos');
 
         $data = $response->original->getData();
@@ -66,7 +68,9 @@ class PhotoApplicationTest extends TestCase
             ->will($this->returnValue($photo));
 		$crawler = $this->client->request('GET', '/photos/' . $id);
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+        $response = $this->client->getResponse();
+		$this->assertTrue($response->isOk());
+        $this->assertContentType($response, 'text/html; charset=UTF-8');
     }
 
 	public function testCantViewMissingPhoto()
@@ -78,7 +82,8 @@ class PhotoApplicationTest extends TestCase
             ->will($this->returnValue(null));
 		$crawler = $this->client->request('GET', '/photos/' . $id);
 
-		$this->assertFalse($this->client->getResponse()->isOk());
+		$this->assertTrue($this->client->getResponse()->isRedirection());
+        $this->assertRedirectedToAction('PhotoController@index');
     }
 
     protected function mock($class, $methods)
