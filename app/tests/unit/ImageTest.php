@@ -12,10 +12,14 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($name, $image->getName());
     }
 
-    public function testGetHash()
+    public function testGetHashChangesWhenNameChanges()
     {
         $image = new Image;
-        $hash = $image->getHash();
+        $image->setName('One');
+        $hash_1 = $hash = $image->getHash();
+        $image->setName('Two');
+        $hash_2 = $hash = $image->getHash();
+        $this->assertTrue($hash_1 != $hash_2);
     }
 
     public function testGetId()

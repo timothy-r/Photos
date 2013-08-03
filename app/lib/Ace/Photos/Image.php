@@ -2,7 +2,7 @@
 namespace Ace\Photos;
 
 /**
-* represents a single Image document
+* Represents a single Image document
 */
 class Image
 {
@@ -14,6 +14,8 @@ class Image
     protected $id;
 
     protected $name;
+
+    protected $hash;
 
     public function getId()
     {
@@ -35,10 +37,17 @@ class Image
     public function setName($name)
     {
         $this->name = $name;
+        $this->setHash();
     }
 
     public function getHash()
     {
+        return $this->hash;
+    }
+
+    protected function setHash()
+    {
+        $this->hash = md5("{$this->name}");
     }
 }
 
