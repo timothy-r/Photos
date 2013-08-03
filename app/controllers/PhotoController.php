@@ -19,11 +19,6 @@ class PhotoController extends \BaseController
             'photo-validate-store', 
             array('only' => array('store'))
         );
-
-        $this->beforeFilter(
-            'photo-validate-show', 
-            array('only' => array('show', 'edit', 'update', 'destroy'))
-        );
     }
 
 	/**
@@ -34,7 +29,6 @@ class PhotoController extends \BaseController
 	 */
 	public function index()
 	{
-        // inject a photos store into this controller
         $photos = $this->store->all();
         return View::make('photos', array('photos' => $photos));
 	}
@@ -81,8 +75,15 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = $this->store->get($id);
-        // add validation here ?
-        return View::make('photo', array('photo' => $photo));
+        // add validation here
+        if ($photo) {
+            return View::make('photo', array('photo' => $photo));
+        } else {
+            return Redirect::action('PhotoController@index')
+                ->withInput()
+                ->withErrors(array('Photo not found')
+            );
+        }
 	}
 
 	/**

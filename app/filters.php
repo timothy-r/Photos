@@ -97,18 +97,3 @@ Route::filter('photo-validate-store', function()
         );
     }
 });
-
-
-Route::filter('photo-validate-show', function()
-{
-    $rules = array('id' => 'image_exists');
-    $validator = Validator::make(Input::only('id'), $rules);
-
-    if (!$validator->passes()) {
-        // redirect depends on caller / output type?
-        return Redirect::action('PhotoController@index')
-            ->withInput()
-            ->withErrors($validator->messages()
-        );
-    }
-});

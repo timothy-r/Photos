@@ -69,6 +69,18 @@ class PhotoApplicationTest extends TestCase
 		$this->assertTrue($this->client->getResponse()->isOk());
     }
 
+	public function testCantViewMissingPhoto()
+    {
+        $id = 123;
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue(null));
+		$crawler = $this->client->request('GET', '/photos/' . $id);
+
+		$this->assertFalse($this->client->getResponse()->isOk());
+    }
+
     protected function mock($class, $methods)
     {
         $mock = $this->getMock($class, $methods);

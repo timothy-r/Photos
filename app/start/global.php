@@ -70,12 +70,6 @@ App::down(function()
 });
 
 
-/**
-* Add custom validators 
-*/
-
-Validator::extend('image_exists', 'Ace\Photos\PhotoExistsValidator@validate');
-
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
