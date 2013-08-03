@@ -61,6 +61,8 @@ class PhotoApplicationTest extends TestCase
         );
        
 		$this->assertTrue($response->isOk());
+        #var_dump($response->getContent());
+        #var_dump($response->headers->get('Content-Type'));
         $this->assertContentType($response, 'application/json');
         $content = $response->original->getContent();
         $data = json_decode($content);

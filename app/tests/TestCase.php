@@ -22,7 +22,7 @@ abstract class TestCase extends BaseTestCase
     {
         if (in_array($method, array('get', 'post', 'put', 'head', 'delete'))){
             return $this->call($method, $args[0]);
-        }
+        };
         throw new BadMethodCallException("'$method' not supported");
     }
     

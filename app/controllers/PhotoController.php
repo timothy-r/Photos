@@ -36,20 +36,25 @@ class PhotoController extends \BaseController
         return $this->createResponse('photos', array('photos' => $data));
     }
 
+    /**
+    * @todo move to a view helper
+    */
     protected function imageData($images)
     {
         $data = array();
         foreach ($images as $image) {
             $data[] = array(
                 'name' => $image->getName(),
-                'uri' => 
-                    URL::action('PhotoController@show', array('photos'=>$image->getId())),
+                'uri' => ''
+                    #URL::action('PhotoController@show', array('photos'=>$image->getId())),
                 );
         }
         return $data;
     }
 
     /**
+    * @todo move to a view clas
+    *
     * Get target Content-Type based on Accept header
     * eg. application/json, text/hml, application/xml
     * set reponse Content-Type and content body
@@ -57,15 +62,11 @@ class PhotoController extends \BaseController
     protected function createResponse($name, $data)
     {
         $types = explode(',', Request::header('Accept'));
+        var_dump($types);
         if (in_array('text/html', $types)) { 
             return View::make($name, $data);
         } else if (in_array('application/json', $types)) { 
             return View::make($name.'-json', $data);
-            #return Response::make(
-            #    Response::json($data),
-            #    200, 
-            #    array('Content-Type' => 'application/json')
-            #);
         }
 	}
 
