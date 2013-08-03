@@ -62,11 +62,10 @@ class PhotoController extends \BaseController
     protected function createResponse($name, $data)
     {
         $types = explode(',', Request::header('Accept'));
-        var_dump($types);
         if (in_array('text/html', $types)) { 
             return View::make($name, $data);
         } else if (in_array('application/json', $types)) { 
-            return View::make($name.'-json', $data);
+            return Response::json($data);
         }
 	}
 
