@@ -48,12 +48,19 @@ class PhotoApplicationTest extends TestCase
             ->method('all')
             ->will($this->returnValue($photos));
 
-		$response = $this->call('get', '/photos', array(), array(), array('HTTP_Accept' => 'application/json'));
+		$response = $this->call(
+            'get', 
+            '/photos', 
+            array(), 
+            array(), 
+            array('HTTP_Accept' => 'application/json')
+        );
        
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'application/json');
-        $content = $response->getContent();
-
+        $content = $response->original->getContent();
+        $data = json_decode($content);
+        $this->assertInstanceOf('StdClass', $data);
 	}
 
 	public function testCanViewCreatePhotoForm()
