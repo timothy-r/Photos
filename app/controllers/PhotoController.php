@@ -47,7 +47,7 @@ class PhotoController extends \BaseController
             return View::make($name, $data);
         } else if (in_array('application/json', $types)) { 
             return Response::make(
-                'view for type ' . print_r($types,1), 
+                Response::json($data),
                 200, 
                 array('Content-Type' => 'application/json')
             );
