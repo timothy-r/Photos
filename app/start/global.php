@@ -69,6 +69,12 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+/**
+App::bind('view', function() 
+{
+    return App::make('Ace\Photos\PhotoView');
+});
+*/
 
 /*
 |--------------------------------------------------------------------------

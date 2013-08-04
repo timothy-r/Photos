@@ -49,6 +49,7 @@ class PhotoController extends \BaseController
     * Get target Content-Type based on Accept header
     * eg. application/json, text/hml, application/xml
     * set reponse Content-Type and content body
+    * also needs to set ETag and LastModified headers too
     */
     protected function createResponse($name, $data)
     {

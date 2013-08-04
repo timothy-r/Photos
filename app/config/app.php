@@ -115,6 +115,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         #'Way\Console\GuardLaravelServiceProvider',
         'Ace\Photos\FakeImageStoreServiceProvider',
+        #'Ace\Photos\PhotoViewServiceProvider',
 	),
 
 	/*
