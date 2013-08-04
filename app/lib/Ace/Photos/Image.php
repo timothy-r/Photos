@@ -13,9 +13,20 @@ class Image
     */
     protected $id;
 
+    /**
+    * @var string
+    */
     protected $name;
 
+    /**
+    * @var string
+    */
     protected $hash;
+
+    /**
+    * @var integer
+    */
+    protected $last_modified;
 
     public function getId()
     {
@@ -37,7 +48,7 @@ class Image
     public function setName($name)
     {
         $this->name = $name;
-        $this->setHash();
+        $this->changed();
     }
 
     public function getHash()
@@ -45,9 +56,18 @@ class Image
         return $this->hash;
     }
 
-    protected function setHash()
+    public function getLastModified()
     {
-        $this->hash = md5("{$this->name}");
+        return $this->last_modified;
+    }
+    
+    /**
+    * The Image state has changed, update bookkeeping data
+    */
+    protected function changed()
+    {
+        $this->hash = md5("Ace\Photos\Image::{$this->name}");
+        $this->last_modified = time();
     }
 }
 

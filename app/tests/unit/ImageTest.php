@@ -47,5 +47,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($id, $actual_id);
     }
 
-
+    public function testLastModifiedChangesWhenNameSet()
+    {
+        $image = new Image;
+        $modified_1 = $image->getLastModified();
+        $image->setName('One');
+        $modified_2 = $image->getLastModified();
+        $this->assertTrue($modified_1 != $modified_2);
+    }
 }
