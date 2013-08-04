@@ -60,6 +60,7 @@ class PhotoController extends \BaseController
             return Response::json($data);
         } else {
             // return Not Acceptable status 406
+            return Response::make('', 406);
         }
 	}
 

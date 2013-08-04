@@ -20,7 +20,7 @@ class PhotoApplicationTest extends TestCase
 	/**
 	 * Test listing photos works
 	 */
-	public function testCanListPhotos()
+	public function testCanListPhotosAsHTML()
 	{
         $name = 'A fantastic panorama';
         $image = new Image;
@@ -66,6 +66,26 @@ class PhotoApplicationTest extends TestCase
         $this->assertInstanceOf('StdClass', $data);
 	}
 
+	/**
+	 */
+	public function testCantListPhotosAsXML()
+	{
+        $photos = array('1' => new Image);
+        $this->mock_store->expects($this->any())
+            ->method('all')
+            ->will($this->returnValue($photos));
+
+		$response = $this->call(
+            'get', 
+            '/photos', 
+            array(), 
+            array(), 
+            array('HTTP_Accept' => 'application/xml')
+        );
+       
+		$this->assertFalse($response->isOk());
+	}
+
 	public function testCanViewCreatePhotoForm()
 	{
 		$crawler = $this->client->request('GET', '/photos/create');
@@ -85,7 +105,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertRedirectedToAction('PhotoController@index');
 	}
 
-	public function testCanViewPhoto()
+	public function testCanViewPhotoAsHTML()
     {
         $photo = new Image;
         $id = 1;
@@ -124,6 +144,28 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'application/json');
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
+	}
+
+	/**
+	 */
+	public function testCantViewPhotoAsXML()
+	{
+        $photo = new Image;
+        $id =1;
+        $this->mock_store->expects($this->any())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($photo));
+
+		$response = $this->call(
+            'get', 
+            '/photos/'.$id, 
+            array(), 
+            array(), 
+            array('HTTP_Accept' => 'application/xml')
+        );
+       
+		$this->assertFalse($response->isOk());
 	}
 
 
