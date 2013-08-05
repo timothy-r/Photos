@@ -12,6 +12,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($name, $image->getName());
     }
 
+    public function testNameIsEmptyByDefault()
+    {
+        $image = new Image;
+        $this->assertSame('', $image->getName());
+    }
+
     public function testGetHashChangesWhenNameChanges()
     {
         $image = new Image;

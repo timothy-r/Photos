@@ -16,7 +16,7 @@ class Image
     /**
     * @var string
     */
-    protected $name;
+    protected $name = '';
 
     /**
     * @var string
@@ -27,6 +27,12 @@ class Image
     * @var integer
     */
     protected $last_modified;
+    
+    /**
+    * The size of the Image this class contains in bytes
+    * @var integer
+    */
+    protected $size = 0;
 
     public function getId()
     {
@@ -60,7 +66,12 @@ class Image
     {
         return $this->last_modified;
     }
-    
+   
+    public function getSize()
+    {
+        return $this->size;
+    }
+
     /**
     * The Image state has changed, update bookkeeping data
     */
