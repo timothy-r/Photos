@@ -11,7 +11,7 @@ class Image
     *
     * @var string
     */
-    protected $id = null;
+    protected $id;
 
     /**
     * @var string
@@ -19,17 +19,22 @@ class Image
     protected $name = '';
 
     /**
+    * Hashed value of this Image instance
+    *
     * @var string
     */
     protected $hash = '';
 
     /**
+    * Unix timestamp of the last modification to this Image
+    *
     * @var integer
     */
     protected $last_modified;
     
     /**
     * The size of the Image this class contains in bytes
+    *
     * @var integer
     */
     protected $size = 0;

@@ -4,7 +4,7 @@ use Ace\Photos\Image;
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testSetName()
+    public function testCanSetName()
     {
         $name = 'Freddy';
         $image = new Image;
@@ -18,7 +18,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('', $image->getName());
     }
 
-    public function testGetHashChangesWhenNameChanges()
+    public function testHashChangesWhenNameChanges()
     {
         $image = new Image;
         $image->setName('One');
@@ -32,12 +32,6 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     {
         $image = new Image;
         $this->assertSame('', $image->getHash());
-    }
-
-    public function testGetId()
-    {
-        $image = new Image;
-        $id = $image->getId();
     }
 
     public function testIdIsNullByDefault()
@@ -78,5 +72,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     {
         $image = new Image;
         $this->assertSame(0, $image->getSize());
+    }
+
+    public function testLastModifiedIsNullByDefault()
+    {
+        $image = new Image;
+        $this->assertSame(null, $image->getLastModified());
     }
 }
