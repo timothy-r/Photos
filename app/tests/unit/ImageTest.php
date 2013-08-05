@@ -28,10 +28,22 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($hash_1 != $hash_2);
     }
 
+    public function testHashIsEmptyByDefault()
+    {
+        $image = new Image;
+        $this->assertSame('', $image->getHash());
+    }
+
     public function testGetId()
     {
         $image = new Image;
         $id = $image->getId();
+    }
+
+    public function testIdIsNullByDefault()
+    {
+        $image = new Image;
+        $this->assertSame(null, $image->getId());
     }
 
     public function testCanSetId()
@@ -60,5 +72,11 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $image->setName('One');
         $modified_2 = $image->getLastModified();
         $this->assertTrue($modified_1 != $modified_2);
+    }
+
+    public function testSizeIsZeroByDefault()
+    {
+        $image = new Image;
+        $this->assertSame(0, $image->getSize());
     }
 }

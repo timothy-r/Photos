@@ -11,7 +11,7 @@ class Image
     *
     * @var string
     */
-    protected $id;
+    protected $id = null;
 
     /**
     * @var string
@@ -21,7 +21,7 @@ class Image
     /**
     * @var string
     */
-    protected $hash;
+    protected $hash = '';
 
     /**
     * @var integer
