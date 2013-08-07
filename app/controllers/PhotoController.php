@@ -17,14 +17,14 @@ class PhotoController extends \BaseController
         $this->store = $store;
         $this->beforeFilter(
             'photo-validate-store', 
-            array('only' => array('store'))
+            ['only' => ['store']]
         );
 
         $this->get_photo_data = function($image){
-            return array(
+            return [
                 'name' => $image->getName(),
                 'uri' => ''
-            );
+            ];
         };
     }
 
@@ -45,6 +45,7 @@ class PhotoController extends \BaseController
 
     /**
     * @todo move to a view clas
+    * @todo use the Request class methods - no need for an AcceptParser class
     *
     * Get target Content-Type based on Accept header
     * eg. application/json, text/hml, application/xml
