@@ -107,6 +107,8 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = $this->store->get($id);
+        // test the request ETag against the one for this Image
+        // if they match return a NotModified status 304
         if ($photo) {
             $data = call_user_func($this->get_photo_data, $photo);
             return $this->createResponse('photo', array('photo' => $data));
