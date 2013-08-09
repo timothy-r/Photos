@@ -1,11 +1,15 @@
 <?php
 namespace Ace\Photos;
+use Purekid\Mongodm\Model;
 
 /**
 * Represents a single Image document
 */
-class Image
+class Image extends Model
 {
+    
+    protected static $collection = 'image';
+
     /**
     * A unique identifier for this instance
     *

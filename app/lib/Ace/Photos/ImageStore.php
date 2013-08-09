@@ -7,15 +7,24 @@ use Ace\Photos\IImageStore;
 */
 class ImageStore implements IImageStore
 {
-    
+    /**
+    * Add the parameter Image to the store
+    *
+    * @return boolean
+    */
     public function add(Image $image)
     {
-        return true;
+        return $image->save();
     }
-
+    
+    /**
+    * Get an array of all the Images in the store
+    *
+    * @return array
+    */
     public function all()
     {
-        return array();
+        return [];
     }
 
     public function get($id)
