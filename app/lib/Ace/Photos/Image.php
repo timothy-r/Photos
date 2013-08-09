@@ -11,13 +11,6 @@ class Image extends Model
     protected static $collection = 'image';
 
     /**
-    * A unique identifier for this instance
-    *
-    * @var string
-    */
-    protected $id;
-
-    /**
     * @var string
     */
     protected $name = '';
@@ -43,11 +36,9 @@ class Image extends Model
     */
     protected $size = 0;
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
+    /**
+    * @todo remove
+    */
     public function setId($id)
     {
         if (!isset($this->id)){

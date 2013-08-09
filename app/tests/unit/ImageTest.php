@@ -40,25 +40,6 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(null, $image->getId());
     }
 
-    public function testCanSetId()
-    {
-        $image = new Image;
-        $id = '401af4';
-        $image->setId($id);
-        $actual_id = $image->getId();
-        $this->assertSame($id, $actual_id);
-    }
-
-    public function testCannotOverwriteId()
-    {
-        $image = new Image;
-        $id = '401af4';
-        $image->setId($id);
-        $image->setId('bogus');
-        $actual_id = $image->getId();
-        $this->assertSame($id, $actual_id);
-    }
-
     public function testLastModifiedChangesWhenNameSet()
     {
         $image = new Image;

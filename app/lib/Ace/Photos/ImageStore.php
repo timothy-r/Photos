@@ -24,11 +24,16 @@ class ImageStore implements IImageStore
     */
     public function all()
     {
-        return [];
+        return Image::all()->toArray(false);
     }
 
     public function get($id)
     {
 
+    }
+
+    public function remove(Image $image)
+    {
+        return true;
     }
 }

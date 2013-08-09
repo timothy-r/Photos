@@ -23,4 +23,9 @@ class NullImageStore implements IImageStore
     {
         return null;
     }
+
+    public function remove(Image $image)
+    {
+
+    }
 }

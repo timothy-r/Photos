@@ -12,4 +12,6 @@ interface IImageStore
     public function all();
 
     public function get($id);
+
+    public function remove(Image $image);
 }

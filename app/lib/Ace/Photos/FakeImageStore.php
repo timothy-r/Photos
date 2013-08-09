@@ -38,6 +38,11 @@ class FakeImageStore implements IImageStore
         return $image;
     }
 
+    public function remove(Image $image)
+    {
+
+    }
+
     protected function createImages()
     {
         $all = array();

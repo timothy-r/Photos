@@ -13,7 +13,7 @@ class PhotoApplicationTest extends TestCase
         parent::setUp();
         $this->mock_store = $this->mock(
             'Ace\Photos\IImageStore',
-            array('all', 'add', 'get')
+            array('all', 'add', 'get', 'remove')
         );
     }
 

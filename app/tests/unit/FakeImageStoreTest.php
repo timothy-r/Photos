@@ -42,7 +42,6 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
     {
         $image = $this->image_store->get($id);
         $this->assertInstanceOf('Ace\Photos\Image', $image);
-        $this->assertSame($id, $image->getId());
     }
 
     public function getInvalidImageIds()
