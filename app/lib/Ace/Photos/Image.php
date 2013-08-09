@@ -8,33 +8,20 @@ use Purekid\Mongodm\Model;
 class Image extends Model
 {
     
+    /**
+    * where Image documents are stored
+    */
     protected static $collection = 'image';
-
+   
     /**
-    * @var string
-    */
-    protected $name = '';
-
-    /**
-    * Hashed value of this Image instance
-    *
-    * @var string
-    */
-    protected $hash = '';
-
-    /**
-    * Unix timestamp of the last modification to this Image
-    *
-    * @var integer
-    */
-    protected $last_modified;
-    
-    /**
-    * The size of the Image this class contains in bytes
-    *
-    * @var integer
-    */
-    protected $size = 0;
+    * persisted attributes
+    */ 
+    protected static $attrs = array(
+        'name' => array('type'=>'string', 'default' => ''),
+        'hash' => array('type'=>'string', 'default' => ''),
+        'last_modified' => array('type'=>'integer'),
+        'size' => array('type'=>'integer', 'default' => 0),
+    );
 
     /**
     * @todo remove
@@ -48,7 +35,7 @@ class Image extends Model
 
     public function getName()
     {
-        return $this->name;    
+        return $this->name;
     }
 
     public function setName($name)
