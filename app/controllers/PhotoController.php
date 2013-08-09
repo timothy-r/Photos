@@ -54,10 +54,11 @@ class PhotoController extends \BaseController
     */
     protected function createResponse($name, $data)
     {
-        $parser = new Ace\AcceptParser(Request::header('Accept'));
-        if ($parser->isAcceptable('text/html')) { 
+        $negotiator = App::make('\Negotiation\FormatNegotiator');
+        $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
+        if ($format->getValue() === 'text/html') { 
             return View::make($name, $data);
-        } else if ($parser->isAcceptable('application/json')) { 
+        } else if ($format->getValue() === 'application/json') { 
             return Response::json($data);
         } else {
             // return Not Acceptable status 406
