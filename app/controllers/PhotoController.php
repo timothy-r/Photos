@@ -40,7 +40,7 @@ class PhotoController extends \BaseController
         $photos = $this->store->all();
         // convert $photos to an array of data for presentation
         $data = array_map($this->get_photo_data, $photos);
-        return $this->createResponse('photos', array('photos' => $data));
+        return $this->createResponse('photos', ['photos' => $data]);
     }
 
     /**
@@ -112,11 +112,11 @@ class PhotoController extends \BaseController
         // if they match return a NotModified status 304
         if ($photo) {
             $data = call_user_func($this->get_photo_data, $photo);
-            return $this->createResponse('photo', array('photo' => $data));
+            return $this->createResponse('photo', ['photo' => $data]);
         } else {
             return Redirect::action('PhotoController@index')
                 ->withInput()
-                ->withErrors(array('Photo not found')
+                ->withErrors(['Photo not found']
             );
         }
 	}
