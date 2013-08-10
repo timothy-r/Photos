@@ -55,14 +55,14 @@ class PhotoController extends \BaseController
     * set reponse Content-Type and content body
     * also needs to set ETag and LastModified headers too
     */
-    protected function createResponse($name, $data)
+    protected function createResponse($name, $data, array $headers = [])
     {
         $negotiator = App::make('\Negotiation\FormatNegotiator');
         $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
         if ($format->getValue() === 'text/html') { 
-            return View::make($name, $data);
+            return View::make($name, $data, $headers);
         } else if ($format->getValue() === 'application/json') { 
-            return Response::json($data);
+            return Response::json($data, 200, $headers);
         } else {
             // return Not Acceptable status 406
             return Response::make('', 406);
@@ -111,11 +111,14 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = $this->store->get($id);
-        // test the request ETag against the one for this Image
-        // if they match return a NotModified status 304
         if ($photo) {
+            // test the request ETag against the one for this Image
+            // if they match return a NotModified status 304
+            // otherwise return a new document
+            // set ETag header here
+            #Response::header('ETag', $photo->getHash());
             $data = call_user_func($this->get_photo_data, $photo);
-            return $this->createResponse('photo', ['photo' => $data]);
+            return $this->createResponse('photo', ['photo' => $data], ['ETag' => $photo->getHash()]);
         } else {
             return Redirect::action('PhotoController@index')
                 ->withInput()

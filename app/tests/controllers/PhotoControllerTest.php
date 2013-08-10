@@ -31,10 +31,13 @@ class PhotoApplicationTest extends TestCase
 
     protected function givenAPhoto($id = 1)
     {
-        $this->photo = $this->getMock('Ace\Photos\Image', ['getId']);
+        $this->photo = $this->getMock('Ace\Photos\Image', ['getId', 'getHash']);
         $this->photo->expects($this->any())
             ->method('getId')
             ->will($this->returnValue($id));
+        $this->photo->expects($this->any())
+            ->method('getHash')
+            ->will($this->returnValue('52063fab1e'));
     }
 
 	/**
@@ -143,10 +146,12 @@ class PhotoApplicationTest extends TestCase
         $response = $this->client->getResponse();
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'text/html; charset=UTF-8');
+        // assert ETag is set
+        $this->assertETag($response, $this->photo->getHash());
     }
 
 	/**
-	 * Test listing photos works with json
+	 * Test viewing photos works with json
 	 */
 	public function testCanViewPhotoAsJson()
 	{
@@ -170,6 +175,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'application/json');
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
+        $this->assertETag($response, $this->photo->getHash());
 	}
 
 	/**
