@@ -1,5 +1,6 @@
 <?php
 use Ace\Photos\IImageStore;
+use Ace\Photos\IImageFactory;
 use Ace\Photos\Image;
 
 class PhotoController extends \BaseController
@@ -12,7 +13,7 @@ class PhotoController extends \BaseController
     /**
     * @param Ace\Photos\IImageStore $store
     */
-    public function __construct(IImageStore $store)
+    public function __construct(IImageStore $store, IImageFactory $factory)
     {
         $this->store = $store;
         $this->beforeFilter(
