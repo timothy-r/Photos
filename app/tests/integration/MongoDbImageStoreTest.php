@@ -1,17 +1,17 @@
 <?php
-use Ace\Photos\ImageStore;
+use Ace\Photos\MongoDbImageStore;
 use Ace\Photos\Image;
 
 /**
 * @group integration
 */
-class ImageStoreTest extends \PHPUnit_Framework_TestCase
+class MongoDbImageStoreTest extends \PHPUnit_Framework_TestCase
 {
     protected $image_store;
 
     public function setUp()
     {
-        $this->image_store = new ImageStore;
+        $this->image_store = new MongoDbImageStore;
     }
 
     public function tearDown()

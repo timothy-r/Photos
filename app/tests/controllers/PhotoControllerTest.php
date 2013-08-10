@@ -1,6 +1,6 @@
 <?php
 use Ace\Photos\Image;
-use Ace\Photos\ImageStore;
+use Ace\Photos\MongoDbImageStore;
 
 /**
 * @group controller
@@ -22,7 +22,7 @@ class PhotoApplicationTest extends TestCase
 
     public function tearDown()
     {
-        $image_store = new ImageStore;
+        $image_store = new MongoDbImageStore;
         foreach($image_store->all() as $image) {
             $image_store->remove($image);
         }

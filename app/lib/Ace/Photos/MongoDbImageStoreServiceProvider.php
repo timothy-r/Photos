@@ -4,15 +4,15 @@ namespace Ace\Photos;
 use Illuminate\Support\ServiceProvider;
 
 /**
-* Binds the ImageStore class to the IImageStore interface
+* Binds the MongoDbImageStore class to the IImageStore interface
 */
-class ImageStoreServiceProvider extends ServiceProvider
+class MongoDbImageStoreServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->app->bind(
             'Ace\Photos\IImageStore',
-            'Ace\Photos\ImageStore'
+            'Ace\Photos\MongoDbImageStore'
         );
     }
 }

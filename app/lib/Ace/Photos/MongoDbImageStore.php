@@ -8,7 +8,7 @@ use Config;
 /**
 * A MongoDB repository for Images
 */
-class ImageStore implements IImageStore
+class MongoDbImageStore implements IImageStore
 {
     
     public function __construct()
