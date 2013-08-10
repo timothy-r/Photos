@@ -32,7 +32,7 @@ class Image extends Model
             $this->id = $id;
         }
     }
-
+    
     public function getName()
     {
         return $this->name;

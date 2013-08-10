@@ -22,8 +22,11 @@ class PhotoController extends \BaseController
 
         $this->get_photo_data = function($image){
             return [
+                'id' => $image->getId(),
                 'name' => $image->getName(),
-                'uri' => ''
+                'last_modified' => $image->getLastModified(),
+                'hash' => $image->getHash(),
+                'uri' => URL::action('PhotoController@show', [$image->getId()])
             ];
         };
     }

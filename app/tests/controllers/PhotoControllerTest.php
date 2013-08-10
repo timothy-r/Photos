@@ -7,6 +7,8 @@ use Ace\Photos\Image;
 class PhotoApplicationTest extends TestCase
 {
     protected $mock_store;
+    
+    protected $photo;
 
     public function setUp()
     {
@@ -17,15 +19,24 @@ class PhotoApplicationTest extends TestCase
         );
     }
 
+    protected function givenAPhoto($id = 1)
+    {
+        $this->photo = $this->getMock('Ace\Photos\Image', ['getId']);
+        $this->photo->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
+    }
+
 	/**
 	 * Test listing photos works
 	 */
 	public function testCanListPhotosAsHTML()
 	{
+        $id = 1;
         $name = 'A fantastic panorama';
-        $image = new Image;
-        $image->setName($name);
-        $photos = array('1' => $image);
+        $this->givenAPhoto($id);
+        $this->photo->setName($name);
+        $photos = [$id => $this->photo];
         $this->mock_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
@@ -47,7 +58,9 @@ class PhotoApplicationTest extends TestCase
 	 */
 	public function testCanListPhotosAsJson()
 	{
-        $photos = array('1' => new Image);
+        $id = 1;
+        $this->givenAPhoto($id);
+        $photos = [$id => $this->photo];
         $this->mock_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
@@ -70,7 +83,9 @@ class PhotoApplicationTest extends TestCase
 	 */
 	public function testCantListPhotosAsXML()
 	{
-        $photos = array('1' => new Image);
+        $id = 1;
+        $this->givenAPhoto($id);
+        $photos = ['1' => $this->photo];
         $this->mock_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
@@ -107,12 +122,12 @@ class PhotoApplicationTest extends TestCase
 
 	public function testCanViewPhotoAsHTML()
     {
-        $photo = new Image;
         $id = 1;
+        $this->givenAPhoto($id);
         $this->mock_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($photo));
+            ->will($this->returnValue($this->photo));
 		$crawler = $this->client->request('GET', '/photos/' . $id);
 
         $response = $this->client->getResponse();
@@ -125,12 +140,13 @@ class PhotoApplicationTest extends TestCase
 	 */
 	public function testCanViewPhotoAsJson()
 	{
-        $photo = new Image;
-        $id =1;
+        $id = 1;
+        $this->givenAPhoto($id);
+
         $this->mock_store->expects($this->any())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($photo));
+            ->will($this->returnValue($this->photo));
 
 		$response = $this->call(
             'get', 
@@ -150,12 +166,13 @@ class PhotoApplicationTest extends TestCase
 	 */
 	public function testCantViewPhotoAsXML()
 	{
-        $photo = new Image;
         $id =1;
+        $this->givenAPhoto($id);
+
         $this->mock_store->expects($this->any())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($photo));
+            ->will($this->returnValue($this->photo));
 
 		$response = $this->call(
             'get', 
