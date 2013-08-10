@@ -116,6 +116,7 @@ return array(
         #'Way\Console\GuardLaravelServiceProvider',
         'Ace\Photos\ImageStoreServiceProvider',
         #'Ace\Photos\PhotoViewServiceProvider',
+        'Annotatecms\Debugger\DebuggerServiceProvider',
 	),
 
 	/*

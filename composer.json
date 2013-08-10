@@ -10,7 +10,8 @@
     "require-dev" : {
         "phpunit/phpunit" : "3.7.*",
         "way/phpunit-wrappers": "dev-master",
-        "mockery/mockery": "dev-master"
+        "mockery/mockery": "dev-master",
+        "annotatecms/debugger" : "2.*"
     },
 	"autoload": {
 		"classmap": [
