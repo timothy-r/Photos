@@ -19,14 +19,6 @@ return array(
 //          'password'  => '',
         )
     ),
-    'testing' => array(
-        'connection' => array(
-            'hostnames' => 'localhost',
-            'database'  => 'test',
-//          'username'  => '',
-//          'password'  => '',
-        )
-    ),
     'production' => array(
             'connection' => array(
                 'hostnames' => 'localhost',
