@@ -60,7 +60,7 @@ class PhotoController extends \BaseController
         $negotiator = App::make('\Negotiation\FormatNegotiator');
         $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
         if ($format->getValue() === 'text/html') { 
-            return View::make($name, $data, $headers);
+            return Response::make(View::make($name, $data), 200, $headers);
         } else if ($format->getValue() === 'application/json') { 
             return Response::json($data, 200, $headers);
         } else {
