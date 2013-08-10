@@ -3,14 +3,7 @@
 return array(
 
    /* Configuration section name*/
-    'default' => array(
-        'connection' => array(
-            'hostnames' => 'localhost',
-            'database'  => 'default',
-//          'username'  => '',
-//          'password'  => '',
-        )
-    ),
+    'default' => 'development',
     'development' => array(
         'connection' => array(
             'hostnames' => 'localhost',

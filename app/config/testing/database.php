@@ -2,6 +2,7 @@
 
 return array(
 
+    'default' => 'testing',
    /* Configuration section name*/
     'testing' => array(
         'connection' => array(

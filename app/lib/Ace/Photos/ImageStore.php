@@ -1,12 +1,23 @@
 <?php namespace Ace\Photos;
 
+use Purekid\Mongodm\MongoDB;
 use Ace\Photos\IImageStore;
+use Config;
 
 /**
 * A MongoDB repository for Images
 */
 class ImageStore implements IImageStore
 {
+    
+    public function __construct()
+    {
+        // initialize the MongoDb connection here
+        $name = Config::get('database.default');
+        $config = Config::get('database.' .$name);
+        $db = MongoDB::instance($name, $config);
+    }
+
     /**
     * Add the parameter Image to the store
     *
