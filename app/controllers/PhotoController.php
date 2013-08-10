@@ -1,7 +1,6 @@
 <?php
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImageFactory;
-use Ace\Photos\Image;
 
 class PhotoController extends \BaseController
 {
@@ -11,11 +10,18 @@ class PhotoController extends \BaseController
     protected $store;
 
     /**
+    * @var Ace\Photos\IImageFactory
+    */
+    protected $factory;
+
+    /**
     * @param Ace\Photos\IImageStore $store
     */
     public function __construct(IImageStore $store, IImageFactory $factory)
     {
         $this->store = $store;
+        $this->factory = $factory;
+
         $this->beforeFilter(
             'photo-validate-store', 
             ['only' => ['store']]
@@ -91,14 +97,12 @@ class PhotoController extends \BaseController
 		// get the input data
         $name = Input::get('name');
 
-        // @todo use a factory
         // create an Image instance
-        $image = new Image;
-        // set its members
-        $image->setName($name);
+        $image = $this->factory->create($name);
 
         // store Image
         $this->store->add($image);
+
         // redirect to view all Photos
         return Redirect::action('PhotoController@index');
 	}
