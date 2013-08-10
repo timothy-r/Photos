@@ -1,11 +1,12 @@
 <?php
 namespace Ace\Photos;
 use Purekid\Mongodm\Model;
+use Ace\Photos\IImage;
 
 /**
 * Represents a single Image document
 */
-class Image extends Model
+class Image extends Model implements IImage
 {
     
     /**
