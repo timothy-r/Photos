@@ -154,6 +154,22 @@ class PhotoController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-		//
+        $photo = $this->store->get($id);
+        // test the request ETag against the one for this Image
+        // if they don't match then don't delete
+        if ($photo) {
+            $result = $this->store->remove($photo);
+            if ($result) {
+                return Redirect::action('PhotoController@index');
+            } else {
+                // show photo
+                return Redirect::action('PhotoController@show', [$id]);
+            }
+        } else {
+            return Redirect::action('PhotoController@index')
+                ->withInput()
+                ->withErrors(['Photo not found']
+            );
+        }
 	}
 }

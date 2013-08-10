@@ -209,6 +209,63 @@ class PhotoApplicationTest extends TestCase
         $this->assertRedirectedToAction('PhotoController@index');
     }
 
+    public function testCanRemoveExistingPhoto()
+    {
+        $id = 1;
+        $this->givenAPhoto($id);
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($this->photo));
+        $this->mock_store->expects($this->once())
+            ->method('remove')
+            ->with($this->photo)
+            ->will($this->returnValue(true));
+		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+
+        $response = $this->client->getResponse();
+        // assert redirected to index page
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedToAction('PhotoController@index');
+    }
+
+    public function testCantRemoveMissingPhoto()
+    {
+        $id = 1;
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue(null));
+        $this->mock_store->expects($this->never())
+            ->method('remove');
+		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+
+        $response = $this->client->getResponse();
+        // assert redirected to index page
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedToAction('PhotoController@index');
+    }
+
+    public function testFailureToRemovePhotoShowsIt()
+    {
+        $id = 1;
+        $this->givenAPhoto($id);
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($this->photo));
+        $this->mock_store->expects($this->once())
+            ->method('remove')
+            ->with($this->photo)
+            ->will($this->returnValue(false));
+		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+
+        $response = $this->client->getResponse();
+        // assert redirected to index page
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedToAction('PhotoController@show', [$id]);
+    }
+
     protected function mock($class, $methods)
     {
         $mock = $this->getMock($class, $methods);

@@ -1,9 +1,9 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos;
+
 use Ace\Photos\IImageStore;
 
 /**
-* A repository for Images
+* A MongoDB repository for Images
 */
 class ImageStore implements IImageStore
 {
@@ -27,11 +27,20 @@ class ImageStore implements IImageStore
         return Image::all()->toArray(false);
     }
 
+    /**
+    * Get an Image by its id 
+    *
+    * @return Image
+    */
     public function get($id)
     {
-
+        return Image::id($id);
     }
 
+    /**
+    * Remove the parameter Image from the store
+    * @return boolean
+    */
     public function remove(Image $image)
     {
         return true;
