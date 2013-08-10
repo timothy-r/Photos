@@ -1,5 +1,6 @@
 <?php
 use Ace\Photos\Image;
+use Ace\Photos\ImageStore;
 
 /**
 * @group controller
@@ -18,6 +19,15 @@ class PhotoApplicationTest extends TestCase
             array('all', 'add', 'get', 'remove')
         );
     }
+
+    public function tearDown()
+    {
+        $image_store = new ImageStore;
+        foreach($image_store->all() as $image) {
+            $image_store->remove($image);
+        }
+    }
+
 
     protected function givenAPhoto($id = 1)
     {

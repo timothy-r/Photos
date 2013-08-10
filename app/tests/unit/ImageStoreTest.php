@@ -24,7 +24,6 @@ class ImageStoreTest extends \PHPUnit_Framework_TestCase
         $result = $this->image_store->add($image);
         $this->assertSame(true, $result);
         // assert id is set
-
     }
 
     public function testCanListImages()
