@@ -115,10 +115,15 @@ class PhotoController extends \BaseController
             // test the request ETag against the one for this Image
             // if they match return a NotModified status 304
             // otherwise return a new document
-            // set ETag header here
-            #Response::header('ETag', $photo->getHash());
+            // set ETag & LastModified headers here
             $data = call_user_func($this->get_photo_data, $photo);
-            return $this->createResponse('photo', ['photo' => $data], ['ETag' => $photo->getHash()]);
+            $last_modified = new DateTime;
+            $last_modified->setTimestamp($photo->getLastModified());
+            return $this->createResponse(
+                'photo', 
+                ['photo' => $data], 
+                ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]
+            );
         } else {
             return Redirect::action('PhotoController@index')
                 ->withInput()

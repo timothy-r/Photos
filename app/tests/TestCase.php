@@ -38,4 +38,9 @@ abstract class TestCase extends BaseTestCase
     {
         $this->assertSame($tag, $response->headers->get('ETag'));
     }
+
+    public function assertLastModified($response, $date)
+    {
+        $this->assertSame($date, $response->headers->get('LastModified'));
+    }
 }

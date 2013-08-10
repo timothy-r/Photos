@@ -31,13 +31,16 @@ class PhotoApplicationTest extends TestCase
 
     protected function givenAPhoto($id = 1)
     {
-        $this->photo = $this->getMock('Ace\Photos\Image', ['getId', 'getHash']);
+        $this->photo = $this->getMock('Ace\Photos\Image', ['getId', 'getHash', 'getLastModified']);
         $this->photo->expects($this->any())
             ->method('getId')
             ->will($this->returnValue($id));
         $this->photo->expects($this->any())
             ->method('getHash')
             ->will($this->returnValue('52063fab1e'));
+        $this->photo->expects($this->any())
+            ->method('getLastModified')
+            ->will($this->returnValue(time()));
     }
 
 	/**
@@ -148,6 +151,8 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'text/html; charset=UTF-8');
         // assert ETag is set
         $this->assertETag($response, $this->photo->getHash());
+        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
+        $this->assertLastModified($response, $last_modified);
     }
 
 	/**
