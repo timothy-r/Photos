@@ -24,6 +24,7 @@ class ImageStoreTest extends \PHPUnit_Framework_TestCase
         $result = $this->image_store->add($image);
         $this->assertSame(true, $result);
         // assert id is set
+        $this->assertTrue(!is_null($image->getId()));
     }
 
     public function testCanListImages()
@@ -37,15 +38,21 @@ class ImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function testCanGetImage()
     {
-        $image = $this->image_store->get(1);
+        $image = new Image;
+        $this->image_store->add($image);
+        $result = $this->image_store->get($image->getId());
+        $this->assertInstanceOf('Ace\Photos\Image', $image);
     }
 
-    public function testCanDeleteImage()
+    public function testCanRemoveImage()
     {
         $image = new Image;
         $this->image_store->add($image);
+        $id = $image->getId();
         $result = $this->image_store->remove($image);
         $this->assertSame(true, $result);
 
+        $result = $this->image_store->get($id);
+        $this->assertTrue(is_null($result));
     }
 }

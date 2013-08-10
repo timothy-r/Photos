@@ -43,6 +43,6 @@ class ImageStore implements IImageStore
     */
     public function remove(Image $image)
     {
-        return true;
+        return $image->delete();
     }
 }
