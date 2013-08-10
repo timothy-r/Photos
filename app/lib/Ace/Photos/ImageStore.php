@@ -1,5 +1,6 @@
 <?php namespace Ace\Photos;
 
+use Ace\Photos\Image;
 use Purekid\Mongodm\MongoDB;
 use Ace\Photos\IImageStore;
 use Config;
@@ -16,6 +17,7 @@ class ImageStore implements IImageStore
         $name = Config::get('database.default');
         $config = Config::get('database.' .$name);
         $db = MongoDB::instance($name, $config);
+        Image::setConfig($name);
     }
 
     /**

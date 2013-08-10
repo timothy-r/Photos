@@ -24,6 +24,11 @@ class Image extends Model implements IImage
         'size' => array('type'=>'integer', 'default' => 0),
     );
 
+    public static function setConfig($config)
+    {
+        static::$config = $config;
+    }
+
     /**
     * @todo remove
     */
