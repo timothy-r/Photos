@@ -2,6 +2,9 @@
 use Ace\Photos\FakeImageStore;
 use Ace\Photos\Image;
 
+/**
+* @group unit
+*/
 class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
 {
     protected $image_store;

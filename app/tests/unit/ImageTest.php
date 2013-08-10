@@ -1,6 +1,9 @@
 <?php
 use Ace\Photos\Image;
 
+/**
+* @group unit
+*/
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
 

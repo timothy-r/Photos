@@ -2,7 +2,7 @@
 namespace Ace\Photos;
 
 /**
-* Represents a single Image document
+* The interface that Images must implement
 */
 interface IImage 
 {

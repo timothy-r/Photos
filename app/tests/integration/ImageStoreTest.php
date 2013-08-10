@@ -2,6 +2,9 @@
 use Ace\Photos\ImageStore;
 use Ace\Photos\Image;
 
+/**
+* @group integration
+*/
 class ImageStoreTest extends \PHPUnit_Framework_TestCase
 {
     protected $image_store;

@@ -2,6 +2,9 @@
 use Ace\Photos\NullImageStore;
 use Ace\Photos\Image;
 
+/**
+* @group unit
+*/
 class NullImageStoreTest extends \PHPUnit_Framework_TestCase
 {
     protected $image_store;
