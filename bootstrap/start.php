@@ -28,7 +28,7 @@ $app->redirectIfTrailingSlash();
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('photos.ace.com'),
+	'local' => array('photos.net'),
 	'production' => array('photos.timjr.net'),
 
 ));
