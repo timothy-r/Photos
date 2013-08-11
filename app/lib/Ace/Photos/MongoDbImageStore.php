@@ -33,7 +33,12 @@ class MongoDbImageStore implements IImageStore
     
     public function update(IImage $image)
     {
-        return $image->save();
+        $result = $image->save();
+        if (is_array($result)){
+            return $result['err'] === null;
+        } else {
+            return $result;
+        }
     }
     
     /**
