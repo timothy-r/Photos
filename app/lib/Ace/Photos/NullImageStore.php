@@ -1,7 +1,7 @@
 <?php
 namespace Ace\Photos;
 use Ace\Photos\IImageStore;
-use Ace\Photos\Image;
+use Ace\Photos\IImage;
 
 /**
 * A null repository for Images
@@ -9,7 +9,7 @@ use Ace\Photos\Image;
 class NullImageStore implements IImageStore
 {
     
-    public function add(Image $image)
+    public function add(IImage $image)
     {
         return true;
     }
@@ -24,7 +24,7 @@ class NullImageStore implements IImageStore
         return null;
     }
 
-    public function remove(Image $image)
+    public function remove(IImage $image)
     {
 
     }

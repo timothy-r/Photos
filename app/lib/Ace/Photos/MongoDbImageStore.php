@@ -1,5 +1,6 @@
 <?php namespace Ace\Photos;
 
+use Ace\Photos\IImage;
 use Ace\Photos\Image;
 use Purekid\Mongodm\MongoDB;
 use Ace\Photos\IImageStore;
@@ -25,7 +26,7 @@ class MongoDbImageStore implements IImageStore
     *
     * @return boolean
     */
-    public function add(Image $image)
+    public function add(IImage $image)
     {
         return $image->save();
     }
@@ -54,7 +55,7 @@ class MongoDbImageStore implements IImageStore
     * Remove the parameter Image from the store
     * @return boolean
     */
-    public function remove(Image $image)
+    public function remove(IImage $image)
     {
         return $image->delete();
     }

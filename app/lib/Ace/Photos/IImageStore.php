@@ -1,17 +1,17 @@
 <?php
 namespace Ace\Photos;
-use Ace\Photos\Image;
+use Ace\Photos\IImage;
 
 /**
 * An interface to repositories for Images
 */
 interface IImageStore
 {
-    public function add(Image $image);
+    public function add(IImage $image);
 
     public function all();
 
     public function get($id);
 
-    public function remove(Image $image);
+    public function remove(IImage $image);
 }
