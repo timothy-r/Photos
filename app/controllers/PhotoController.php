@@ -33,7 +33,10 @@ class PhotoController extends \BaseController
             ['only' => ['show']]
         );
         */
-
+        
+        /**
+        * @todo move to view
+        */
         $this->get_photo_data = function($image){
             return [
                 'id' => $image->getId(),
@@ -182,6 +185,15 @@ class PhotoController extends \BaseController
         // test the request ETag against the one for this Image
         // if they don't match then don't delete
         if ($photo) {
+            // test the request ETag against the one for this Image
+            // if they don't match return a Precondition Failed (412) response
+            $request_etag = Request::header('If-Match');
+            if ($request_etag && ($request_etag !== $photo->getHash())){
+                $last_modified = new DateTime;
+                $last_modified->setTimestamp($photo->getLastModified());
+                $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+                return Response::make('', 412, $headers);
+            }
             $result = $this->store->remove($photo);
             if ($result) {
                 return Redirect::action('PhotoController@index');
