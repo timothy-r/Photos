@@ -31,6 +31,11 @@ class MongoDbImageStore implements IImageStore
         return $image->save();
     }
     
+    public function update(IImage $image)
+    {
+        return $image->save();
+    }
+    
     /**
     * Get an array of all the Images in the store
     *

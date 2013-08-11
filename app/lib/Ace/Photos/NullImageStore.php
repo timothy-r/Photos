@@ -13,6 +13,11 @@ class NullImageStore implements IImageStore
     {
         return true;
     }
+    
+    public function update(IImage $image)
+    {
+        return true;
+    }
 
     public function all()
     {
@@ -26,6 +31,6 @@ class NullImageStore implements IImageStore
 
     public function remove(IImage $image)
     {
-
+        return true;
     }
 }

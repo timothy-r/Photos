@@ -9,6 +9,8 @@ interface IImageStore
 {
     public function add(IImage $image);
 
+    public function update(IImage $image);
+
     public function all();
 
     public function get($id);

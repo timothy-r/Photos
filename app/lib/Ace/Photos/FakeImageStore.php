@@ -14,6 +14,11 @@ class FakeImageStore implements IImageStore
     {
         return true;
     }
+    
+    public function update(IImage $image)
+    {
+        return true;
+    }
 
     public function all()
     {

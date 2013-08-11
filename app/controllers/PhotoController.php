@@ -113,7 +113,7 @@ class PhotoController extends \BaseController
         // store Image
         $this->store->add($image);
 
-        // redirect to view all Photos
+        // redirect to view Photo
         return Redirect::action('PhotoController@show', [$image->getId()]);
 	}
 
@@ -170,7 +170,32 @@ class PhotoController extends \BaseController
 	 */
 	public function update($id)
 	{
-		//
+        $photo = $this->store->get($id);
+        if ($photo) {
+            // test the request ETag against the one for this Image
+            // if they don't match return a Precondition Failed (412) response
+            $request_etag = Request::header('If-Match');
+            if ($request_etag && ($request_etag !== $photo->getHash())){
+                $last_modified = new DateTime;
+                $last_modified->setTimestamp($photo->getLastModified());
+                $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+                return Response::make('', 412, $headers);
+            }
+
+            $name = Input::get('name');
+            $photo->setName($name);
+
+            // store Image
+            $this->store->update($photo);
+
+            // redirect to view Photo
+            return Redirect::action('PhotoController@show', [$id]);
+        } else {
+            return Redirect::action('PhotoController@index')
+                ->withInput()
+                ->withErrors(['Photo not found']
+            );
+        }
 	}
 
 	/**
