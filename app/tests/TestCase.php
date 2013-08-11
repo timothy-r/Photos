@@ -21,7 +21,9 @@ abstract class TestCase extends BaseTestCase
     public function __call($method, $args)
     {
         if (in_array($method, array('get', 'post', 'put', 'head', 'delete'))){
-            return $this->call($method, $args[0]);
+            // push the method onto the argument array and call call()
+            array_unshift($args, $method);
+            return call_user_func_array([$this, 'call'], $args);
         };
         throw new BadMethodCallException("'$method' not supported");
     }

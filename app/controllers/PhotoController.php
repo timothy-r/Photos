@@ -26,6 +26,13 @@ class PhotoController extends \BaseController
             'photo-validate-store', 
             ['only' => ['store']]
         );
+        
+        /*
+        $this->beforeFilter(
+            'photo-validate-etag', 
+            ['only' => ['show']]
+        );
+        */
 
         $this->get_photo_data = function($image){
             return [
@@ -117,17 +124,21 @@ class PhotoController extends \BaseController
 	{
         $photo = $this->store->get($id);
         if ($photo) {
-            // test the request ETag against the one for this Image
-            // if they match return a NotModified status 304
-            // otherwise return a new document
-            // set ETag & LastModified headers here
             $data = call_user_func($this->get_photo_data, $photo);
             $last_modified = new DateTime;
             $last_modified->setTimestamp($photo->getLastModified());
+            $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+
+            // test the request ETag against the one for this Image
+            // if they match return a NotModified status 304
+            $request_etag = Request::header('If-None-Match');
+            if ($request_etag === $photo->getHash()){
+                return Response::make('', 304, $headers);
+            }
             return $this->createResponse(
                 'photo', 
                 ['photo' => $data], 
-                ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]
+                $headers 
             );
         } else {
             return Redirect::action('PhotoController@index')

@@ -1,6 +1,7 @@
 <?php
 use Ace\Photos\Image;
 use Ace\Photos\MongoDbImageStore;
+use Way\Tests\Assert;
 
 /**
 * @group controller
@@ -16,7 +17,7 @@ class PhotoApplicationTest extends TestCase
         parent::setUp();
         $this->mock_store = $this->mock(
             'Ace\Photos\IImageStore',
-            array('all', 'add', 'get', 'remove')
+            ['all', 'add', 'get', 'remove']
         );
     }
 
@@ -81,12 +82,11 @@ class PhotoApplicationTest extends TestCase
             ->method('all')
             ->will($this->returnValue($photos));
 
-		$response = $this->call(
-            'get', 
+		$response = $this->get(
             '/photos', 
-            array(), 
-            array(), 
-            array('HTTP_Accept' => 'application/json')
+            [], 
+            [], 
+            ['HTTP_Accept' => 'application/json']
         );
        
 		$this->assertTrue($response->isOk());
@@ -106,12 +106,11 @@ class PhotoApplicationTest extends TestCase
             ->method('all')
             ->will($this->returnValue($photos));
 
-		$response = $this->call(
-            'get', 
+		$response = $this->get(
             '/photos', 
-            array(), 
-            array(), 
-            array('HTTP_Accept' => 'application/xml')
+            [], 
+            [], 
+            ['HTTP_Accept' => 'application/xml']
         );
        
 		$this->assertFalse($response->isOk());
@@ -128,7 +127,7 @@ class PhotoApplicationTest extends TestCase
 	{
         $mock_factory = $this->mock(
             'Ace\Photos\IImageFactory',
-            array('create')
+            ['create']
         );
         $id = 1;
         $this->givenAPhoto($id);
@@ -138,8 +137,8 @@ class PhotoApplicationTest extends TestCase
             ->method('create')
             ->will($this->returnValue($this->photo));
 
-        $data = array('name' => 'Test photo');
-		$crawler = $this->client->request('POST', '/photos', $data);
+        $data = ['name' => 'Test photo'];
+		$response = $this->post('/photos', $data);
 
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
@@ -153,9 +152,8 @@ class PhotoApplicationTest extends TestCase
             ->method('get')
             ->with($id)
             ->will($this->returnValue($this->photo));
-		$crawler = $this->client->request('GET', '/photos/' . $id);
+		$response = $this->get('/photos/' . $id);
 
-        $response = $this->client->getResponse();
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'text/html; charset=UTF-8');
         // assert ETag is set
@@ -177,13 +175,7 @@ class PhotoApplicationTest extends TestCase
             ->with($id)
             ->will($this->returnValue($this->photo));
 
-		$response = $this->call(
-            'get', 
-            '/photos/'.$id, 
-            array(), 
-            array(), 
-            array('HTTP_Accept' => 'application/json')
-        );
+		$response = $this->get('/photos/'.$id, [], [], ['HTTP_Accept' => 'application/json']);
        
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'application/json');
@@ -191,6 +183,47 @@ class PhotoApplicationTest extends TestCase
         $this->assertInstanceOf('StdClass', $data);
         $this->assertETag($response, $this->photo->getHash());
 	}
+
+	public function testConditionalRequestToViewPhotoGets304IfMatches()
+    {
+        $id = 1;
+        $this->givenAPhoto($id);
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($this->photo));
+        $headers = ['HTTP_If-None-Match' => $this->photo->getHash()];
+
+        $response = $this->get('/photos/' . $id, [], [], $headers);
+        $this->assertResponseStatus(304);
+        $this->assertContentType($response, 'text/html; charset=UTF-8');
+
+        // assert ETag is set
+        $this->assertETag($response, $this->photo->getHash());
+        // assert LastModified is also set
+        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
+        $this->assertLastModified($response, $last_modified);
+    }
+
+	public function testConditionalRequestToViewPhotoGetsNewPhotoIfNotMatches()
+    {
+        $id = 1;
+        $this->givenAPhoto($id);
+        $this->mock_store->expects($this->once())
+            ->method('get')
+            ->with($id)
+            ->will($this->returnValue($this->photo));
+        $headers = ['HTTP_If-None-Match' => 'not-an-etag'];
+
+        $response = $this->get('/photos/' . $id, [], [], $headers);
+		$this->assertTrue($response->isOk());
+
+        // assert ETag is set
+        $this->assertETag($response, $this->photo->getHash());
+        // assert LastModified is also set
+        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
+        $this->assertLastModified($response, $last_modified);
+    }
 
 	/**
 	 */
@@ -204,12 +237,11 @@ class PhotoApplicationTest extends TestCase
             ->with($id)
             ->will($this->returnValue($this->photo));
 
-		$response = $this->call(
-            'get', 
+		$response = $this->get(
             '/photos/'.$id, 
-            array(), 
-            array(), 
-            array('HTTP_Accept' => 'application/xml')
+            [], 
+            [], 
+            ['HTTP_Accept' => 'application/xml']
         );
        
 		$this->assertFalse($response->isOk());
@@ -223,9 +255,9 @@ class PhotoApplicationTest extends TestCase
             ->method('get')
             ->with($id)
             ->will($this->returnValue(null));
-		$crawler = $this->client->request('GET', '/photos/' . $id);
+		$response = $this->get('/photos/' . $id);
 
-		$this->assertTrue($this->client->getResponse()->isRedirection());
+		$this->assertTrue($response->isRedirection());
         $this->assertRedirectedToAction('PhotoController@index');
     }
 
@@ -241,9 +273,8 @@ class PhotoApplicationTest extends TestCase
             ->method('remove')
             ->with($this->photo)
             ->will($this->returnValue(true));
-		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+		$response = $this->delete('/photos/' . $id);
 
-        $response = $this->client->getResponse();
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@index');
@@ -258,9 +289,8 @@ class PhotoApplicationTest extends TestCase
             ->will($this->returnValue(null));
         $this->mock_store->expects($this->never())
             ->method('remove');
-		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+		$response = $this->delete('/photos/' . $id);
 
-        $response = $this->client->getResponse();
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@index');
@@ -278,9 +308,8 @@ class PhotoApplicationTest extends TestCase
             ->method('remove')
             ->with($this->photo)
             ->will($this->returnValue(false));
-		$crawler = $this->client->request('DELETE', '/photos/' . $id);
+		$response = $this->delete('/photos/' . $id);
 
-        $response = $this->client->getResponse();
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
