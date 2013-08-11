@@ -17,6 +17,6 @@ Route::get('/', function()
 });
 
 /**
-* 
+* Define PhotoController as a restful controller of the photos resource
 */
 Route::resource('/photos', 'PhotoController');

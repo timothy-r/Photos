@@ -1,14 +1,10 @@
 <?php
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImageFactory;
+use Ace\Photos\ImageStore;
 
 class PhotoController extends \BaseController
 {
-    /**
-    * @var Ace\Photos\IImageStore
-    */
-    protected $store;
-
     /**
     * @var Ace\Photos\IImageFactory
     */
@@ -17,9 +13,8 @@ class PhotoController extends \BaseController
     /**
     * @param Ace\Photos\IImageStore $store
     */
-    public function __construct(IImageStore $store, IImageFactory $factory)
+    public function __construct(IImageFactory $factory)
     {
-        $this->store = $store;
         $this->factory = $factory;
 
         $this->beforeFilter('csrf',
@@ -61,7 +56,8 @@ class PhotoController extends \BaseController
 	public function index()
 	{
         // obtain an array of Image objects to display
-        $photos = $this->store->all();
+        $photos = ImageStore::all();
+
         // convert $photos to an array of data for presentation
         $data = array_map($this->get_photo_data, $photos);
         return $this->createResponse('photos', ['photos' => $data]);
@@ -115,7 +111,7 @@ class PhotoController extends \BaseController
         $image = $this->factory->create($name);
 
         // store Image
-        $this->store->add($image);
+        ImageStore::add($image);
 
         // redirect to view Photo
         return Redirect::action('PhotoController@show', [$image->getId()]);
@@ -129,7 +125,7 @@ class PhotoController extends \BaseController
 	 */
 	public function show($id)
 	{
-        $photo = $this->store->get($id);
+        $photo = ImageStore::get($id);
         if ($photo) {
             $data = call_user_func($this->get_photo_data, $photo);
             $last_modified = new DateTime;
@@ -174,7 +170,7 @@ class PhotoController extends \BaseController
 	 */
 	public function update($id)
 	{
-        $photo = $this->store->get($id);
+        $photo = ImageStore::get($id);
         if ($photo) {
             // test the request ETag against the one for this Image
             // if they don't match return a Precondition Failed (412) response
@@ -190,7 +186,7 @@ class PhotoController extends \BaseController
             $photo->setName($name);
 
             // store Image
-            $this->store->update($photo);
+            ImageStore::update($photo);
 
             // redirect to view Photo
             return Redirect::action('PhotoController@show', [$id]);
@@ -210,7 +206,7 @@ class PhotoController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-        $photo = $this->store->get($id);
+        $photo = ImageStore::get($id);
         // test the request ETag against the one for this Image
         // if they don't match then don't delete
         if ($photo) {
@@ -223,7 +219,7 @@ class PhotoController extends \BaseController
                 $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
                 return Response::make('', 412, $headers);
             }
-            $result = $this->store->remove($photo);
+            $result = ImageStore::remove($photo);
             if ($result) {
                 return Redirect::action('PhotoController@index');
             } else {

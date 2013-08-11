@@ -76,6 +76,11 @@ App::bind('view', function()
 });
 */
 
+App::bind('image_store', function()
+{
+    return App::make('Ace\Photos\IImageStore');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
