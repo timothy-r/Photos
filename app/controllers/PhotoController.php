@@ -104,7 +104,7 @@ class PhotoController extends \BaseController
         $this->store->add($image);
 
         // redirect to view all Photos
-        return Redirect::action('PhotoController@index');
+        return Redirect::action('PhotoController@show', [$image->getId()]);
 	}
 
 	/**

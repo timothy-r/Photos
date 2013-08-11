@@ -8,7 +8,7 @@ use Ace\Photos\MongoDbImageStore;
 class PhotoApplicationTest extends TestCase
 {
     protected $mock_store;
-    
+
     protected $photo;
 
     public function setUp()
@@ -126,14 +126,23 @@ class PhotoApplicationTest extends TestCase
 
 	public function testCanStorePhotoWithValidData()
 	{
+        $mock_factory = $this->mock(
+            'Ace\Photos\IImageFactory',
+            array('create')
+        );
+        $id = 1;
+        $this->givenAPhoto($id);
         $this->mock_store->expects($this->once())
             ->method('add');
-        
+        $mock_factory->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($this->photo));
+
         $data = array('name' => 'Test photo');
 		$crawler = $this->client->request('POST', '/photos', $data);
 
         $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@index');
+        $this->assertRedirectedToAction('PhotoController@show', [$id]);
 	}
 
 	public function testCanViewPhotoAsHTML()
