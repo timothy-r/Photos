@@ -22,6 +22,10 @@ class PhotoController extends \BaseController
         $this->store = $store;
         $this->factory = $factory;
 
+        $this->beforeFilter('csrf',
+            ['only' => 'store update']
+        );
+
         $this->beforeFilter(
             'photo-validate-store', 
             ['only' => ['store']]
