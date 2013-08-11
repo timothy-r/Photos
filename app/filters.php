@@ -97,3 +97,15 @@ Route::filter('photo-validate-store', function()
         );
     }
 });
+
+Route::filter('photo-validate-etag', function()
+{
+    var_dump(Input::get('photos'));
+
+    $store = App::make('Ace\Photos\IImageStore');
+    // get photo id from request
+    #$image = $store->get();
+    // get If-None-Match header from request
+    $request_etag = Request::header('If-None-Match');
+
+});
