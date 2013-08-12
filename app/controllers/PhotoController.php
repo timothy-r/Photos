@@ -2,6 +2,7 @@
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImageFactory;
 use Ace\Photos\ImageStore;
+use Ace\Photos\PhotoView;
 
 class PhotoController extends \BaseController
 {
@@ -127,17 +128,18 @@ class PhotoController extends \BaseController
 	{
         $photo = ImageStore::get($id);
         if ($photo) {
-            $data = call_user_func($this->get_photo_data, $photo);
             $last_modified = new DateTime;
             $last_modified->setTimestamp($photo->getLastModified());
-            $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+            $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
 
             // test the request ETag against the one for this Image
             // if they match return a NotModified status 304
             $request_etag = Request::header('If-None-Match');
             if ($request_etag === $photo->getHash()){
-                return Response::make('', 304, $headers);
+                return PhotoView::notModified($photo);
+                #return Response::make('', 304, $headers);
             }
+            $data = call_user_func($this->get_photo_data, $photo);
             return $this->createResponse(
                 'photo', 
                 ['photo' => $data], 
@@ -178,7 +180,7 @@ class PhotoController extends \BaseController
             if ($request_etag && ($request_etag !== $photo->getHash())){
                 $last_modified = new DateTime;
                 $last_modified->setTimestamp($photo->getLastModified());
-                $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+                $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
                 return Response::make('', 412, $headers);
             }
 
@@ -216,7 +218,7 @@ class PhotoController extends \BaseController
             if ($request_etag && ($request_etag !== $photo->getHash())){
                 $last_modified = new DateTime;
                 $last_modified->setTimestamp($photo->getLastModified());
-                $headers = ['ETag' => $photo->getHash(), 'LastModified' => http_date($last_modified)]; 
+                $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
                 return Response::make('', 412, $headers);
             }
             $result = ImageStore::remove($photo);

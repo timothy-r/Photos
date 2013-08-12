@@ -69,16 +69,14 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
-/**
-App::bind('view', function() 
-{
-    return App::make('Ace\Photos\PhotoView');
-});
-*/
-
 App::bind('image_store', function()
 {
     return App::make('Ace\Photos\IImageStore');
+});
+
+App::bind('photo_view', function()
+{
+    return App::make('Ace\Photos\IPhotoView');
 });
 
 /*

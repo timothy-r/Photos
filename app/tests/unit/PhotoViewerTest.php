@@ -2,9 +2,14 @@
 
 use Ace\Photos\Image;
 use Ace\Photos\PhotoViewer;
+use Ace\Photos\AssertTrait;
+
+require_once(__DIR__.'/../../lib/Ace/Photos/AssertTrait.php');
 
 class PhotoViewerTest extends PHPUnit_Framework_TestCase
 {
+    use AssertTrait;
+
     public function testNotFoundReturns404Response()
     {
         $view = new PhotoViewer;
@@ -40,12 +45,5 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(412, $response->getStatusCode());
         $this->assertSame($image->getHash(), $response->getETag());
         $this->assertLastModified($image, $response);
-    }
-
-    protected function assertLastModified($image, $response)
-    {
-        $last_modified = new DateTime('GMT');
-        $last_modified->setTimestamp($image->getLastModified());
-        $this->assertEquals($last_modified, $response->getLastModified());
     }
 }

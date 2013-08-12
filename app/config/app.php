@@ -115,8 +115,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         #'Way\Console\GuardLaravelServiceProvider',
         'Ace\Photos\MongoDbImageServiceProvider',
-        #'Ace\Photos\PhotoViewServiceProvider',
         'Annotatecms\Debugger\DebuggerServiceProvider',
+        'Ace\Photos\PhotoViewerServiceProvider',
 	),
 
 	/*

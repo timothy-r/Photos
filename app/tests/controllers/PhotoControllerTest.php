@@ -2,12 +2,15 @@
 use Ace\Photos\Image;
 use Ace\Photos\MongoDbImageStore;
 use Way\Tests\Assert;
+use Ace\Photos\AssertTrait;
 
 /**
 * @group controller
 */
 class PhotoApplicationTest extends TestCase
 {
+    use AssertTrait;
+
     protected $mock_store;
 
     protected $photo;
@@ -158,8 +161,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'text/html; charset=UTF-8');
         // assert ETag is set
         $this->assertETag($response, $this->photo->getHash());
-        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
-        $this->assertLastModified($response, $last_modified);
+        $this->assertLastModified($this->photo, $response);
     }
 
 	/**
@@ -200,9 +202,8 @@ class PhotoApplicationTest extends TestCase
 
         // assert ETag is set
         $this->assertETag($response, $this->photo->getHash());
-        // assert LastModified is also set
-        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
-        $this->assertLastModified($response, $last_modified);
+        // assert Last-Modified is also set
+        $this->assertLastModified($this->photo, $response);
     }
 
 	public function testConditionalRequestToViewPhotoGetsNewPhotoIfNotMatches()
@@ -220,9 +221,8 @@ class PhotoApplicationTest extends TestCase
 
         // assert ETag is set
         $this->assertETag($response, $this->photo->getHash());
-        // assert LastModified is also set
-        $last_modified = date('D, d M Y H:i:s', $this->photo->getLastModified()) . ' GMT';
-        $this->assertLastModified($response, $last_modified);
+        // assert Last-Modified is also set
+        $this->assertLastModified($this->photo, $response);
     }
 
 	/**
