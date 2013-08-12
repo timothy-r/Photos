@@ -137,7 +137,6 @@ class PhotoController extends \BaseController
             $request_etag = Request::header('If-None-Match');
             if ($request_etag === $photo->getHash()){
                 return PhotoView::notModified($photo);
-                #return Response::make('', 304, $headers);
             }
             $data = call_user_func($this->get_photo_data, $photo);
             return $this->createResponse(
@@ -146,10 +145,7 @@ class PhotoController extends \BaseController
                 $headers 
             );
         } else {
-            return Redirect::action('PhotoController@index')
-                ->withInput()
-                ->withErrors(['Photo not found']
-            );
+            return PhotoView::notFound($id);
         }
 	}
 
@@ -178,10 +174,7 @@ class PhotoController extends \BaseController
             // if they don't match return a Precondition Failed (412) response
             $request_etag = Request::header('If-Match');
             if ($request_etag && ($request_etag !== $photo->getHash())){
-                $last_modified = new DateTime;
-                $last_modified->setTimestamp($photo->getLastModified());
-                $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
-                return Response::make('', 412, $headers);
+                return PhotoView::preconditionFailed($photo);
             }
 
             $name = Input::get('name');
@@ -193,10 +186,7 @@ class PhotoController extends \BaseController
             // redirect to view Photo
             return Redirect::action('PhotoController@show', [$id]);
         } else {
-            return Redirect::action('PhotoController@index')
-                ->withInput()
-                ->withErrors(['Photo not found']
-            );
+            return PhotoView::notFound($id);
         }
 	}
 
@@ -216,10 +206,7 @@ class PhotoController extends \BaseController
             // if they don't match return a Precondition Failed (412) response
             $request_etag = Request::header('If-Match');
             if ($request_etag && ($request_etag !== $photo->getHash())){
-                $last_modified = new DateTime;
-                $last_modified->setTimestamp($photo->getLastModified());
-                $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
-                return Response::make('', 412, $headers);
+                return PhotoView::preconditionFailed($photo);
             }
             $result = ImageStore::remove($photo);
             if ($result) {
@@ -229,10 +216,7 @@ class PhotoController extends \BaseController
                 return Redirect::action('PhotoController@show', [$id]);
             }
         } else {
-            return Redirect::action('PhotoController@index')
-                ->withInput()
-                ->withErrors(['Photo not found']
-            );
+            return PhotoView::notFound($id);
         }
 	}
 }

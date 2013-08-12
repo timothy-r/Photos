@@ -256,8 +256,7 @@ class PhotoApplicationTest extends TestCase
             ->will($this->returnValue(null));
 		$response = $this->get('/photos/' . $id);
 
-		$this->assertTrue($response->isRedirection());
-        $this->assertRedirectedToAction('PhotoController@index');
+        $this->assertResponseStatus(404);
     }
 
     public function testCanUpdatePhotoWithoutETag()
@@ -332,8 +331,7 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->put('/photos/' . $id, $data);
 
         // assert redirected to view page
-        $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@index');
+        $this->assertResponseStatus(404);
     }
 
     public function testCanRemoveExistingPhotoWithoutETag()
@@ -405,8 +403,7 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->delete('/photos/' . $id);
 
         // assert redirected to index page
-        $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@index');
+        $this->assertResponseStatus(404);
     }
 
     public function testFailureToRemovePhotoShowsIt()
