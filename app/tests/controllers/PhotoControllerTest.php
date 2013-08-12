@@ -32,21 +32,6 @@ class PhotoApplicationTest extends TestCase
         }
     }
 
-
-    protected function givenAPhoto($id = 1)
-    {
-        $this->photo = $this->getMock('Ace\Photos\Image', ['getId', 'getHash', 'getLastModified']);
-        $this->photo->expects($this->any())
-            ->method('getId')
-            ->will($this->returnValue($id));
-        $this->photo->expects($this->any())
-            ->method('getHash')
-            ->will($this->returnValue('52063fab1e'));
-        $this->photo->expects($this->any())
-            ->method('getLastModified')
-            ->will($this->returnValue(time()));
-    }
-
 	/**
 	 * Test listing photos works
 	 */

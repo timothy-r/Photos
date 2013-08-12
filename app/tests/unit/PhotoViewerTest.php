@@ -10,6 +10,23 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
 {
     use AssertTrait;
 
+    public function testMakeAcceptableImage()
+    {
+        #$image = new Image;
+        $this->givenAPhoto();
+
+        #$image->setName('A test photo');
+        $view = new Ace\Photos\PhotoViewer;
+        $response = $view->makeAcceptable($this->photo);
+        
+        $this->assertInstanceOf('\Illuminate\Http\Response', $response);
+        
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame($this->photo->getHash(), $response->getETag());
+
+        $this->assertLastModified($this->photo, $response);
+    }
+
     public function testNotFoundReturns404Response()
     {
         $view = new PhotoViewer;

@@ -4,9 +4,34 @@ use Ace\Photos\IImage;
 use Ace\Photos\IPhotoView;
 use Response;
 use DateTime;
+use View;
+use URL;
 
 class PhotoViewer implements IPhotoView
 {
+    protected $get_photo_data;
+
+    public function __construct()
+    {
+        $this->get_photo_data = function(IImage $image){
+            return [
+                'id' => $image->getId(),
+                'name' => $image->getName(),
+                'last_modified' => $image->getLastModified(),
+                'hash' => $image->getHash(),
+                'uri' => URL::action('PhotoController@show', [$image->getId()])
+            ];
+        };
+    }
+
+    public function makeAcceptable(IImage $image)
+    {
+        // get best response format
+        // generate data array for the image
+        $data = call_user_func($this->get_photo_data, $image);
+        return Response::make(View::make('photo', ['photo' => $data]), 200, $this->headers($image));
+    }
+
     public function notFound($id)
     {
         return Response::make('', 404);

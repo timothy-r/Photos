@@ -6,6 +6,8 @@ use DateTime;
 
 trait AssertTrait
 {
+    protected $photo;
+
     protected function assertLastModified(IImage $image, Response $response)
     {
         $last_modified = new DateTime('GMT');
@@ -16,5 +18,19 @@ trait AssertTrait
     protected function assertETag(IImage $image, $response)
     {
         $this->assertSame($image->getHash(), $response->getETag());
+    }
+
+    protected function givenAPhoto($id = 1)
+    {
+        $this->photo = $this->getMock('Ace\Photos\Image', ['getId', 'getHash', 'getLastModified']);
+        $this->photo->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
+        $this->photo->expects($this->any())
+            ->method('getHash')
+            ->will($this->returnValue('52063fab1e'));
+        $this->photo->expects($this->any())
+            ->method('getLastModified')
+            ->will($this->returnValue(time()));
     }
 }

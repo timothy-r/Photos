@@ -4,6 +4,9 @@ use Ace\Photos\IImage;
 
 interface IPhotoView
 {
+
+    public function makeAcceptable(IImage $image);
+
     /**
     * Respond with a 404
     *
