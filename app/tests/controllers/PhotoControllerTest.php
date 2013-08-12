@@ -160,7 +160,7 @@ class PhotoApplicationTest extends TestCase
 		$this->assertTrue($response->isOk());
         $this->assertContentType($response, 'text/html; charset=UTF-8');
         // assert ETag is set
-        $this->assertETag($response, $this->photo->getHash());
+        $this->assertETag($this->photo, $response);
         $this->assertLastModified($this->photo, $response);
     }
 
@@ -183,7 +183,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'application/json');
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
-        $this->assertETag($response, $this->photo->getHash());
+        $this->assertETag($this->photo, $response);
 	}
 
 	public function testConditionalRequestToViewPhotoGets304IfMatches()
@@ -201,7 +201,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType($response, 'text/html; charset=UTF-8');
 
         // assert ETag is set
-        $this->assertETag($response, $this->photo->getHash());
+        $this->assertETag($this->photo, $response);
         // assert Last-Modified is also set
         $this->assertLastModified($this->photo, $response);
     }
@@ -220,7 +220,7 @@ class PhotoApplicationTest extends TestCase
 		$this->assertTrue($response->isOk());
 
         // assert ETag is set
-        $this->assertETag($response, $this->photo->getHash());
+        $this->assertETag($this->photo, $response);
         // assert Last-Modified is also set
         $this->assertLastModified($this->photo, $response);
     }

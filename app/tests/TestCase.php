@@ -36,8 +36,4 @@ abstract class TestCase extends BaseTestCase
         $this->assertSame($type, $response->headers->get('Content-Type'));
     }
 
-    public function assertETag($response, $tag)
-    {
-        $this->assertSame($tag, $response->getETag());
-    }
 }
