@@ -25,6 +25,25 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(304, $response->getStatusCode());
         $this->assertSame($image->getHash(), $response->getETag());
 
+        $this->assertLastModified($image, $response);
+    }
+
+    public function testPreconditionFailedReturns412Response()
+    {
+        $image = new Image;
+        $image->setName('A test photo');
+        $view = new Ace\Photos\PhotoViewer;
+        $response = $view->preconditionFailed($image);
+        
+        $this->assertInstanceOf('\Illuminate\Http\Response', $response);
+        
+        $this->assertSame(412, $response->getStatusCode());
+        $this->assertSame($image->getHash(), $response->getETag());
+        $this->assertLastModified($image, $response);
+    }
+
+    protected function assertLastModified($image, $response)
+    {
         $last_modified = new DateTime('GMT');
         $last_modified->setTimestamp($image->getLastModified());
         $this->assertEquals($last_modified, $response->getLastModified());

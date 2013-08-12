@@ -18,4 +18,10 @@ interface IPhotoView
     */
     public function notModified(IImage $image);
 
+    
+    /**
+    * response with a 412
+    * @return Illuminate\Http\Response
+    */
+    public function preconditionFailed(IImage $image);
 }
