@@ -42,8 +42,6 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $response = $mock_viewer->makeAcceptable($this->photo);
         
         $this->assertSame(406, $response->getStatusCode());
-        #$this->assertSame($this->photo->getHash(), $response->getETag());
-        #$this->assertLastModified($this->photo, $response);
     }
 
     public function getAcceptableHeaders()
@@ -62,6 +60,14 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(404, $response->getStatusCode());
     }
 
+    /**
+    * 
+    * 304 response 
+    * MUST contain a Date header
+    * MUST contain an ETag header
+    * MUST NOT contain a Last-Modified header
+    * MUST NOT contain a Content-Type header
+    */
     public function testNotModifiedReturns304Response()
     {
         $this->givenAPhoto();
@@ -74,6 +80,7 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame($this->photo->getHash(), $response->getETag());
 
         $this->assertSame(null, $response->headers->get('Last-Modified'));
+        $this->assertTrue($response->headers->has('Date'));
 
         $this->assertContentType(null, $response);
     }
