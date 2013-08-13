@@ -26,15 +26,25 @@ class PhotoViewer implements IPhotoView
 
     public function makeAcceptable(IImage $image)
     {
+        $data = call_user_func($this->get_photo_data, $image);
+        $headers = $this->headers($image);
+        return $this->getResponse('photo', ['photo' => $data], $headers);
+    }
+
+    public function makeManyAcceptable(array $images)
+    {
+        $data = array_map($this->get_photo_data, $images);
+        return $this->getResponse('photos', ['photos' => $data], []);
+    }
+
+    protected function getResponse($name, $data, $headers)
+    {
         // get best response format
         $type = $this->getAcceptableContentType();
 
-        $data = call_user_func($this->get_photo_data, $image);
-        $headers = $this->headers($image);
-
         if ($type === 'text/html') {
             $headers['Content-Type'] = 'text/html';
-            return Response::make(View::make('photo', ['photo' => $data]), 200, $headers);
+            return Response::make(View::make($name, $data), 200, $headers);
         } else if ($type === 'application/json') {
             return Response::json($data, 200, $headers);
         } else {

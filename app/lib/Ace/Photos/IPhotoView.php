@@ -7,6 +7,8 @@ interface IPhotoView
 
     public function makeAcceptable(IImage $image);
 
+    public function makeManyAcceptable(array $images);
+
     /**
     * Respond with a 404
     *

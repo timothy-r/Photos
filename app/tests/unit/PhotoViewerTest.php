@@ -13,7 +13,7 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
     /**
     * @dataProvider getAcceptableHeaders
     */
-    public function testMakeAcceptableImage($accept_type, $content_type)
+    public function testMakeAcceptable($accept_type, $content_type)
     {
         $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
         $mock_viewer->expects($this->any())
@@ -30,6 +30,24 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertContentType($content_type, $response);
     }
 
+    /**
+    * @dataProvider getAcceptableHeaders
+    */
+    public function testMakeManyAcceptable($accept_type, $content_type)
+    {
+        $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
+        $mock_viewer->expects($this->any())
+            ->method('getAcceptableContentType')
+            ->will($this->returnValue($accept_type));
+
+        $this->givenAPhoto();
+
+        $response = $mock_viewer->makeManyAcceptable([$this->photo]);
+        
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertContentType($content_type, $response);
+    }
+
     public function testMakeUnacceptableImage()
     {
         $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
@@ -40,6 +58,20 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->givenAPhoto();
 
         $response = $mock_viewer->makeAcceptable($this->photo);
+        
+        $this->assertSame(406, $response->getStatusCode());
+    }
+
+    public function testMakeManyUnacceptable()
+    {
+        $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
+        $mock_viewer->expects($this->any())
+            ->method('getAcceptableContentType')
+            ->will($this->returnValue('application/xhtml+xml'));
+
+        $this->givenAPhoto();
+
+        $response = $mock_viewer->makeManyAcceptable([$this->photo]);
         
         $this->assertSame(406, $response->getStatusCode());
     }
