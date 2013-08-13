@@ -26,10 +26,16 @@ class PhotoViewer implements IPhotoView
 
     public function makeAcceptable(IImage $image)
     {
+        $negotiator = \App::make('\Negotiation\FormatNegotiator');
+        $format = $negotiator->getBest(\Request::header('Accept'), ['text/html', 'application/json']);
+
         // get best response format
-        // generate data array for the image
-        $data = call_user_func($this->get_photo_data, $image);
-        return Response::make(View::make('photo', ['photo' => $data]), 200, $this->headers($image));
+        if ($format->getValue() === 'text/html') {
+            $headers = $this->headers($image);
+            $headers['Content-Type'] = 'text/html';
+            $data = call_user_func($this->get_photo_data, $image);
+            return Response::make(View::make('photo', ['photo' => $data]), 200, $headers);
+        }
     }
 
     public function notFound($id)
@@ -39,7 +45,9 @@ class PhotoViewer implements IPhotoView
     
     public function notModified(IImage $image)
     {
-        return Response::make('', 304, $this->headers($image));
+        $response = Response::make('', 304, $this->headers($image));
+        $response->setNotModified();
+        return $response;
     }
 
     public function preconditionFailed(IImage $image)

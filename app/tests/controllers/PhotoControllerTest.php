@@ -185,8 +185,8 @@ class PhotoApplicationTest extends TestCase
 
         // assert ETag is set
         $this->assertETag($this->photo, $response);
-        // assert Last-Modified is also set
-        $this->assertLastModified($this->photo, $response);
+        // assert Last-Modified is not  set
+        $this->assertSame(null, $response->headers->get('Last-Modified'));
     }
 
 	public function testConditionalRequestToViewPhotoGetsNewPhotoIfNotMatches()
@@ -406,12 +406,5 @@ class PhotoApplicationTest extends TestCase
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
-    }
-
-    protected function mock($class, $methods)
-    {
-        $mock = $this->getMock($class, $methods);
-        $this->app->instance($class, $mock);
-        return $mock;
     }
 }

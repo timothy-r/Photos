@@ -10,8 +10,19 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
 {
     use AssertTrait;
 
-    public function testMakeAcceptableImageWithHtml()
+    /**
+    * @dataProvider getAcceptableHeaders
+    */
+    public function testMakeAcceptableImage($accept_type, $content_type)
     {
+        $mock_request = $this->mock(
+            'Illuminate\Http\Request',
+            ['header']
+        );
+        $mock_request->expects($this->any())
+            ->method('header')
+            ->will($this->returnValue($accept_type));
+
         $this->givenAPhoto();
 
         $view = new Ace\Photos\PhotoViewer;
@@ -22,7 +33,14 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame($this->photo->getHash(), $response->getETag());
         $this->assertLastModified($this->photo, $response);
-        $this->assertContentType('text/html', $response);
+        $this->assertContentType($content_type, $response);
+    }
+
+    public function getAcceptableHeaders()
+    {
+        return [
+            ['text/html', 'text/html'],
+        ];
     }
 
     public function testNotFoundReturns404Response()
@@ -44,7 +62,8 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(304, $response->getStatusCode());
         $this->assertSame($this->photo->getHash(), $response->getETag());
 
-        $this->assertLastModified($this->photo, $response);
+        $this->assertSame(null, $response->headers->get('Last-Modified'));
+
         $this->assertContentType(null, $response);
     }
 
