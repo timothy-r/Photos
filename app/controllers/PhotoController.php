@@ -127,23 +127,16 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = ImageStore::get($id);
-        if ($photo) {
-            $last_modified = new DateTime;
-            $last_modified->setTimestamp($photo->getLastModified());
-            $headers = ['ETag' => $photo->getHash(), 'Last-Modified' => http_date($last_modified)]; 
 
+        if ($photo) {
             // test the request ETag against the one for this Image
             // if they match return a NotModified status 304
             $request_etag = Request::header('If-None-Match');
             if ($request_etag === $photo->getHash()){
                 return PhotoView::notModified($photo);
+            } else {
+                return PhotoView::makeAcceptable($photo);
             }
-            $data = call_user_func($this->get_photo_data, $photo);
-            return $this->createResponse(
-                'photo', 
-                ['photo' => $data], 
-                $headers 
-            );
         } else {
             return PhotoView::notFound($id);
         }
