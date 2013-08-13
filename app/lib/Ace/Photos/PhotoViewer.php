@@ -26,16 +26,27 @@ class PhotoViewer implements IPhotoView
 
     public function makeAcceptable(IImage $image)
     {
+        // get best response format
+        $type = $this->getAcceptableContentType();
+
+        $data = call_user_func($this->get_photo_data, $image);
+        $headers = $this->headers($image);
+
+        if ($type === 'text/html') {
+            $headers['Content-Type'] = 'text/html';
+            return Response::make(View::make('photo', ['photo' => $data]), 200, $headers);
+        } else if ($type === 'application/json') {
+            return Response::json($data, 200, $headers);
+        } else {
+            return Response::make('', 406);
+        }
+    }
+
+    protected function getAcceptableContentType()
+    {
         $negotiator = \App::make('\Negotiation\FormatNegotiator');
         $format = $negotiator->getBest(\Request::header('Accept'), ['text/html', 'application/json']);
-
-        // get best response format
-        if ($format->getValue() === 'text/html') {
-            $headers = $this->headers($image);
-            $headers['Content-Type'] = 'text/html';
-            $data = call_user_func($this->get_photo_data, $image);
-            return Response::make(View::make('photo', ['photo' => $data]), 200, $headers);
-        }
+        return $format->getValue(); 
     }
 
     public function notFound($id)

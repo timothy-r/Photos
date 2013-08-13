@@ -15,20 +15,14 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
     */
     public function testMakeAcceptableImage($accept_type, $content_type)
     {
-        $mock_request = $this->mock(
-            'Illuminate\Http\Request',
-            ['header']
-        );
-        $mock_request->expects($this->any())
-            ->method('header')
+        $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
+        $mock_viewer->expects($this->any())
+            ->method('getAcceptableContentType')
             ->will($this->returnValue($accept_type));
 
         $this->givenAPhoto();
 
-        $view = new Ace\Photos\PhotoViewer;
-        $response = $view->makeAcceptable($this->photo);
-        
-        $this->assertInstanceOf('\Illuminate\Http\Response', $response);
+        $response = $mock_viewer->makeAcceptable($this->photo);
         
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame($this->photo->getHash(), $response->getETag());
@@ -36,10 +30,27 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         $this->assertContentType($content_type, $response);
     }
 
+    public function testMakeUnacceptableImage()
+    {
+        $mock_viewer = $this->getMock('Ace\Photos\PhotoViewer', ['getAcceptableContentType']);
+        $mock_viewer->expects($this->any())
+            ->method('getAcceptableContentType')
+            ->will($this->returnValue('application/xhtml+xml'));
+
+        $this->givenAPhoto();
+
+        $response = $mock_viewer->makeAcceptable($this->photo);
+        
+        $this->assertSame(406, $response->getStatusCode());
+        #$this->assertSame($this->photo->getHash(), $response->getETag());
+        #$this->assertLastModified($this->photo, $response);
+    }
+
     public function getAcceptableHeaders()
     {
         return [
             ['text/html', 'text/html'],
+            ['application/json', 'application/json'],
         ];
     }
 

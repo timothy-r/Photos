@@ -8,7 +8,7 @@ trait AssertTrait
 {
     protected $photo;
 
-    protected function assertLastModified(IImage $image, Response $response)
+    protected function assertLastModified(IImage $image, $response)
     {
         $last_modified = new DateTime('GMT');
         $last_modified->setTimestamp($image->getLastModified());
