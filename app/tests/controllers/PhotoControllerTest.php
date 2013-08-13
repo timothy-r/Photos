@@ -13,8 +13,6 @@ class PhotoApplicationTest extends TestCase
 
     protected $mock_store;
 
-    protected $photo;
-
     public function setUp()
     {
         parent::setUp();
@@ -49,7 +47,7 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->get('/photos');
        
 		$this->assertTrue($response->isOk());
-        $this->assertContentType($response, 'text/html; charset=UTF-8');
+        $this->assertContentType('text/html; charset=UTF-8', $response);
         $this->assertViewHas('photos');
 
         $data = $response->original->getData();
@@ -78,7 +76,7 @@ class PhotoApplicationTest extends TestCase
         );
        
 		$this->assertTrue($response->isOk());
-        $this->assertContentType($response, 'application/json');
+        $this->assertContentType('application/json', $response);
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
 	}
@@ -143,7 +141,7 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->get('/photos/' . $id);
 
 		$this->assertTrue($response->isOk());
-        $this->assertContentType($response, 'text/html; charset=UTF-8');
+        $this->assertContentType('text/html; charset=UTF-8', $response);
         // assert ETag is set
         $this->assertETag($this->photo, $response);
         $this->assertLastModified($this->photo, $response);
@@ -165,7 +163,7 @@ class PhotoApplicationTest extends TestCase
 		$response = $this->get('/photos/'.$id, [], [], ['HTTP_Accept' => 'application/json']);
        
 		$this->assertTrue($response->isOk());
-        $this->assertContentType($response, 'application/json');
+        $this->assertContentType('application/json', $response);
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
         $this->assertETag($this->photo, $response);
@@ -183,7 +181,7 @@ class PhotoApplicationTest extends TestCase
 
         $response = $this->get('/photos/' . $id, [], [], $headers);
         $this->assertResponseStatus(304);
-        $this->assertContentType($response, 'text/html; charset=UTF-8');
+        $this->assertContentType('text/html; charset=UTF-8', $response);
 
         // assert ETag is set
         $this->assertETag($this->photo, $response);

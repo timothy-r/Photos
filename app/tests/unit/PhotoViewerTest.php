@@ -10,12 +10,10 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
 {
     use AssertTrait;
 
-    public function testMakeAcceptableImage()
+    public function testMakeAcceptableImageWithHtml()
     {
-        #$image = new Image;
         $this->givenAPhoto();
 
-        #$image->setName('A test photo');
         $view = new Ace\Photos\PhotoViewer;
         $response = $view->makeAcceptable($this->photo);
         
@@ -23,8 +21,8 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame($this->photo->getHash(), $response->getETag());
-
         $this->assertLastModified($this->photo, $response);
+        $this->assertContentType('text/html', $response);
     }
 
     public function testNotFoundReturns404Response()
@@ -37,30 +35,29 @@ class PhotoViewerTest extends PHPUnit_Framework_TestCase
 
     public function testNotModifiedReturns304Response()
     {
-        $image = new Image;
-        $image->setName('A test photo');
+        $this->givenAPhoto();
         $view = new Ace\Photos\PhotoViewer;
-        $response = $view->notModified($image);
+        $response = $view->notModified($this->photo);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         
         $this->assertSame(304, $response->getStatusCode());
-        $this->assertSame($image->getHash(), $response->getETag());
+        $this->assertSame($this->photo->getHash(), $response->getETag());
 
-        $this->assertLastModified($image, $response);
+        $this->assertLastModified($this->photo, $response);
+        $this->assertContentType(null, $response);
     }
 
     public function testPreconditionFailedReturns412Response()
     {
-        $image = new Image;
-        $image->setName('A test photo');
+        $this->givenAPhoto();
         $view = new Ace\Photos\PhotoViewer;
-        $response = $view->preconditionFailed($image);
+        $response = $view->preconditionFailed($this->photo);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         
         $this->assertSame(412, $response->getStatusCode());
-        $this->assertSame($image->getHash(), $response->getETag());
-        $this->assertLastModified($image, $response);
+        $this->assertSame($this->photo->getHash(), $response->getETag());
+        $this->assertLastModified($this->photo, $response);
     }
 }

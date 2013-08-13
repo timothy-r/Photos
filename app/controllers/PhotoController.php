@@ -199,8 +199,6 @@ class PhotoController extends \BaseController
 	public function destroy($id)
 	{
         $photo = ImageStore::get($id);
-        // test the request ETag against the one for this Image
-        // if they don't match then don't delete
         if ($photo) {
             // test the request ETag against the one for this Image
             // if they don't match return a Precondition Failed (412) response

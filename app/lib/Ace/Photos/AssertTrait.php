@@ -33,4 +33,12 @@ trait AssertTrait
             ->method('getLastModified')
             ->will($this->returnValue(time()));
     }
+
+    /**
+    * test that the Content-Type header in $response is $type
+    */
+    public function assertContentType($type, $response)
+    {
+        $this->assertSame($type, $response->headers->get('Content-Type'));
+    }
 }

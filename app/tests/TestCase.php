@@ -27,13 +27,4 @@ abstract class TestCase extends BaseTestCase
         };
         throw new BadMethodCallException("'$method' not supported");
     }
-    
-    /**
-    * test that the Content-Type header in $response is $type
-    */
-    public function assertContentType($response, $type)
-    {
-        $this->assertSame($type, $response->headers->get('Content-Type'));
-    }
-
 }
