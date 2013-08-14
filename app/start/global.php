@@ -79,6 +79,11 @@ App::bind('photo_view', function()
     return App::make('Ace\Photos\IPhotoView');
 });
 
+App::bind('entity_handler', function()
+{
+    return App::make('Ace\EntityHandler');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File

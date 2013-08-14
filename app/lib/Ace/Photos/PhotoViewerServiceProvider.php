@@ -1,5 +1,4 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos;
 
 use Illuminate\Support\ServiceProvider;
 

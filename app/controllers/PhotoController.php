@@ -3,6 +3,7 @@ use Ace\Photos\IImageStore;
 use Ace\Photos\IImageFactory;
 use Ace\Photos\ImageStore;
 use Ace\Photos\PhotoView;
+use Ace\Facades\EntityHandler;
 
 class PhotoController extends \BaseController
 {
@@ -94,8 +95,7 @@ class PhotoController extends \BaseController
         if ($photo) {
             // test the request ETag against the one for this Image
             // if they match return a NotModified status 304
-            $request_etag = Request::header('If-None-Match');
-            if ($request_etag === $photo->getHash()){
+            if (EntityHandler::matches(Request::header('If-None-Match'), $photo->getHash())){
                 return PhotoView::notModified($photo);
             } else {
                 return PhotoView::makeAcceptable($photo);
@@ -129,18 +129,18 @@ class PhotoController extends \BaseController
             // test the request ETag against the one for this Image
             // if they don't match return a Precondition Failed (412) response
             $request_etag = Request::header('If-Match');
-            if ($request_etag && ($request_etag !== $photo->getHash())){
+            if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
                 return PhotoView::preconditionFailed($photo);
+            } else {
+                $name = Input::get('name');
+                $photo->setName($name);
+
+                // store Image
+                ImageStore::update($photo);
+
+                // redirect to view Photo
+                return Redirect::action('PhotoController@show', [$id]);
             }
-
-            $name = Input::get('name');
-            $photo->setName($name);
-
-            // store Image
-            ImageStore::update($photo);
-
-            // redirect to view Photo
-            return Redirect::action('PhotoController@show', [$id]);
         } else {
             return PhotoView::notFound($id);
         }
@@ -159,9 +159,10 @@ class PhotoController extends \BaseController
             // test the request ETag against the one for this Image
             // if they don't match return a Precondition Failed (412) response
             $request_etag = Request::header('If-Match');
-            if ($request_etag && ($request_etag !== $photo->getHash())){
+            if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
                 return PhotoView::preconditionFailed($photo);
             }
+
             $result = ImageStore::remove($photo);
             if ($result) {
                 return Redirect::action('PhotoController@index');
