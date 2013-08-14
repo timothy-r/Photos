@@ -6,6 +6,7 @@ use Response;
 use DateTime;
 use View;
 use URL;
+use App;
 
 class PhotoViewer implements IPhotoView
 {
@@ -54,7 +55,7 @@ class PhotoViewer implements IPhotoView
 
     protected function getAcceptableContentType()
     {
-        $negotiator = \App::make('\Negotiation\FormatNegotiator');
+        $negotiator = App::make('\Negotiation\FormatNegotiator');
         $format = $negotiator->getBest(\Request::header('Accept'), ['text/html', 'application/json']);
         return $format->getValue(); 
     }
