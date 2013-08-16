@@ -92,17 +92,17 @@ class PhotoController extends \BaseController
 	{
         $photo = ImageStore::get($id);
 
-        if ($photo) {
-            // test the request ETag against the one for this Image
-            // if they match return a NotModified status 304
-            if (EntityHandler::matches(Request::header('If-None-Match'), $photo->getHash())){
-                return PhotoView::notModified($photo);
-            } else {
-                return PhotoView::makeAcceptable($photo);
-            }
-        } else {
+        if (!$photo) {
             return PhotoView::notFound($id);
         }
+
+        // test the request ETag against the one for this Image
+        // if they match return a NotModified status 304
+        if (EntityHandler::matches(Request::header('If-None-Match'), $photo->getHash())){
+            return PhotoView::notModified($photo);
+        }
+
+        return PhotoView::makeAcceptable($photo);
 	}
 
 	/**
@@ -125,25 +125,25 @@ class PhotoController extends \BaseController
 	public function update($id)
 	{
         $photo = ImageStore::get($id);
-        if ($photo) {
-            // test the request ETag against the one for this Image
-            // if they don't match return a Precondition Failed (412) response
-            $request_etag = Request::header('If-Match');
-            if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-                return PhotoView::preconditionFailed($photo);
-            } else {
-                $name = Input::get('name');
-                $photo->setName($name);
-
-                // store Image
-                ImageStore::update($photo);
-
-                // redirect to view Photo
-                return Redirect::action('PhotoController@show', [$id]);
-            }
-        } else {
+        if (!$photo) {
             return PhotoView::notFound($id);
         }
+
+        // test the request ETag against the one for this Image
+        // if they don't match return a Precondition Failed (412) response
+        $request_etag = Request::header('If-Match');
+        if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
+            return PhotoView::preconditionFailed($photo);
+        }
+
+        $name = Input::get('name');
+        $photo->setName($name);
+
+        // store Image
+        ImageStore::update($photo);
+
+        // redirect to view Photo
+        return Redirect::action('PhotoController@show', [$id]);
 	}
 
 	/**
@@ -155,23 +155,23 @@ class PhotoController extends \BaseController
 	public function destroy($id)
 	{
         $photo = ImageStore::get($id);
-        if ($photo) {
-            // test the request ETag against the one for this Image
-            // if they don't match return a Precondition Failed (412) response
-            $request_etag = Request::header('If-Match');
-            if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-                return PhotoView::preconditionFailed($photo);
-            }
-
-            $result = ImageStore::remove($photo);
-            if ($result) {
-                return Redirect::action('PhotoController@index');
-            } else {
-                // show photo
-                return Redirect::action('PhotoController@show', [$id]);
-            }
-        } else {
+        if (!$photo) {
             return PhotoView::notFound($id);
         }
+
+        // test the request ETag against the one for this Image
+        // if they don't match return a Precondition Failed (412) response
+        $request_etag = Request::header('If-Match');
+        if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
+            return PhotoView::preconditionFailed($photo);
+        }
+
+        $result = ImageStore::remove($photo);
+        if ($result) {
+            return Redirect::action('PhotoController@index');
+        } 
+
+        // delete failed - show photo
+        return Redirect::action('PhotoController@show', [$id]);
 	}
 }
