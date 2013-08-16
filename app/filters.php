@@ -91,6 +91,7 @@ Route::filter('photo-validate-store', function()
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
+        // @todo put this redirect in a PhotoView method and call from here
         return Redirect::action('PhotoController@create')
             ->withInput()
             ->withErrors($validator->messages()
@@ -98,14 +99,33 @@ Route::filter('photo-validate-store', function()
     }
 });
 
+/**
+* Add a filter to validate Images exist
+* return a 404 if they don't
+*/
+Route::filter('photo-exists', function()
+{
+    
+});
+
+/**
+* add filters to handle ETags in requests
+* they need to be able to:
+* a) get the Image object from the request
+* b) generate an ETag for it
+* c) get the request headers (from Request facade)
+* d) call PhotoView methods (easy as it's a facade)
+*/
 Route::filter('photo-validate-etag', function()
 {
     var_dump(Input::get('photos'));
 
     $store = App::make('Ace\Photos\IImageStore');
-    // get photo id from request
+    // get photo id from request somehow
     #$image = $store->get();
-    // get If-None-Match header from request
+    // get If-Match and If-None-Match headers from request
+    // for If-Match check that etag matches and if not then return a prconditionFailed response
+    // for If-None-Match check that etag matches and if it does then return notModified
     $request_etag = Request::header('If-None-Match');
 
 });
