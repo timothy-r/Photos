@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

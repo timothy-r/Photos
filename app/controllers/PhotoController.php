@@ -1,7 +1,7 @@
 <?php
-use Ace\Photos\IImageStore;
 use Ace\Photos\IImageFactory;
-use Ace\Photos\ImageStore;
+
+use Ace\Facades\ImageStore;
 use Ace\Photos\PhotoView;
 use Ace\Facades\EntityHandler;
 
@@ -13,7 +13,7 @@ class PhotoController extends \BaseController
     protected $factory;
 
     /**
-    * @param Ace\Photos\IImageStore $store
+    * @param Ace\Photos\IImageFactory $factory
     */
     public function __construct(IImageFactory $factory)
     {
