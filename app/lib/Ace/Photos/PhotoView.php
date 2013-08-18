@@ -2,13 +2,14 @@
 
 use Ace\Photos\IImage;
 use Ace\Photos\IPhotoView;
+use Request;
 use Response;
 use DateTime;
 use View;
 use URL;
 use App;
 
-class PhotoViewer implements IPhotoView
+class PhotoView implements IPhotoView
 {
     protected $get_photo_data;
 
@@ -59,7 +60,7 @@ class PhotoViewer implements IPhotoView
     protected function getAcceptableContentType()
     {
         $negotiator = App::make('\Negotiation\FormatNegotiator');
-        $format = $negotiator->getBest(\Request::header('Accept'), ['text/html', 'application/json']);
+        $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
         return $format->getValue(); 
     }
 
