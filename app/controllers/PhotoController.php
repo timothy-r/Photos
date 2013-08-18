@@ -2,23 +2,14 @@
 use Ace\Photos\IImageFactory;
 
 use Ace\Facades\ImageStore;
+use Ace\Facades\ImageFactory;
 use Ace\Facades\PhotoView;
 use Ace\Facades\EntityHandler;
 
 class PhotoController extends \BaseController
 {
-    /**
-    * @var Ace\Photos\IImageFactory
-    */
-    protected $factory;
-
-    /**
-    * @param Ace\Photos\IImageFactory $factory
-    */
-    public function __construct(IImageFactory $factory)
+    public function __construct()
     {
-        $this->factory = $factory;
-
         $this->beforeFilter('csrf',
             ['only' => 'store update']
         );
@@ -73,7 +64,7 @@ class PhotoController extends \BaseController
         $name = Input::get('name');
 
         // create an Image instance
-        $image = $this->factory->create($name);
+        $image = ImageFactory::create($name);
 
         // store Image
         ImageStore::add($image);

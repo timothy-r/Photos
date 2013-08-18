@@ -84,6 +84,11 @@ App::bind('entity_handler', function()
     return App::make('Ace\EntityHandler');
 });
 
+App::bind('image_factory', function()
+{
+    return App::make('Ace\Photos\IImageFactory');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File

@@ -117,6 +117,7 @@ return array(
         'Ace\Photos\MongoDbImageServiceProvider',
         'Annotatecms\Debugger\DebuggerServiceProvider',
         'Ace\Photos\PhotoViewServiceProvider',
+        'Ace\Photos\ImageFactoryServiceProvider',
 	),
 
 	/*
