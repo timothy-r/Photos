@@ -46,11 +46,14 @@ class PhotoViewer implements IPhotoView
         if ($type === 'text/html') {
             $headers['Content-Type'] = 'text/html';
             return Response::make(View::make($name, $data), 200, $headers);
-        } else if ($type === 'application/json') {
-            return Response::json($data, 200, $headers);
-        } else {
-            return Response::make('', 406);
         }
+
+        if ($type === 'application/json') {
+            return Response::json($data, 200, $headers);
+        }
+        
+        // return NotAcceptable status
+        return $this->notAcceptable();
     }
 
     protected function getAcceptableContentType()
@@ -75,6 +78,11 @@ class PhotoViewer implements IPhotoView
     public function preconditionFailed(IImage $image)
     {
         return Response::make('', 412, $this->headers($image));
+    }
+    
+    public function notAcceptable()
+    {
+        return Response::make('', 406);
     }
 
     protected function headers(IImage $image)

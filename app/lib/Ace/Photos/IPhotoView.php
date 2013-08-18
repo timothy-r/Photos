@@ -29,4 +29,10 @@ interface IPhotoView
     * @return Illuminate\Http\Response
     */
     public function preconditionFailed(IImage $image);
+
+    /**
+    * response with a 406
+    * @return Illuminate\Http\Response
+    */
+    public function notAcceptable();
 }
