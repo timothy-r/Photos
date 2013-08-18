@@ -76,7 +76,7 @@ App::bind('image_store', function()
 
 App::bind('photo_view', function()
 {
-    return App::make('Ace\Photos\IPhotoView');
+    return App::make('Ace\Photos\IImageView');
 });
 
 App::bind('entity_handler', function()

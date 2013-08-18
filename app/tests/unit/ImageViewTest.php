@@ -1,12 +1,12 @@
 <?php
 
 use Ace\Photos\Image;
-use Ace\Photos\PhotoView;
+use Ace\Photos\ImageView;
 use Ace\Photos\AssertTrait;
 
 require_once(__DIR__.'/../../lib/Ace/Photos/AssertTrait.php');
 
-class PhotoViewTest extends PHPUnit_Framework_TestCase
+class ImageViewTest extends PHPUnit_Framework_TestCase
 {
     use AssertTrait;
 
@@ -15,7 +15,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
     */
     public function testMakeAcceptable($accept_type, $content_type)
     {
-        $mock_viewer = $this->getMock('Ace\Photos\PhotoView', ['getAcceptableContentType']);
+        $mock_viewer = $this->getMock('Ace\Photos\ImageView', ['getAcceptableContentType']);
         $mock_viewer->expects($this->any())
             ->method('getAcceptableContentType')
             ->will($this->returnValue($accept_type));
@@ -35,7 +35,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
     */
     public function testMakeManyAcceptable($accept_type, $content_type)
     {
-        $mock_viewer = $this->getMock('Ace\Photos\PhotoView', ['getAcceptableContentType']);
+        $mock_viewer = $this->getMock('Ace\Photos\ImageView', ['getAcceptableContentType']);
         $mock_viewer->expects($this->any())
             ->method('getAcceptableContentType')
             ->will($this->returnValue($accept_type));
@@ -50,7 +50,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
 
     public function testMakeUnacceptableImage()
     {
-        $mock_viewer = $this->getMock('Ace\Photos\PhotoView', ['getAcceptableContentType']);
+        $mock_viewer = $this->getMock('Ace\Photos\ImageView', ['getAcceptableContentType']);
         $mock_viewer->expects($this->any())
             ->method('getAcceptableContentType')
             ->will($this->returnValue('application/xhtml+xml'));
@@ -64,7 +64,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
 
     public function testMakeManyUnacceptable()
     {
-        $mock_viewer = $this->getMock('Ace\Photos\PhotoView', ['getAcceptableContentType']);
+        $mock_viewer = $this->getMock('Ace\Photos\ImageView', ['getAcceptableContentType']);
         $mock_viewer->expects($this->any())
             ->method('getAcceptableContentType')
             ->will($this->returnValue('application/xhtml+xml'));
@@ -86,7 +86,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
 
     public function testNotFoundReturns404Response()
     {
-        $view = new PhotoView;
+        $view = new ImageView;
         $response = $view->notFound(1);
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         $this->assertSame(404, $response->getStatusCode());
@@ -103,7 +103,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
     public function testNotModifiedReturns304Response()
     {
         $this->givenAPhoto();
-        $view = new Ace\Photos\PhotoView;
+        $view = new Ace\Photos\ImageView;
         $response = $view->notModified($this->photo);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
@@ -120,7 +120,7 @@ class PhotoViewTest extends PHPUnit_Framework_TestCase
     public function testPreconditionFailedReturns412Response()
     {
         $this->givenAPhoto();
-        $view = new Ace\Photos\PhotoView;
+        $view = new Ace\Photos\ImageView;
         $response = $view->preconditionFailed($this->photo);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);

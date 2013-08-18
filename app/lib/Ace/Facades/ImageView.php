@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
-class PhotoView extends Facade
+class ImageView extends Facade
 {
     protected static function getFacadeAccessor() { return 'photo_view'; }
 }

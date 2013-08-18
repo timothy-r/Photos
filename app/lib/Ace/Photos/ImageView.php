@@ -1,7 +1,7 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
-use Ace\Photos\IPhotoView;
+use Ace\Photos\IImageView;
 use Request;
 use Response;
 use DateTime;
@@ -9,7 +9,7 @@ use View;
 use URL;
 use App;
 
-class PhotoView implements IPhotoView
+class ImageView implements IImageView
 {
     protected $get_photo_data;
 

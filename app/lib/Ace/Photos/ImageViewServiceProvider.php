@@ -4,13 +4,13 @@ use Illuminate\Support\ServiceProvider;
 
 /**
 */
-class PhotoViewServiceProvider extends ServiceProvider
+class ImageViewServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->app->bind(
-            'Ace\Photos\IPhotoView',
-            'Ace\Photos\PhotoView'
+            'Ace\Photos\IImageView',
+            'Ace\Photos\ImageView'
         );
     }
 }

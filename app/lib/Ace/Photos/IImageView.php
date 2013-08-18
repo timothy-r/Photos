@@ -2,7 +2,7 @@
 
 use Ace\Photos\IImage;
 
-interface IPhotoView
+interface IImageView
 {
 
     public function makeAcceptable(IImage $image);
