@@ -2,7 +2,7 @@
 use Ace\Photos\IImageFactory;
 
 use Ace\Facades\ImageStore;
-use Ace\Photos\PhotoView;
+use Ace\Facades\PhotoView;
 use Ace\Facades\EntityHandler;
 
 class PhotoController extends \BaseController
