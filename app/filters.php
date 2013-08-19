@@ -1,5 +1,7 @@
 <?php
 use Ace\Photos\Image;
+use Ace\Facades\ImageStore;
+use Ace\Facades\ImageView;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +83,7 @@ Route::filter('csrf', function()
 });
 
 
-Route::filter('photo-validate-store', function()
+Route::filter('image-validate-store', function()
 {
     $rules = array(
         'name' => 'required'
@@ -103,10 +105,21 @@ Route::filter('photo-validate-store', function()
 * Add a filter to validate Images exist
 * return a 404 if they don't
 */
-Route::filter('photo-exists', function()
+
+Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
+
+/*
+Route::filter('image-exists', function($route)
 {
-    
+    $id = $route->getParameter('photos');
+    $image = ImageStore::get($id);
+
+    if (!$image) {
+        return ImageView::notFound($id);
+    }
 });
+*/
+
 
 /**
 * add filters to handle ETags in requests
@@ -116,13 +129,12 @@ Route::filter('photo-exists', function()
 * c) get the request headers (from Request facade)
 * d) call PhotoView methods (easy as it's a facade)
 */
-Route::filter('photo-validate-etag', function()
+Route::filter('image-validate-etag', function($route)
 {
-    var_dump(Input::get('photos'));
+    $id = $route->getParameter('photos');
 
-    $store = App::make('Ace\Photos\IImageStore');
-    // get photo id from request somehow
-    #$image = $store->get();
+    $image = ImageStore::get($id);
+
     // get If-Match and If-None-Match headers from request
     // for If-Match check that etag matches and if not then return a prconditionFailed response
     // for If-None-Match check that etag matches and if it does then return notModified

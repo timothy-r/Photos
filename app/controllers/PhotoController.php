@@ -15,17 +15,19 @@ class PhotoController extends \BaseController
         );
 
         $this->beforeFilter(
-            'photo-validate-store', 
+            'image-validate-store', 
             ['only' => ['store']]
         );
-        
-        /*
+
         $this->beforeFilter(
-            'photo-validate-etag', 
+            'image-exists', 
+            ['only' => ['show', 'update', 'destroy']]
+        );
+        
+        $this->beforeFilter(
+            'image-validate-etag', 
             ['only' => ['show']]
         );
-        */
-        
     }
 
 	/**
@@ -82,10 +84,6 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $photo = ImageStore::get($id);
-
-        if (!$photo) {
-            return ImageView::notFound($id);
-        }
 
         // test the request ETag against the one for this Image
         // if they match return a NotModified status 304

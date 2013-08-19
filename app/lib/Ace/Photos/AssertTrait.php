@@ -4,6 +4,9 @@ use Ace\Photos\IImage;
 use Illuminate\Http\Response;
 use DateTime;
 
+/**
+* @todo rename this trait to reflect its functionality
+*/
 trait AssertTrait
 {
     protected $photo;

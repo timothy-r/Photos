@@ -1,4 +1,5 @@
 <?php
+
 use Ace\Photos\Image;
 use Ace\Photos\MongoDbImageStore;
 use Way\Tests\Assert;
@@ -229,18 +230,6 @@ class PhotoApplicationTest extends TestCase
        
 		$this->assertFalse($response->isOk());
 	}
-
-	public function testCantViewMissingPhoto()
-    {
-        $id = 123;
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue(null));
-		$response = $this->get('/photos/' . $id);
-
-        $this->assertResponseStatus(404);
-    }
 
     public function testCanUpdatePhotoWithoutETag()
     {
