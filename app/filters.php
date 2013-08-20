@@ -1,5 +1,7 @@
 <?php
 use Ace\Photos\Image;
+use Ace\Facades\ImageStore;
+use Ace\Facades\ImageView;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,7 +83,7 @@ Route::filter('csrf', function()
 });
 
 
-Route::filter('photo-validate-store', function()
+Route::filter('image-validate-store', function()
 {
     $rules = array(
         'name' => 'required'
@@ -91,6 +93,7 @@ Route::filter('photo-validate-store', function()
 
     if (!$validator->passes()) {
         // redirect depends on caller / output type?
+        // @todo put this redirect in a PhotoView method and call from here
         return Redirect::action('PhotoController@create')
             ->withInput()
             ->withErrors($validator->messages()
@@ -98,14 +101,45 @@ Route::filter('photo-validate-store', function()
     }
 });
 
-Route::filter('photo-validate-etag', function()
-{
-    var_dump(Input::get('photos'));
+/**
+* Add a filter to validate Images exist
+* return a 404 if they don't
+*/
 
-    $store = App::make('Ace\Photos\IImageStore');
-    // get photo id from request
-    #$image = $store->get();
-    // get If-None-Match header from request
+Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
+
+/*
+Route::filter('image-exists', function($route)
+{
+    $id = $route->getParameter('photos');
+    $image = ImageStore::get($id);
+
+    if (!$image) {
+        return ImageView::notFound($id);
+    }
+});
+*/
+
+
+/**
+* add filters to handle ETags in requests
+* they need to be able to:
+* a) get the Image object from the request
+* b) generate an ETag for it
+* c) get the request headers (from Request facade)
+* d) call PhotoView methods (easy as it's a facade)
+*
+* @todo convert to use a class not a function
+*/
+Route::filter('image-validate-etag', function($route)
+{
+    $id = $route->getParameter('photos');
+
+    $image = ImageStore::get($id);
+
+    // get If-Match and If-None-Match headers from request
+    // for If-Match check that etag matches and if not then return a prconditionFailed response
+    // for If-None-Match check that etag matches and if it does then return notModified
     $request_etag = Request::header('If-None-Match');
 
 });

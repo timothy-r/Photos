@@ -3,7 +3,11 @@
 use Ace\Photos\IImage;
 use Illuminate\Http\Response;
 use DateTime;
+use App;
 
+/**
+* @todo rename this trait to reflect its functionality
+*/
 trait AssertTrait
 {
     protected $photo;
@@ -45,7 +49,7 @@ trait AssertTrait
     protected function mock($class, $methods)
     {
         $mock = $this->getMock($class, $methods);
-        \App::instance($class, $mock);
+        App::instance($class, $mock);
         return $mock;
     }
 }

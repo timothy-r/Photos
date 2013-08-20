@@ -1,40 +1,33 @@
 <?php
-use Ace\Photos\IImageStore;
+
 use Ace\Photos\IImageFactory;
-use Ace\Photos\ImageStore;
-use Ace\Photos\PhotoView;
+use Ace\Facades\ImageStore;
+use Ace\Facades\ImageFactory;
+use Ace\Facades\ImageView;
 use Ace\Facades\EntityHandler;
 
 class PhotoController extends \BaseController
 {
-    /**
-    * @var Ace\Photos\IImageFactory
-    */
-    protected $factory;
-
-    /**
-    * @param Ace\Photos\IImageStore $store
-    */
-    public function __construct(IImageFactory $factory)
+    public function __construct()
     {
-        $this->factory = $factory;
-
         $this->beforeFilter('csrf',
             ['only' => 'store update']
         );
 
         $this->beforeFilter(
-            'photo-validate-store', 
+            'image-validate-store', 
             ['only' => ['store']]
         );
-        
-        /*
+
         $this->beforeFilter(
-            'photo-validate-etag', 
+            'image-exists', 
+            ['only' => ['show', 'update', 'destroy']]
+        );
+        
+        $this->beforeFilter(
+            'image-validate-etag', 
             ['only' => ['show']]
         );
-        */
-        
     }
 
 	/**
@@ -48,7 +41,7 @@ class PhotoController extends \BaseController
         $photos = ImageStore::all();
         
         // call the view to return a reponse based on Accept header in request
-        return PhotoView::makeManyAcceptable($photos);
+        return ImageView::makeManyAcceptable($photos);
     }
 
 	/**
@@ -73,7 +66,7 @@ class PhotoController extends \BaseController
         $name = Input::get('name');
 
         // create an Image instance
-        $image = $this->factory->create($name);
+        $image = ImageFactory::create($name);
 
         // store Image
         ImageStore::add($image);
@@ -92,17 +85,13 @@ class PhotoController extends \BaseController
 	{
         $photo = ImageStore::get($id);
 
-        if (!$photo) {
-            return PhotoView::notFound($id);
-        }
-
         // test the request ETag against the one for this Image
         // if they match return a NotModified status 304
         if (EntityHandler::matches(Request::header('If-None-Match'), $photo->getHash())){
-            return PhotoView::notModified($photo);
+            return ImageView::notModified($photo);
         }
 
-        return PhotoView::makeAcceptable($photo);
+        return ImageView::makeAcceptable($photo);
 	}
 
 	/**
@@ -126,14 +115,14 @@ class PhotoController extends \BaseController
 	{
         $photo = ImageStore::get($id);
         if (!$photo) {
-            return PhotoView::notFound($id);
+            return ImageView::notFound($id);
         }
 
         // test the request ETag against the one for this Image
         // if they don't match return a Precondition Failed (412) response
         $request_etag = Request::header('If-Match');
         if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-            return PhotoView::preconditionFailed($photo);
+            return ImageView::preconditionFailed($photo);
         }
 
         $name = Input::get('name');
@@ -156,14 +145,14 @@ class PhotoController extends \BaseController
 	{
         $photo = ImageStore::get($id);
         if (!$photo) {
-            return PhotoView::notFound($id);
+            return ImageView::notFound($id);
         }
 
         // test the request ETag against the one for this Image
         // if they don't match return a Precondition Failed (412) response
         $request_etag = Request::header('If-Match');
         if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-            return PhotoView::preconditionFailed($photo);
+            return ImageView::preconditionFailed($photo);
         }
 
         $result = ImageStore::remove($photo);

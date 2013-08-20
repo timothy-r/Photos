@@ -1,14 +1,15 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
-use Ace\Photos\IPhotoView;
+use Ace\Photos\IImageView;
+use Request;
 use Response;
 use DateTime;
 use View;
 use URL;
 use App;
 
-class PhotoViewer implements IPhotoView
+class ImageView implements IImageView
 {
     protected $get_photo_data;
 
@@ -46,17 +47,20 @@ class PhotoViewer implements IPhotoView
         if ($type === 'text/html') {
             $headers['Content-Type'] = 'text/html';
             return Response::make(View::make($name, $data), 200, $headers);
-        } else if ($type === 'application/json') {
-            return Response::json($data, 200, $headers);
-        } else {
-            return Response::make('', 406);
         }
+
+        if ($type === 'application/json') {
+            return Response::json($data, 200, $headers);
+        }
+        
+        // return NotAcceptable status
+        return $this->notAcceptable();
     }
 
     protected function getAcceptableContentType()
     {
         $negotiator = App::make('\Negotiation\FormatNegotiator');
-        $format = $negotiator->getBest(\Request::header('Accept'), ['text/html', 'application/json']);
+        $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
         return $format->getValue(); 
     }
 
@@ -75,6 +79,11 @@ class PhotoViewer implements IPhotoView
     public function preconditionFailed(IImage $image)
     {
         return Response::make('', 412, $this->headers($image));
+    }
+    
+    public function notAcceptable()
+    {
+        return Response::make('', 406);
     }
 
     protected function headers(IImage $image)
