@@ -114,9 +114,6 @@ class PhotoController extends \BaseController
 	public function update($id)
 	{
         $photo = ImageStore::get($id);
-        if (!$photo) {
-            return ImageView::notFound($id);
-        }
 
         // test the request ETag against the one for this Image
         // if they don't match return a Precondition Failed (412) response
@@ -144,9 +141,6 @@ class PhotoController extends \BaseController
 	public function destroy($id)
 	{
         $photo = ImageStore::get($id);
-        if (!$photo) {
-            return ImageView::notFound($id);
-        }
 
         // test the request ETag against the one for this Image
         // if they don't match return a Precondition Failed (412) response

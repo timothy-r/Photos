@@ -102,24 +102,9 @@ Route::filter('image-validate-store', function()
 });
 
 /**
-* Add a filter to validate Images exist
-* return a 404 if they don't
+* Adds a filter to validate Images exist
 */
-
 Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
-
-/*
-Route::filter('image-exists', function($route)
-{
-    $id = $route->getParameter('photos');
-    $image = ImageStore::get($id);
-
-    if (!$image) {
-        return ImageView::notFound($id);
-    }
-});
-*/
-
 
 /**
 * add filters to handle ETags in requests

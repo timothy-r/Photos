@@ -290,22 +290,6 @@ class PhotoApplicationTest extends TestCase
         $this->assertResponseStatus(412);
     }
 
-    public function testCantUpdateMissingPhoto()
-    {
-        $id = 1;
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue(null));
-        $this->mock_store->expects($this->never())
-            ->method('update');
-        $data = ['name' => 'A new name'];
-		$response = $this->put('/photos/' . $id, $data);
-
-        // assert redirected to view page
-        $this->assertResponseStatus(404);
-    }
-
     public function testCanRemoveExistingPhotoWithoutETag()
     {
         $id = 1;
@@ -361,21 +345,6 @@ class PhotoApplicationTest extends TestCase
 
         // assert redirected to view Photo page
         $this->assertResponseStatus(412);
-    }
-
-    public function testCantRemoveMissingPhoto()
-    {
-        $id = 1;
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue(null));
-        $this->mock_store->expects($this->never())
-            ->method('remove');
-		$response = $this->delete('/photos/' . $id);
-
-        // assert redirected to index page
-        $this->assertResponseStatus(404);
     }
 
     public function testFailureToRemovePhotoShowsIt()
