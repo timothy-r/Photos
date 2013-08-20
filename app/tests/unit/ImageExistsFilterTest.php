@@ -2,7 +2,7 @@
 use Ace\Photos\ImageExistsFilter;
 use Ace\Photos\AssertTrait;
 
-class ImageExistsFilterTest extends PHPUnit_Framework_TestCase
+class ImageExistsFilterTest extends TestCase
 {
     use AssertTrait;
 
