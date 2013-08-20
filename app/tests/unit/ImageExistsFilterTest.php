@@ -20,6 +20,7 @@ class ImageExistsFilterTest extends PHPUnit_Framework_TestCase
         $mock_route = $this->getMock('Illuminate\Routing\Route', ['getParameter'], [], '', false);
         $mock_route->expects($this->any())
             ->method('getParameter')
+            ->with('photos')
             ->will($this->returnValue($id));
 
         $filter = new ImageExistsFilter;
@@ -27,5 +28,28 @@ class ImageExistsFilterTest extends PHPUnit_Framework_TestCase
 
         // null is validation suceeded
         $this->assertNull($result);
+    }
+
+    public function testMissingImageIsNotValid()
+    {
+        $id = 1;
+        $mock_store = $this->mock('Ace\Photos\IImageStore',
+            ['all', 'add', 'get', 'remove', 'update']
+        );
+        $mock_store->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue(null));
+
+        $mock_route = $this->getMock('Illuminate\Routing\Route', ['getParameter'], [], '', false);
+        $mock_route->expects($this->any())
+            ->method('getParameter')
+            ->with('photos')
+            ->will($this->returnValue($id));
+
+        $filter = new ImageExistsFilter;
+        $result = $filter->filter($mock_route);
+
+        // Reponse is validation failed
+        $this->assertInstanceOf('Illuminate\Http\Response', $result);
     }
 }

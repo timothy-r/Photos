@@ -128,6 +128,8 @@ Route::filter('image-exists', function($route)
 * b) generate an ETag for it
 * c) get the request headers (from Request facade)
 * d) call PhotoView methods (easy as it's a facade)
+*
+* @todo convert to use a class not a function
 */
 Route::filter('image-validate-etag', function($route)
 {

@@ -1,6 +1,6 @@
 <?php
-use Ace\Photos\IImageFactory;
 
+use Ace\Photos\IImageFactory;
 use Ace\Facades\ImageStore;
 use Ace\Facades\ImageFactory;
 use Ace\Facades\ImageView;
