@@ -9,6 +9,7 @@ class ImageIfMatchFilterTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockImageStore();
         $this->givenARequest();
+        $this->request->headers->set('If-Match', 'abcdef');
         $this->givenAMockEntityHandler(true);
         $this->givenAMockImage();
 
@@ -29,6 +30,6 @@ class ImageIfMatchFilterTest extends FilterTest
         
         $this->filter = new ImageIfMatchFilter;
         $this->whenTheFilterIsRun();
-        $this->thenTheFilterFailed();
+        $this->thenTheFilterFailed(412);
     }
 }

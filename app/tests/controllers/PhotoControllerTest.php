@@ -170,26 +170,6 @@ class PhotoApplicationTest extends TestCase
         $this->assertETag($this->photo, $response);
 	}
 
-	public function testConditionalRequestToViewPhotoGets304IfMatches()
-    {
-        $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue($this->photo));
-        $headers = ['HTTP_If-None-Match' => $this->photo->getHash()];
-
-        $response = $this->get('/photos/' . $id, [], [], $headers);
-        $this->assertResponseStatus(304);
-        $this->assertContentType('text/html; charset=UTF-8', $response);
-
-        // assert ETag is set
-        $this->assertETag($this->photo, $response);
-        // assert Last-Modified is not  set
-        $this->assertSame(null, $response->headers->get('Last-Modified'));
-    }
-
 	public function testConditionalRequestToViewPhotoGetsNewPhotoIfNotMatches()
     {
         $id = 1;
