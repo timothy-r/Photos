@@ -231,7 +231,7 @@ class PhotoApplicationTest extends TestCase
 		$this->assertFalse($response->isOk());
 	}
 
-    public function testCanUpdatePhotoWithoutETag()
+    public function testCanUpdatePhoto()
     {
         $id = 1;
         $this->givenAPhoto($id);
@@ -251,46 +251,7 @@ class PhotoApplicationTest extends TestCase
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
     }
 
-    public function testCanUpdatePhotoWithMatchingETag()
-    {
-        $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->once())
-            ->method('update')
-            ->with($this->photo)
-            ->will($this->returnValue(true));
-        $data = ['name' => 'A new name'];
-        $headers = ['HTTP_If-Match' => $this->photo->getHash()];
-		$response = $this->put('/photos/' . $id, $data, [], $headers);
-
-        // assert redirected to view page
-        $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@show', [$id]);
-    }
-
-    public function testCantUpdatePhotoWithNonMatchingETag()
-    {
-        $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->never())
-            ->method('update');
-        $data = ['name' => 'A new name'];
-        $headers = ['HTTP_If-Match' => 'not-an-etag'];
-		$response = $this->put('/photos/' . $id, $data, [], $headers);
-
-        // assert Precondition Failed response
-        $this->assertResponseStatus(412);
-    }
-
-    public function testCanRemoveExistingPhotoWithoutETag()
+    public function testCanRemovePhoto()
     {
         $id = 1;
         $this->givenAPhoto($id);
@@ -307,44 +268,6 @@ class PhotoApplicationTest extends TestCase
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@index');
-    }
-
-    public function testCanRemoveExistingPhotoWithMatchingETag()
-    {
-        $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->once())
-            ->method('remove')
-            ->with($this->photo)
-            ->will($this->returnValue(true));
-        $headers = ['HTTP_If-Match' => $this->photo->getHash()];
-		$response = $this->delete('/photos/' . $id, [], [], $headers);
-
-        // assert redirected to index page
-        $this->assertResponseStatus(302);
-        $this->assertRedirectedToAction('PhotoController@index');
-    }
-
-    public function testCantRemoveExistingPhotoWithNonMatchingETag()
-    {
-        $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
-            ->method('get')
-            ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->never())
-            ->method('remove');
-
-        $headers = ['HTTP_If-Match' => 'not-an-etag'];
-		$response = $this->delete('/photos/' . $id, [], [], $headers);
-
-        // assert redirected to view Photo page
-        $this->assertResponseStatus(412);
     }
 
     public function testFailureToRemovePhotoShowsIt()
