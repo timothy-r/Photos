@@ -27,6 +27,6 @@ class ImageExistsFilterTest extends FilterTest
 
         $this->filter = new ImageExistsFilter;
         $this->whenTheFilterIsRun();
-        $this->thenTheFilterFailed();
+        $this->thenTheFilterFailed(404);
     }
 }

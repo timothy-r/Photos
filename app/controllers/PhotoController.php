@@ -38,10 +38,10 @@ class PhotoController extends \BaseController
 	public function index()
 	{
         // obtain an array of Image objects to display
-        $photos = ImageStore::all();
+        $images = ImageStore::all();
         
         // call the view to return a reponse based on Accept header in request
-        return ImageView::makeManyAcceptable($photos);
+        return ImageView::makeManyAcceptable($images);
     }
 
 	/**
@@ -83,15 +83,15 @@ class PhotoController extends \BaseController
 	 */
 	public function show($id)
 	{
-        $photo = ImageStore::get($id);
+        $image = ImageStore::get($id);
 
         // test the request ETag against the one for this Image
         // if they match return a NotModified status 304
-        if (EntityHandler::matches(Request::header('If-None-Match'), $photo->getHash())){
-            return ImageView::notModified($photo);
+        if (EntityHandler::matches(Request::header('If-None-Match'), $image->getHash())){
+            return ImageView::notModified($image);
         }
 
-        return ImageView::makeAcceptable($photo);
+        return ImageView::makeAcceptable($image);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class PhotoController extends \BaseController
             return Redirect::action('PhotoController@index');
         } 
 
-        // delete failed - show image
+        // delete failed - show image - show an error message
         return Redirect::action('PhotoController@show', [$id]);
 	}
 }
