@@ -28,6 +28,11 @@ class PhotoController extends \BaseController
             'image-matches', 
             ['only' => ['update', 'destroy']]
         );
+
+        $this->beforeFilter(
+            'image-does-not-match', 
+            ['only' => ['show']]
+        );
     }
 
 	/**
@@ -84,12 +89,6 @@ class PhotoController extends \BaseController
 	public function show($id)
 	{
         $image = ImageStore::get($id);
-
-        // test the request ETag against the one for this Image
-        // if they match return a NotModified status 304
-        if (EntityHandler::matches(Request::header('If-None-Match'), $image->getHash())){
-            return ImageView::notModified($image);
-        }
 
         return ImageView::makeAcceptable($image);
 	}

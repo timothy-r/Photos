@@ -110,3 +110,9 @@ Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
 * Adds a filter to validate that the incoming If-Matches header is valid for the requested Image
 */
 Route::filter('image-matches', 'Ace\Photos\ImageIfMatchFilter');
+
+/**
+* Adds a filter to validate that the incoming If-None-Matches header does not match the requested Image
+* returns a NotModified response if they match
+*/
+Route::filter('image-does-not-match', 'Ace\Photos\ImageIfNoneMatchFilter');
