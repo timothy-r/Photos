@@ -25,8 +25,8 @@ class PhotoController extends \BaseController
         );
         
         $this->beforeFilter(
-            'image-validate-etag', 
-            ['only' => ['show']]
+            'image-matches', 
+            ['only' => ['update', 'destroy']]
         );
     }
 
@@ -113,23 +113,15 @@ class PhotoController extends \BaseController
 	 */
 	public function update($id)
 	{
-        $photo = ImageStore::get($id);
-        if (!$photo) {
-            return ImageView::notFound($id);
-        }
-
-        // test the request ETag against the one for this Image
-        // if they don't match return a Precondition Failed (412) response
-        $request_etag = Request::header('If-Match');
-        if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-            return ImageView::preconditionFailed($photo);
-        }
+        $image = ImageStore::get($id);
 
         $name = Input::get('name');
-        $photo->setName($name);
+
+        // update the Image
+        $image->setName($name);
 
         // store Image
-        ImageStore::update($photo);
+        ImageStore::update($image);
 
         // redirect to view Photo
         return Redirect::action('PhotoController@show', [$id]);
@@ -143,24 +135,13 @@ class PhotoController extends \BaseController
 	 */
 	public function destroy($id)
 	{
-        $photo = ImageStore::get($id);
-        if (!$photo) {
-            return ImageView::notFound($id);
-        }
+        $image = ImageStore::get($id);
 
-        // test the request ETag against the one for this Image
-        // if they don't match return a Precondition Failed (412) response
-        $request_etag = Request::header('If-Match');
-        if ($request_etag && ! EntityHandler::matches($request_etag, $photo->getHash())){
-            return ImageView::preconditionFailed($photo);
-        }
-
-        $result = ImageStore::remove($photo);
-        if ($result) {
+        if (ImageStore::remove($image)) {
             return Redirect::action('PhotoController@index');
         } 
 
-        // delete failed - show photo
+        // delete failed - show image
         return Redirect::action('PhotoController@show', [$id]);
 	}
 }

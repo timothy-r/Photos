@@ -102,44 +102,11 @@ Route::filter('image-validate-store', function()
 });
 
 /**
-* Add a filter to validate Images exist
-* return a 404 if they don't
+* Adds a filter to validate Images exist
 */
-
 Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
 
-/*
-Route::filter('image-exists', function($route)
-{
-    $id = $route->getParameter('photos');
-    $image = ImageStore::get($id);
-
-    if (!$image) {
-        return ImageView::notFound($id);
-    }
-});
-*/
-
-
 /**
-* add filters to handle ETags in requests
-* they need to be able to:
-* a) get the Image object from the request
-* b) generate an ETag for it
-* c) get the request headers (from Request facade)
-* d) call PhotoView methods (easy as it's a facade)
-*
-* @todo convert to use a class not a function
+* Adds a filter to validate that the incoming If-Matches header is valid for the requested Image
 */
-Route::filter('image-validate-etag', function($route)
-{
-    $id = $route->getParameter('photos');
-
-    $image = ImageStore::get($id);
-
-    // get If-Match and If-None-Match headers from request
-    // for If-Match check that etag matches and if not then return a prconditionFailed response
-    // for If-None-Match check that etag matches and if it does then return notModified
-    $request_etag = Request::header('If-None-Match');
-
-});
+Route::filter('image-matches', 'Ace\Photos\ImageIfMatchFilter');
