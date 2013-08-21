@@ -9,11 +9,7 @@ class ImageIfMatchFilterTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockImageStore();
         $this->givenARequest();
-
-        // set up the request
-        $this->request->headers->set('If-Match', 'abcdef');
-        // mock EntityHandler
-
+        $this->givenAMockEntityHandler(true);
         $this->givenAMockImage();
 
         $this->filter = new ImageIfMatchFilter;
@@ -27,8 +23,10 @@ class ImageIfMatchFilterTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockImageStore();
         $this->givenARequest();
-
-        // mock the Request here
+        $this->request->headers->set('If-Match', 'abcdef');
+        $this->givenAMockEntityHandler(false);
+        $this->givenAMockImage();
+        
         $this->filter = new ImageIfMatchFilter;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterFailed();

@@ -20,7 +20,7 @@ trait MockTrait
 
     protected function givenAMockImage()
     {
-        $this->mock_image = $this->getMock('Ace\Photos\Image');
+        $this->mock_image = $this->getMock('Ace\Photos\Image', ['getHash']);
         $this->mock_image_store->expects($this->any())
             ->method('get')
             ->will($this->returnValue($this->mock_image));

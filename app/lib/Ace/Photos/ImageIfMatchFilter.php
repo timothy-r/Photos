@@ -3,6 +3,8 @@
 use Ace\Facades\ImageStore;
 // @todo investigate the class name clash with Ace\Photos\ImageView
 use Ace\Facades\ImageView as ImgView;
+use Ace\Facades\EntityHandler;
+
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 
@@ -25,7 +27,12 @@ class ImageIfMatchFilter
     {
         $id = $route->getParameter('photos');
         $image = ImageStore::get($id);
-        #$request_etag = $request->header('If-Match');
-            
+        $if_match = $request->headers->get('If-Match');
+
+        // really ought not expose this filter to how an Image Etag is generated
+        if ($if_match && ! EntityHandler::matches($if_match, $image->getHash())){
+            return ImgView::preconditionFailed($image);
+        }
+        // returning nothing is success 
     }
 }
