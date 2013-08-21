@@ -10,6 +10,7 @@ class ImageExistsFilterTest extends FilterTest
         $id = 1;
         $this->givenAMockRoute($id);
         $this->givenAMockImageStore();
+        $this->givenARequest();
         $this->givenAMockImage();
 
         $this->filter = new ImageExistsFilter;
@@ -22,6 +23,7 @@ class ImageExistsFilterTest extends FilterTest
         $id = 1;
         $this->givenAMockRoute($id);
         $this->givenAMockImageStore();
+        $this->givenARequest();
 
         $this->filter = new ImageExistsFilter;
         $this->whenTheFilterIsRun();

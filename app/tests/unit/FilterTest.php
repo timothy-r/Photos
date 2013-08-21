@@ -15,7 +15,7 @@ abstract class FilterTest extends TestCase
 
     protected function whenTheFilterIsRun()
     {
-        $this->result = $this->filter->filter($this->mock_route);
+        $this->result = $this->filter->filter($this->mock_route, $this->request);
     }
 
     protected function thenTheFilterFailed()

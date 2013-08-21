@@ -1,10 +1,13 @@
 <?php namespace Ace\Photos;
 
+use Illuminate\Http\Request;
+
 trait MockTrait
 {
     protected $mock_image;
     protected $mock_image_store;
     protected $mock_route;
+    protected $request;
 
     protected function givenAMockRoute($id)
     {
@@ -27,5 +30,9 @@ trait MockTrait
         $this->mock_image_store = $this->mock('Ace\Photos\IImageStore',
             ['all', 'add', 'get', 'remove', 'update']
         );
+    }
+
+    protected function givenARequest(){
+        $this->request = new Request;
     }
 }

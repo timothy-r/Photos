@@ -4,6 +4,7 @@ use Ace\Facades\ImageStore;
 // @todo investigate the class name clash with Ace\Photos\ImageView
 use Ace\Facades\ImageView as ImgView;
 use Illuminate\Routing\Route;
+use Illuminate\Http\Request;
 
 /**
 * Validates that an image's ETag against the request header If-Match 
@@ -17,13 +18,14 @@ class ImageIfMatchFilter
     * if not set then return null
     *
     * @param Illuminate\Routing\Route $route
-    *
+    * @param Illuminate\Http\Request $request
     * @return mixed null|Illuminate\Http\Response
     */
-    public function filter(Route $route)
+    public function filter(Route $route, Request $request)
     {
         $id = $route->getParameter('photos');
         $image = ImageStore::get($id);
+        #$request_etag = $request->header('If-Match');
             
     }
 }
