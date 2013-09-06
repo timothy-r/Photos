@@ -61,7 +61,10 @@ class ImageView implements IImageView
     {
         $negotiator = App::make('\Negotiation\FormatNegotiator');
         $format = $negotiator->getBest(Request::header('Accept'), ['text/html', 'application/json']);
-        return $format->getValue(); 
+        if ($format) {
+            return $format->getValue(); 
+        }
+        return '';
     }
 
     public function notFound($id)
