@@ -38,7 +38,10 @@ class ImageView implements IImageView
         $data = array_map($this->get_photo_data, $images);
         return $this->getResponse('photos', ['photos' => $data], []);
     }
-
+    
+    /**
+    * @todo set Content-Length header
+    */
     protected function getResponse($name, $data, $headers)
     {
         // get best response format
