@@ -17,10 +17,8 @@ class ImageView implements IImageView
     {
         $this->get_photo_data = function(IImage $image){
             return [
-                'id' => $image->getId(),
                 'name' => $image->getName(),
                 'last_modified' => $image->getLastModified(),
-                'hash' => $image->getHash(),
                 'uri' => URL::action('PhotoController@show', [$image->getId()])
             ];
         };
@@ -48,12 +46,20 @@ class ImageView implements IImageView
         $type = $this->getAcceptableContentType();
 
         if ($type === 'text/html') {
-            $headers['Content-Type'] = 'text/html';
-            return Response::make(View::make($name, $data), 200, $headers);
+            $headers['Content-Type'] = $type;
+            $contents = View::make($name, $data);
+            $response = Response::make($contents, 200, $headers);
+            $response->header('Content-Length', strlen($contents));
+            return $response;
         }
 
         if ($type === 'application/json') {
-            return Response::json($data, 200, $headers);
+            $headers['Content-Type'] = $type;
+            $contents = json_encode($data);
+            $response = Response::make($contents, 200, $headers);
+            $response->header('Content-Length', strlen($contents));
+            //$response = Response::json($data, 200, $headers);
+            return $response;
         }
         
         // return NotAcceptable status

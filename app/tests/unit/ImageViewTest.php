@@ -26,6 +26,7 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame($this->photo->getHash(), $response->getETag());
+        $this->assertTrue(0 < $response->headers->get('Content-Length'));
         $this->assertLastModified($this->photo, $response);
         $this->assertContentType($content_type, $response);
     }
@@ -46,6 +47,7 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
         
         $this->assertSame(200, $response->getStatusCode());
         $this->assertContentType($content_type, $response);
+        $this->assertTrue(0 < $response->headers->get('Content-Length'));
     }
 
     public function testMakeUnacceptableImage()
@@ -109,11 +111,11 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         
         $this->assertSame(304, $response->getStatusCode());
+
+        $this->assertTrue($response->headers->has('Date'));
         $this->assertSame($this->photo->getHash(), $response->getETag());
 
         $this->assertSame(null, $response->headers->get('Last-Modified'));
-        $this->assertTrue($response->headers->has('Date'));
-
         $this->assertContentType(null, $response);
     }
 

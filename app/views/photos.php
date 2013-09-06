@@ -9,7 +9,7 @@
 <!-- list images here -->
 <ul>
 <?php foreach ($photos as $photo) : ?>
-    <li><a href="<?php echo $photo['uri']; ?>"><?php echo $photo['name'].' ('. $photo['id'] .')'; ?></a></li>
+    <li><a href="<?php echo $photo['uri']; ?>"><?php echo $photo['name']; ?></a></li>
 <?php endforeach ?>
 
 </ul>
@@ -17,4 +17,3 @@
 
 </body>
 </html>
-
