@@ -119,7 +119,9 @@ class PhotoApplicationTest extends TestCase
         $id = 1;
         $this->givenAPhoto($id);
         $this->mock_store->expects($this->once())
-            ->method('add');
+            ->method('add')
+            ->will($this->returnValue(true));
+
         $mock_factory->expects($this->once())
             ->method('create')
             ->will($this->returnValue($this->photo));
