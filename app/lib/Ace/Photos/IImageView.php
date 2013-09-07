@@ -23,7 +23,6 @@ interface IImageView
     */
     public function notModified(IImage $image);
 
-    
     /**
     * response with a 412
     * @return Illuminate\Http\Response
@@ -35,4 +34,10 @@ interface IImageView
     * @return Illuminate\Http\Response
     */
     public function notAcceptable();
+
+    /**
+    * response to trying to post/put invalid data
+    * sends a 400 status code
+    */
+    public function badRequest();
 }

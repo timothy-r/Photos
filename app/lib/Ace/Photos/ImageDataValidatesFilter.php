@@ -1,7 +1,7 @@
 <?php namespace Ace\Photos;
 
 // @todo investigate the class name clash with Ace\Photos\ImageView
-#use Ace\Facades\ImageView as ImgView;
+use Ace\Facades\ImageView as ImgView;
 use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -28,6 +28,8 @@ class ImageDataValidatesFilter
         $validator = Validator::make($request->only(array_keys($rules)), $rules);
 
         if (!$validator->passes()) {
+            return ImgView::badRequest();
+            /*
             // redirect depends on caller / output type?
             // @todo put this redirect in a PhotoView method and call from here
             // should we show create or edit action? test if there is a photo identified in the request
@@ -35,6 +37,7 @@ class ImageDataValidatesFilter
                 ->withInput()
                 ->withErrors($validator->messages()
             );
+            */
         }
     }
 }

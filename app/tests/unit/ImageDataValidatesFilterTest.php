@@ -36,7 +36,7 @@ class ImageDataValidatesFilterTest extends FilterTest
 
         $this->filter = new ImageDataValidatesFilter;
         $this->whenTheFilterIsRun();
-        $this->thenTheFilterFailed(302, 'Illuminate\Http\RedirectResponse');
+        $this->thenTheFilterFailed(400);
     }
 
     public function getInvalidImageData()

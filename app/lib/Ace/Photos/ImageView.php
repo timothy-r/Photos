@@ -9,6 +9,12 @@ use View;
 use URL;
 use App;
 
+/**
+ * Class to handle generating and returning responses
+ *
+ * @todo handle errors differently depending on Accept header
+ * if text/html then redirect client, otherwise just return reponses
+*/
 class ImageView implements IImageView
 {
     protected $get_photo_data;
@@ -36,9 +42,15 @@ class ImageView implements IImageView
         $data = array_map($this->get_photo_data, $images);
         return $this->getResponse('photos', ['photos' => $data], []);
     }
-    
+
+    public function badRequest()
+    {
+        return Response::make('', 400);
+    }
+
     /**
-    * @todo set Content-Length header
+    * @todo make this more extensible?
+    * it needs to deal with many more MimeTypes
     */
     protected function getResponse($name, $data, $headers)
     {
@@ -58,7 +70,6 @@ class ImageView implements IImageView
             $contents = json_encode($data);
             $response = Response::make($contents, 200, $headers);
             $response->header('Content-Length', strlen($contents));
-            //$response = Response::json($data, 200, $headers);
             return $response;
         }
         
