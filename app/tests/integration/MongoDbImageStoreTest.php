@@ -59,13 +59,12 @@ class MongoDbImageStoreTest extends \PHPUnit_Framework_TestCase
 
         $image->setName($new_name);
         $result = $this->image_store->update($image);
-        $this->assertEquals($id, $image->getId());
         $this->assertTrue($result, 'Expected ImageStore::update() to return true');
         $this->assertSame($new_name, $image->getName());
 
-        $result = $this->image_store->get($image->getId());
+        $result = $this->image_store->get($id);
         $this->assertInstanceOf('Ace\Photos\Image', $result, "Expected ImageStore::get() to return an Image");
-        $this->assertSame($id, $result->getId());
+        $this->assertEquals($id, $result->getId());
         $this->assertSame($new_name, $result->getName());
     }
 

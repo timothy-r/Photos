@@ -27,10 +27,10 @@ class Image extends Model implements IImage
         'size' => array('type'=>'integer', 'default' => 0),
     );
 
-    public function __construct()
+    public function __construct($data = [])
     {
-        Log::info(__METHOD__. " " . static::$config);
-        parent::__construct();
+        Log::info(__METHOD__. " " . static::$config . " " . print_r($data, 1));
+        parent::__construct($data);
     }
 
     public static function setConfig($config)
