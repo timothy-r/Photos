@@ -83,7 +83,7 @@ Route::filter('csrf', function()
 });
 
 
-Route::filter('image-validate-store', function()
+Route::filter('image-validate', function()
 {
     $rules = array(
         'name' => 'required'

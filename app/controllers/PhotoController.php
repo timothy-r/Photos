@@ -15,7 +15,7 @@ class PhotoController extends \BaseController
         );
 
         $this->beforeFilter(
-            'image-validate-store', 
+            'image-validate', 
             ['only' => ['store', 'update']]
         );
 
