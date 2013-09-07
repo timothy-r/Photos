@@ -22,7 +22,7 @@ trait MockTrait
 
     protected function givenAMockImage($id = 1)
     {
-        $this->mock_image = $this->getMock('Ace\Photos\Image', ['getId', 'getHash', 'getLastModified']);
+        $this->mock_image = $this->getMock('Ace\Photos\IImage', ['save', 'getId', 'getName', 'setName', 'getHash', 'getLastModified', 'getSize']);
         $this->mock_image->expects($this->any())
             ->method('getId')
             ->will($this->returnValue($id));
@@ -32,6 +32,7 @@ trait MockTrait
         $this->mock_image->expects($this->any())
             ->method('getLastModified')
             ->will($this->returnValue(time()));
+
         if ($this->mock_image_store) {
             $this->mock_image_store->expects($this->any())
                 ->method('get')

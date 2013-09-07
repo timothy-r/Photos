@@ -1,12 +1,15 @@
 <?php
 use Ace\Photos\MongoDbImageStore;
 use Ace\Photos\Image;
+use Ace\Photos\MockTrait;
 
 /**
 * @group integration
 */
 class MongoDbImageStoreTest extends \PHPUnit_Framework_TestCase
 {
+    use MockTrait;
+
     protected $image_store;
 
     public function setUp()
@@ -61,12 +64,14 @@ class MongoDbImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function testFailureToUpdateImageReturnsFalse()
     {
-        $image = $this->getMock('Ace\Photos\IImage', ['save', 'getId', 'getName', 'setName', 'getHash', 'getLastModified', 'getSize']);
-        $image->expects($this->any())
+        $this->givenAMockImage(1);
+
+        //$image = $this->getMock('Ace\Photos\IImage', ['save', 'getId', 'getName', 'setName', 'getHash', 'getLastModified', 'getSize']);
+        $this->mock_image->expects($this->any())
             ->method('save')
             ->will($this->returnValue(['err' => 'an error']));
 
-        $result = $this->image_store->update($image);
+        $result = $this->image_store->update($this->mock_image);
         $this->assertFalse($result, 'Expected ImageStore to return false for update');
     }
 

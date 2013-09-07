@@ -37,7 +37,10 @@ class PhotoControllerTest extends TestCase
         $id = 1;
         $name = 'A fantastic panorama';
         $this->givenAMockImage($id);
-        $this->mock_image->setName($name);
+        $this->mock_image->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue($name));
+        
         $photos = [$id => $this->mock_image];
         $this->mock_image_store->expects($this->any())
             ->method('all')
