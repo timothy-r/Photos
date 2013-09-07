@@ -5,10 +5,20 @@ class MongoDbImageFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateMongoDbImage()
     {
-        $factory = new Factory;
-        $this->assertInstanceOf('Ace\Photos\IImageFactory', $factory);
+        // pick any real directory and file name
+        $path = __DIR__ . '/Image_tmp.jpg';
+        $factory = $this->getMock('Ace\Photos\MongoDbImageFactory', ['getStoragePath']);
+        $factory->expects($this->any())
+            ->method('getStoragePath')
+            ->will($this->returnValue($path));
+
         $name = 'What a wonderful panorama';
-        $result = $factory->create($name);
+        $file = $this->getMock('Symfony\Component\HttpFoundation\File\UploadedFile', ['getExtension', 'move'], [], '', false);
+        $file->expects($this->any())
+            ->method('getExtension')
+            ->will($this->returnValue('jpg'));
+
+        $result = $factory->create($name, $file);
         $this->assertInstanceOf('\Ace\Photos\Image', $result);
         $this->assertSame($name, $result->getName());
     }

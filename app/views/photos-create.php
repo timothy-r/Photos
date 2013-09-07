@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Add a photo</h1>
-<form method="POST" action="/photos">
+<form method="POST" action="/photos" enctype="multipart/form-data">
 <input name="name" type="text" placeholder="Name:"></input>
 <input name="image" type="file" placeholder="Pick an image"></input>
 <input name="submit" type="submit" value="Add"></input>

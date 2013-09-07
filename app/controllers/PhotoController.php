@@ -73,8 +73,10 @@ class PhotoController extends \BaseController
 		// get the input data
         $name = Input::get('name');
         
+        $image_file = Input::file('image');
+
         // create an Image instance
-        $image = ImageFactory::create($name);
+        $image = ImageFactory::create($name, $image_file);
         
         // store Image
         $result = ImageStore::add($image);

@@ -1,5 +1,6 @@
 <?php namespace Ace\Photos;
 
+use Purekid\Mongodm\MongoDB;
 use Purekid\Mongodm\Model;
 use Ace\Photos\IImage;
 use Log;
@@ -26,17 +27,8 @@ class Image extends Model implements IImage
         'hash' => array('type'=>'string', 'default' => ''),
         'last_modified' => array('type'=>'integer'),
         'size' => array('type'=>'integer', 'default' => 0),
+        'filename' => array('type'=>'string', 'default' => ''),
     );
-
-    public function __construct($data = [])
-    {
-        #$name = Config::get('database.default');
-        #$config = Config::get('database.' .$name);
-        #static::$config = $config['connection']['database'];
-
-        Log::info(__METHOD__. " " . static::$config);
-        parent::__construct($data);
-    }
 
     public static function setConfig($config)
     {
@@ -62,6 +54,21 @@ class Image extends Model implements IImage
     {
         $this->name = $name;
         $this->changed();
+    }
+
+    public function setFile($filename)
+    {
+        $this->filename = $filename;
+        // add file to grid fs
+        #$result = MongoDB::instance()->set_file($filename);
+        #var_dump($result);
+
+        $this->changed();
+    }
+
+    public function getFile()
+    {
+        
     }
 
     public function getHash()

@@ -6,5 +6,5 @@ interface IImageFactory
     * @param string $name
     * @return IImage
     */
-    public function create($name);
+    public function create($name, $filename);
 }
