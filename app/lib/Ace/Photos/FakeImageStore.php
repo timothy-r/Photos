@@ -10,6 +10,8 @@ use Ace\Photos\Image;
 class FakeImageStore implements IImageStore
 {
     
+    public function init(){}
+
     public function add(IImage $image)
     {
         return true;

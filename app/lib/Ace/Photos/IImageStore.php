@@ -7,6 +7,8 @@ use Ace\Photos\IImage;
 */
 interface IImageStore
 {
+    public function init();
+
     public function add(IImage $image);
 
     public function update(IImage $image);

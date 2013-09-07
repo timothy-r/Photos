@@ -2,9 +2,10 @@
 
 return array(
 
-    'default' => 'testing',
-   /* Configuration section name*/
-    'testing' => array(
+    'default' => 'test',
+
+    /* Configuration section name*/
+    'test' => array(
         'connection' => array(
             'hostnames' => 'localhost',
             'database'  => 'test',

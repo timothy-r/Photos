@@ -3,6 +3,7 @@
 use Purekid\Mongodm\Model;
 use Ace\Photos\IImage;
 use Log;
+use Config;
 
 /**
 * Represents a single Image document
@@ -29,7 +30,11 @@ class Image extends Model implements IImage
 
     public function __construct($data = [])
     {
-        Log::info(__METHOD__. " " . static::$config . " " . print_r($data, 1));
+        #$name = Config::get('database.default');
+        #$config = Config::get('database.' .$name);
+        #static::$config = $config['connection']['database'];
+
+        Log::info(__METHOD__. " " . static::$config);
         parent::__construct($data);
     }
 

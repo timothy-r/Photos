@@ -15,16 +15,17 @@ class MongoDbImageStore implements IImageStore
     
     public function __construct()
     {
-        $this->initDb();
+        $this->init();
     }
 
-    protected function initDb()
+    public function init()
     {
+        Log::info(__METHOD__);
         // initialize the MongoDb connection here
         $name = Config::get('database.default');
         $config = Config::get('database.' .$name);
         $db = MongoDB::instance($name, $config);
-        Image::setConfig($name);
+        Image::setConfig($config['connection']['database']);
     }
 
     /**

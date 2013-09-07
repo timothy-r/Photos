@@ -42,7 +42,7 @@ trait MockTrait
 
     protected function givenAMockImageStore(){
         $this->mock_image_store = $this->mock('Ace\Photos\IImageStore',
-            ['all', 'add', 'get', 'remove', 'update']
+            ['all', 'add', 'get', 'remove', 'update', 'init']
         );
     }
 

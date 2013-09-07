@@ -33,6 +33,9 @@ class PhotoController extends \BaseController
             'image-does-not-match', 
             ['only' => ['show']]
         );
+
+        // ensure that the Store has read config before creating an Image instance (in factory)
+        ImageStore::init();
     }
 
 	/**
@@ -69,7 +72,7 @@ class PhotoController extends \BaseController
 	{
 		// get the input data
         $name = Input::get('name');
-
+        
         // create an Image instance
         $image = ImageFactory::create($name);
         

@@ -9,6 +9,8 @@ use Ace\Photos\IImage;
 class NullImageStore implements IImageStore
 {
     
+    public function init(){}
+
     public function add(IImage $image)
     {
         return true;
