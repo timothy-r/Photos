@@ -72,12 +72,16 @@ class PhotoController extends \BaseController
 
         // create an Image instance
         $image = ImageFactory::create($name);
-
+        
         // store Image
-        ImageStore::add($image);
+        $result = ImageStore::add($image);
+        if ($result) {
+            // redirect to view Photo
+            return Redirect::action('PhotoController@show', [$image->getId()]);
+        }
 
-        // redirect to view Photo
-        return Redirect::action('PhotoController@show', [$image->getId()]);
+        // re-show create form & errors 
+        return Redirect::action('PhotoController@create', []);
 	}
 
 	/**

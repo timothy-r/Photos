@@ -3,12 +3,15 @@
 use Ace\Photos\Image;
 use Ace\Photos\ImageView;
 use Ace\Photos\AssertTrait;
+use Ace\Photos\MockTrait;
 
 require_once(__DIR__.'/../../lib/Ace/Photos/AssertTrait.php');
 
 class ImageViewTest extends PHPUnit_Framework_TestCase
 {
     use AssertTrait;
+    
+    use MockTrait;
 
     /**
     * @dataProvider getAcceptableHeaders
@@ -20,14 +23,14 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
             ->method('getAcceptableContentType')
             ->will($this->returnValue($accept_type));
 
-        $this->givenAPhoto();
+        $this->givenAMockImage();
 
-        $response = $mock_viewer->makeAcceptable($this->photo);
+        $response = $mock_viewer->makeAcceptable($this->mock_image);
         
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame($this->photo->getHash(), $response->getETag());
+        $this->assertSame($this->mock_image->getHash(), $response->getETag());
         $this->assertTrue(0 < $response->headers->get('Content-Length'));
-        $this->assertLastModified($this->photo, $response);
+        $this->assertLastModified($this->mock_image, $response);
         $this->assertContentType($content_type, $response);
     }
 
@@ -41,9 +44,9 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
             ->method('getAcceptableContentType')
             ->will($this->returnValue($accept_type));
 
-        $this->givenAPhoto();
+        $this->givenAMockImage();
 
-        $response = $mock_viewer->makeManyAcceptable([$this->photo]);
+        $response = $mock_viewer->makeManyAcceptable([$this->mock_image]);
         
         $this->assertSame(200, $response->getStatusCode());
         $this->assertContentType($content_type, $response);
@@ -57,9 +60,9 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
             ->method('getAcceptableContentType')
             ->will($this->returnValue('application/xhtml+xml'));
 
-        $this->givenAPhoto();
+        $this->givenAMockImage();
 
-        $response = $mock_viewer->makeAcceptable($this->photo);
+        $response = $mock_viewer->makeAcceptable($this->mock_image);
         
         $this->assertSame(406, $response->getStatusCode());
     }
@@ -71,9 +74,9 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
             ->method('getAcceptableContentType')
             ->will($this->returnValue('application/xhtml+xml'));
 
-        $this->givenAPhoto();
+        $this->givenAMockImage();
 
-        $response = $mock_viewer->makeManyAcceptable([$this->photo]);
+        $response = $mock_viewer->makeManyAcceptable([$this->mock_image]);
         
         $this->assertSame(406, $response->getStatusCode());
     }
@@ -104,16 +107,16 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
     */
     public function testNotModifiedReturns304Response()
     {
-        $this->givenAPhoto();
+        $this->givenAMockImage();
         $view = new Ace\Photos\ImageView;
-        $response = $view->notModified($this->photo);
+        $response = $view->notModified($this->mock_image);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         
         $this->assertSame(304, $response->getStatusCode());
 
         $this->assertTrue($response->headers->has('Date'));
-        $this->assertSame($this->photo->getHash(), $response->getETag());
+        $this->assertSame($this->mock_image->getHash(), $response->getETag());
 
         $this->assertSame(null, $response->headers->get('Last-Modified'));
         $this->assertContentType(null, $response);
@@ -121,14 +124,14 @@ class ImageViewTest extends PHPUnit_Framework_TestCase
 
     public function testPreconditionFailedReturns412Response()
     {
-        $this->givenAPhoto();
+        $this->givenAMockImage();
         $view = new Ace\Photos\ImageView;
-        $response = $view->preconditionFailed($this->photo);
+        $response = $view->preconditionFailed($this->mock_image);
         
         $this->assertInstanceOf('\Illuminate\Http\Response', $response);
         
         $this->assertSame(412, $response->getStatusCode());
-        $this->assertSame($this->photo->getHash(), $response->getETag());
-        $this->assertLastModified($this->photo, $response);
+        $this->assertSame($this->mock_image->getHash(), $response->getETag());
+        $this->assertLastModified($this->mock_image, $response);
     }
 }

@@ -1,11 +1,13 @@
 <?php namespace Ace\Photos;
 
 use Illuminate\Http\Request;
+use App;
 
 trait MockTrait
 {
     protected $mock_image;
     protected $mock_image_store;
+    protected $mock_factory;
     protected $mock_route;
     protected $request;
 
@@ -18,12 +20,23 @@ trait MockTrait
             ->will($this->returnValue($id));
     }
 
-    protected function givenAMockImage()
+    protected function givenAMockImage($id = 1)
     {
-        $this->mock_image = $this->getMock('Ace\Photos\Image', ['getHash']);
-        $this->mock_image_store->expects($this->any())
-            ->method('get')
-            ->will($this->returnValue($this->mock_image));
+        $this->mock_image = $this->getMock('Ace\Photos\Image', ['getId', 'getHash', 'getLastModified']);
+        $this->mock_image->expects($this->any())
+            ->method('getId')
+            ->will($this->returnValue($id));
+        $this->mock_image->expects($this->any())
+            ->method('getHash')
+            ->will($this->returnValue('52063fab1e'));
+        $this->mock_image->expects($this->any())
+            ->method('getLastModified')
+            ->will($this->returnValue(time()));
+        if ($this->mock_image_store) {
+            $this->mock_image_store->expects($this->any())
+                ->method('get')
+                ->will($this->returnValue($this->mock_image));
+        }
     }
 
     protected function givenAMockImageStore(){
@@ -42,5 +55,20 @@ trait MockTrait
         $this->request->expects($this->any())
             ->method('only')
             ->will($this->returnValue($data));
+    }
+
+    protected function givenAMockFactory()
+    {
+        $this->mock_factory = $this->mock(
+            'Ace\Photos\IImageFactory',
+            ['create']
+        );
+    }
+
+    protected function mock($class, $methods)
+    {
+        $mock = $this->getMock($class, $methods);
+        App::instance($class, $mock);
+        return $mock;
     }
 }

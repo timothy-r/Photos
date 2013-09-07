@@ -4,23 +4,21 @@ use Ace\Photos\Image;
 use Ace\Photos\MongoDbImageStore;
 use Way\Tests\Assert;
 use Ace\Photos\AssertTrait;
+use Ace\Photos\MockTrait;
 
 /**
 * @group controller
 */
-class PhotoApplicationTest extends TestCase
+class PhotoControllerTest extends TestCase
 {
     use AssertTrait;
-
-    protected $mock_store;
+    
+    use MockTrait;
 
     public function setUp()
     {
         parent::setUp();
-        $this->mock_store = $this->mock(
-            'Ace\Photos\IImageStore',
-            ['all', 'add', 'get', 'remove', 'update']
-        );
+        $this->givenAMockImageStore();
     }
 
     public function tearDown()
@@ -38,10 +36,10 @@ class PhotoApplicationTest extends TestCase
 	{
         $id = 1;
         $name = 'A fantastic panorama';
-        $this->givenAPhoto($id);
-        $this->photo->setName($name);
-        $photos = [$id => $this->photo];
-        $this->mock_store->expects($this->any())
+        $this->givenAMockImage($id);
+        $this->mock_image->setName($name);
+        $photos = [$id => $this->mock_image];
+        $this->mock_image_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
 
@@ -63,9 +61,9 @@ class PhotoApplicationTest extends TestCase
 	public function testCanListPhotosAsJson()
 	{
         $id = 1;
-        $this->givenAPhoto($id);
-        $photos = [$id => $this->photo];
-        $this->mock_store->expects($this->any())
+        $this->givenAMockImage($id);
+        $photos = [$id => $this->mock_image];
+        $this->mock_image_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
 
@@ -87,9 +85,9 @@ class PhotoApplicationTest extends TestCase
 	public function testCantListPhotosAsXML()
 	{
         $id = 1;
-        $this->givenAPhoto($id);
-        $photos = ['1' => $this->photo];
-        $this->mock_store->expects($this->any())
+        $this->givenAMockImage($id);
+        $photos = ['1' => $this->mock_image];
+        $this->mock_image_store->expects($this->any())
             ->method('all')
             ->will($this->returnValue($photos));
 
@@ -112,19 +110,16 @@ class PhotoApplicationTest extends TestCase
 
 	public function testCanStorePhotoWithValidData()
 	{
-        $mock_factory = $this->mock(
-            'Ace\Photos\IImageFactory',
-            ['create']
-        );
+        $this->givenAMockFactory();
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('add')
             ->will($this->returnValue(true));
 
-        $mock_factory->expects($this->once())
+        $this->mock_factory->expects($this->once())
             ->method('create')
-            ->will($this->returnValue($this->photo));
+            ->will($this->returnValue($this->mock_image));
 
         $data = ['name' => 'Test photo'];
 		$response = $this->post('/photos', $data);
@@ -133,21 +128,41 @@ class PhotoApplicationTest extends TestCase
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
 	}
 
+	public function testFailureToStoreImageShowsCreateForm()
+	{
+        $this->givenAMockFactory();
+        $id = 1;
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
+            ->method('add')
+            ->will($this->returnValue(false));
+
+        $this->mock_factory->expects($this->once())
+            ->method('create')
+            ->will($this->returnValue($this->mock_image));
+
+        $data = ['name' => 'Test photo'];
+		$response = $this->post('/photos', $data);
+
+        $this->assertResponseStatus(302);
+        $this->assertRedirectedToAction('PhotoController@create', []);
+	}
+
 	public function testCanViewPhotoAsHTML()
     {
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
+            ->will($this->returnValue($this->mock_image));
 		$response = $this->get('/photos/' . $id);
 
 		$this->assertTrue($response->isOk());
         $this->assertContentType('text/html; charset=UTF-8', $response);
         // assert ETag is set
-        $this->assertETag($this->photo, $response);
-        $this->assertLastModified($this->photo, $response);
+        $this->assertETag($this->mock_image, $response);
+        $this->assertLastModified($this->mock_image, $response);
     }
 
 	/**
@@ -156,12 +171,12 @@ class PhotoApplicationTest extends TestCase
 	public function testCanViewPhotoAsJson()
 	{
         $id = 1;
-        $this->givenAPhoto($id);
+        $this->givenAMockImage($id);
 
-        $this->mock_store->expects($this->any())
+        $this->mock_image_store->expects($this->any())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
+            ->will($this->returnValue($this->mock_image));
 
 		$response = $this->get('/photos/'.$id, [], [], ['HTTP_Accept' => 'application/json']);
        
@@ -169,26 +184,26 @@ class PhotoApplicationTest extends TestCase
         $this->assertContentType('application/json', $response);
         $data = json_decode($response->getContent());
         $this->assertInstanceOf('StdClass', $data);
-        $this->assertETag($this->photo, $response);
+        $this->assertETag($this->mock_image, $response);
 	}
 
 	public function testConditionalRequestToViewPhotoGetsNewPhotoIfNotMatches()
     {
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
+            ->will($this->returnValue($this->mock_image));
         $headers = ['HTTP_If-None-Match' => 'not-an-etag'];
 
         $response = $this->get('/photos/' . $id, [], [], $headers);
 		$this->assertTrue($response->isOk());
 
         // assert ETag is set
-        $this->assertETag($this->photo, $response);
+        $this->assertETag($this->mock_image, $response);
         // assert Last-Modified is also set
-        $this->assertLastModified($this->photo, $response);
+        $this->assertLastModified($this->mock_image, $response);
     }
 
 	/**
@@ -196,12 +211,12 @@ class PhotoApplicationTest extends TestCase
 	public function testCantViewPhotoAsXML()
 	{
         $id =1;
-        $this->givenAPhoto($id);
+        $this->givenAMockImage($id);
 
-        $this->mock_store->expects($this->any())
+        $this->mock_image_store->expects($this->any())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
+            ->will($this->returnValue($this->mock_image));
 
 		$response = $this->get(
             '/photos/'.$id, 
@@ -216,14 +231,14 @@ class PhotoApplicationTest extends TestCase
     public function testCanUpdatePhoto()
     {
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->once())
+            ->will($this->returnValue($this->mock_image));
+        $this->mock_image_store->expects($this->once())
             ->method('update')
-            ->with($this->photo)
+            ->with($this->mock_image)
             ->will($this->returnValue(true));
         $data = ['name' => 'A new name'];
 		$response = $this->put('/photos/' . $id, $data);
@@ -236,14 +251,14 @@ class PhotoApplicationTest extends TestCase
     public function testCanRemovePhoto()
     {
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->once())
+            ->will($this->returnValue($this->mock_image));
+        $this->mock_image_store->expects($this->once())
             ->method('remove')
-            ->with($this->photo)
+            ->with($this->mock_image)
             ->will($this->returnValue(true));
 		$response = $this->delete('/photos/' . $id);
 
@@ -255,14 +270,14 @@ class PhotoApplicationTest extends TestCase
     public function testFailureToRemovePhotoShowsIt()
     {
         $id = 1;
-        $this->givenAPhoto($id);
-        $this->mock_store->expects($this->once())
+        $this->givenAMockImage($id);
+        $this->mock_image_store->expects($this->once())
             ->method('get')
             ->with($id)
-            ->will($this->returnValue($this->photo));
-        $this->mock_store->expects($this->once())
+            ->will($this->returnValue($this->mock_image));
+        $this->mock_image_store->expects($this->once())
             ->method('remove')
-            ->with($this->photo)
+            ->with($this->mock_image)
             ->will($this->returnValue(false));
 		$response = $this->delete('/photos/' . $id);
 
