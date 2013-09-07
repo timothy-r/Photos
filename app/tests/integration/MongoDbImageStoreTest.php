@@ -52,21 +52,26 @@ class MongoDbImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function testCanUpdateImage()
     {
+        $new_name = 'A new name';
         $image = new Image;
         $this->image_store->add($image);
-        $image->setName('New name');
+        $id = $image->getId();
+
+        $image->setName($new_name);
         $result = $this->image_store->update($image);
-        $this->assertTrue($result, 'Expected ImageStore to return true for update');
+        $this->assertEquals($id, $image->getId());
+        $this->assertTrue($result, 'Expected ImageStore::update() to return true');
+        $this->assertSame($new_name, $image->getName());
 
         $result = $this->image_store->get($image->getId());
-        $this->assertSame('New name', $result->getName());
+        $this->assertInstanceOf('Ace\Photos\Image', $result, "Expected ImageStore::get() to return an Image");
+        $this->assertSame($id, $result->getId());
+        $this->assertSame($new_name, $result->getName());
     }
 
     public function testFailureToUpdateImageReturnsFalse()
     {
         $this->givenAMockImage(1);
-
-        //$image = $this->getMock('Ace\Photos\IImage', ['save', 'getId', 'getName', 'setName', 'getHash', 'getLastModified', 'getSize']);
         $this->mock_image->expects($this->any())
             ->method('save')
             ->will($this->returnValue(['err' => 'an error']));
