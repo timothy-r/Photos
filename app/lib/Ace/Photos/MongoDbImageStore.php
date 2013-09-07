@@ -5,6 +5,7 @@ use Ace\Photos\Image;
 use Purekid\Mongodm\MongoDB;
 use Ace\Photos\IImageStore;
 use Config;
+use Log;
 
 /**
 * A MongoDB repository for Images
@@ -13,6 +14,11 @@ class MongoDbImageStore implements IImageStore
 {
     
     public function __construct()
+    {
+        $this->initDb();
+    }
+
+    protected function initDb()
     {
         // initialize the MongoDb connection here
         $name = Config::get('database.default');

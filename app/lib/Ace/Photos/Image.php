@@ -1,7 +1,8 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos;
+
 use Purekid\Mongodm\Model;
 use Ace\Photos\IImage;
+use Log;
 
 /**
 * Represents a single Image document
@@ -13,7 +14,9 @@ class Image extends Model implements IImage
     * where Image documents are stored
     */
     protected static $collection = 'image';
-   
+  
+    public static $config;
+
     /**
     * persisted attributes
     */ 
@@ -23,6 +26,12 @@ class Image extends Model implements IImage
         'last_modified' => array('type'=>'integer'),
         'size' => array('type'=>'integer', 'default' => 0),
     );
+
+    public function __construct()
+    {
+        Log::info(__METHOD__. " " . static::$config);
+        parent::__construct();
+    }
 
     public static function setConfig($config)
     {
