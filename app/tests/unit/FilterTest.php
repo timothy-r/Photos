@@ -20,9 +20,9 @@ abstract class FilterTest extends TestCase
         $this->result = $this->filter->filter($this->mock_route, $this->request);
     }
 
-    protected function thenTheFilterFailed($status)
+    protected function thenTheFilterFailed($status, $class = 'Illuminate\Http\Response')
     {
-        $this->assertInstanceOf('Illuminate\Http\Response', $this->result);
+        $this->assertInstanceOf($class, $this->result);
         $this->assertSame($status, $this->result->getStatusCode());
     }
 

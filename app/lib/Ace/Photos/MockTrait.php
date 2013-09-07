@@ -35,4 +35,12 @@ trait MockTrait
     protected function givenARequest(){
         $this->request = new Request;
     }
+
+    protected function givenAMockRequest(array $data){
+        $keys = array_keys($data);
+        $this->request = $this->getMock('Illuminate\Http\Request', ['only']);
+        $this->request->expects($this->any())
+            ->method('only')
+            ->will($this->returnValue($data));
+    }
 }

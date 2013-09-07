@@ -82,24 +82,10 @@ Route::filter('csrf', function()
 	}
 });
 
-
-Route::filter('image-validate', function()
-{
-    $rules = array(
-        'name' => 'required'
-    );
-    // @todo use array keys from $rules as params to only
-    $validator = Validator::make(Input::only('name'), $rules);
-
-    if (!$validator->passes()) {
-        // redirect depends on caller / output type?
-        // @todo put this redirect in a PhotoView method and call from here
-        return Redirect::action('PhotoController@create')
-            ->withInput()
-            ->withErrors($validator->messages()
-        );
-    }
-});
+/**
+* Adds a filter to validate incoming Image data and meta-data
+*/
+Route::filter('image-validate', 'Ace\Photos\ImageDataValidatesFilter');
 
 /**
 * Adds a filter to validate Images exist
