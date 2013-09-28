@@ -7,7 +7,7 @@ A photo viewer web application being built with Laravel. It supports both html a
 
 ## Usage
 
-This is a web application so needs to be served using a web server. Only tested using apache 2 so far.
+This is a web application and so needs to be served using a web server. Only tested using apache2 so far.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Use composer to supply all required packages.
 ## Requirements
 
 PHP5.4+
-A web server (eg. apache 2)
+A web server (eg. apache2)
 mongodb
 
 ## Running the Tests
