@@ -1,7 +1,7 @@
 /bootstrap/compiled.php
 /vendor
 /coverage
-/storage
+/app/storage
 composer.phar
 *.lock
 .DS_Store
