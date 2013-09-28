@@ -45,4 +45,3 @@ class MongoDbImageFactory implements IImageFactory
         return tempnam($path, 'Image_') . '.' . $file->guessExtension();
     }
 }
-

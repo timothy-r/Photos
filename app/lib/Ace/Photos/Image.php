@@ -7,13 +7,12 @@ use Log;
 use Config;
 
 /**
-* Represents a single Image document
+* Represents a single Image document stored in MongoDb
 */
 class Image extends Model implements IImage
 {
-    
     /**
-    * where Image documents are stored
+    * the collection where Image documents are stored
     */
     protected static $collection = 'image';
   
@@ -22,13 +21,13 @@ class Image extends Model implements IImage
     /**
     * persisted attributes
     */ 
-    protected static $attrs = array(
-        'name' => array('type'=>'string', 'default' => ''),
-        'hash' => array('type'=>'string', 'default' => ''),
-        'last_modified' => array('type'=>'integer'),
-        'size' => array('type'=>'integer', 'default' => 0),
-        'filename' => array('type'=>'string', 'default' => ''),
-    );
+    protected static $attrs = [
+        'name'          => ['type'=>'string', 'default' => ''],
+        'hash'          => ['type'=>'string', 'default' => ''],
+        'last_modified' => ['type'=>'integer'],
+        'size'          => ['type'=>'integer', 'default' => 0],
+        'filename'      => ['type'=>'string', 'default' => ''],
+    ];
 
     public static function setConfig($config)
     {
@@ -56,13 +55,15 @@ class Image extends Model implements IImage
         $this->changed();
     }
 
+    /**
+    * @todo use di to set the MongoDB instance on this class
+    * so we can mock it for testing
+    */
     public function setFile($filename)
     {
         $this->filename = $filename;
         // add file to grid fs
-        #$result = MongoDB::instance()->set_file($filename);
-        #var_dump($result);
-
+        $result = MongoDB::instance()->set_file($this->filename);
         $this->changed();
     }
 
@@ -88,10 +89,11 @@ class Image extends Model implements IImage
 
     /**
     * The Image state has changed, update bookkeeping data
+    * @todo add the file contents to the hash
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\Image::{$this->name}");
+        $this->hash = md5("Ace\Photos\Image::{$this->name}.{$this->filename}");
         $this->last_modified = time();
     }
 }
