@@ -27,8 +27,6 @@ class MongoDbImageFactory implements IImageFactory
 
         $parts = pathinfo($path);
         
-        #var_dump($parts);
-
         // move it
         $file->move($parts['dirname'], $parts['basename']);
 
@@ -36,13 +34,15 @@ class MongoDbImageFactory implements IImageFactory
         $image->setFile($path);
 
         // remove temp file
+
+        // return Image object
         return $image;
     }
 
     protected function getStoragePath($file)
     {
         $path = storage_path();
-        return tempnam($path, 'Image_') . '.' . $file->getExtension();
+        return tempnam($path, 'Image_') . '.' . $file->guessExtension();
     }
 }
 
