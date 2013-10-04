@@ -1,9 +1,11 @@
 <?php namespace Ace\Photos;
 
+use Ace\Photos\IImage;
+
 /**
 * @Document
 */
-class DoctrineODMImage
+class DoctrineODMImage implements IImage
 {
     /**
     * @Id
@@ -29,6 +31,11 @@ class DoctrineODMImage
     * @Field(type="int")
     */
     private $size = 0;
+
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getName()
     {
