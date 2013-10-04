@@ -10,7 +10,7 @@ use Illuminate\Support\ServiceProvider;
 * Consider this to be a version of abstract factory
 *
 * Binds the MongoDbImageStore class to the IImageStore interface
-* Binds the MongoDbImageFacotry class to the IImageFactory interface
+* Binds the MongoDbImageFactory class to the IImageFactory interface
 */
 class MongoDbImageServiceProvider extends ServiceProvider
 {

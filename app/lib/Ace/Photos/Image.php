@@ -28,16 +28,6 @@ class Image extends Model implements IImage
         'size' => array('type'=>'integer', 'default' => 0),
     );
 
-    public function __construct($data = [])
-    {
-        #$name = Config::get('database.default');
-        #$config = Config::get('database.' .$name);
-        #static::$config = $config['connection']['database'];
-
-        Log::info(__METHOD__. " " . static::$config);
-        parent::__construct($data);
-    }
-
     public static function setConfig($config)
     {
         static::$config = $config;

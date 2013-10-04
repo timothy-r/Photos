@@ -20,7 +20,6 @@ class MongoDbImageStore implements IImageStore
 
     public function init()
     {
-        Log::info(__METHOD__);
         // initialize the MongoDb connection here
         $name = Config::get('database.default');
         $config = Config::get('database.' .$name);
