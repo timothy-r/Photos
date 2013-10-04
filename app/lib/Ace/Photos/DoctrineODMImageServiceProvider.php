@@ -24,6 +24,5 @@ class DoctrineODMImageServiceProvider extends ServiceProvider
             'Ace\Photos\IImageFactory',
             'Ace\Photos\DoctrineODMImageFactory'
         );
-        
     }
 }

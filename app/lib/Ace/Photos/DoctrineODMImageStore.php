@@ -1,33 +1,26 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
+use Ace\Photos\IDoctrineODMConfig;
 use Ace\Photos\DoctrineODMImage as Image;
 use Ace\Photos\IImageStore;
 
-#use Config;
-#use Log;
-
 /**
-* A MongoDB repository for Images
+* A Doctrine ODM store for Images
+* convert to use a Doctrine repository not the document manager
 */
 class DoctrineODMImageStore implements IImageStore
 {
-    
-    public function __construct()
+    protected $dm;
+
+    public function __construct(IDoctrineODMConfig $config)
     {
-        $this->init();
+        $this->dm = $config->getDocumentManager();
     }
 
-    public function init()
+    public function __destruct()
     {
-        /*
-        Log::info(__METHOD__);
-        // initialize the MongoDb connection here
-        $name = Config::get('database.default');
-        $config = Config::get('database.' .$name);
-        $db = MongoDB::instance($name, $config);
-        Image::setConfig($config['connection']['database']);
-        */
+        $this->dm->flush();
     }
 
     /**
@@ -37,6 +30,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function add(IImage $image)
     {
+        $this->dm->persist($image);
     }
 
     /**
@@ -46,6 +40,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function update(IImage $image)
     {
+        $this->dm->persist($image);
     }
     
     /**
@@ -55,6 +50,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function all()
     {
+        return $this->dm->createQueryBuilder('Image')->getQuery()->execute();
     }
 
     /**
@@ -64,6 +60,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function get($id)
     {
+        return $this->dm->find('Image', $id);
     }
 
     /**
@@ -72,5 +69,6 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function remove(IImage $image)
     {
+        $this->dm->remove($image);
     }
 }

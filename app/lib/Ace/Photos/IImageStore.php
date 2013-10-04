@@ -4,11 +4,10 @@ use Ace\Photos\IImage;
 
 /**
 * An interface to repositories for Images
+* @todo add a find($criteria) method
 */
 interface IImageStore
 {
-    public function init();
-
     public function add(IImage $image);
 
     public function update(IImage $image);

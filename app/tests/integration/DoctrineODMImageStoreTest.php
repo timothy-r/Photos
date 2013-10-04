@@ -5,7 +5,7 @@ use Ace\Photos\DoctrineODMImage as Image;
 use Ace\Photos\MockTrait;
 
 /**
-* @group integration
+* @group unit
 */
 class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,33 +13,48 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     protected $image_store;
 
+    protected $mock_dm;
+
+    protected $mock_query_builder;
+
+    protected $mock_query;
+
     public function setUp()
     {
-        $this->image_store = new DoctrineODMImageStore;
-    }
+        $this->mock_dm = $this->getMock('MockDocumentManager', ['persist', 'find', 'createQueryBuilder', 'remove', 'flush']);
+        
+        $this->mock_query_builder = $this->getMock('MockQueryBuilder', ['getQuery']);
+        $this->mock_dm->expects($this->any())
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($this->mock_query_builder));
+        
+        $this->mock_query = $this->getMock('MockQuery', ['execute']);
+        $this->mock_query_builder->expects($this->any())
+            ->method('getQuery')
+            ->will($this->returnValue($this->mock_query));
+        
+        $mock_config = $this->getMock('Ace\Photos\IDoctrineODMConfig', ['getDocumentManager']);
+        $mock_config->expects($this->any())
+            ->method('getDocumentManager')
+            ->will($this->returnValue($this->mock_dm));
 
-    public function tearDown()
-    {
-        /*
-        foreach($this->image_store->all() as $image) {
-            $this->image_store->remove($image);
-        }
-        */
+        $this->image_store = new DoctrineODMImageStore($mock_config);
     }
 
     public function testCanAddAnImage()
     {
         $image = new Image;
+        $this->mock_dm->expects($this->once())
+            ->method('persist')
+            ->with($image);
         $result = $this->image_store->add($image);
-        $this->assertSame(true, $result);
-        // assert id is set
-        $this->assertTrue(!is_null($image->getId()));
     }
 
     public function testCanListImages()
     {
-        $image = new Image;
-        $this->image_store->add($image);
+        $this->mock_query->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue([new Image]));
         $images = $this->image_store->all();
         $this->assertTrue(is_array($images));
         $this->assertTrue(0 < count($images));
@@ -48,49 +63,29 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
     public function testCanGetImage()
     {
         $image = new Image;
-        $this->image_store->add($image);
-        $result = $this->image_store->get($image->getId());
-        $this->assertInstanceOf('Ace\Photos\Image', $image);
+        $this->mock_dm->expects($this->once())
+            ->method('find')
+            ->with('Image', 'abcdef')
+            ->will($this->returnValue($image));
+        $result = $this->image_store->get('abcdef');
+        $this->assertInstanceOf('Ace\Photos\DoctrineODMImage', $image);
     }
 
     public function testCanUpdateImage()
     {
-        $new_name = 'A new name';
         $image = new Image;
-        $this->image_store->add($image);
-        $id = $image->getId();
-
-        $image->setName($new_name);
+        $this->mock_dm->expects($this->once())
+            ->method('persist')
+            ->with($image);
         $result = $this->image_store->update($image);
-        $this->assertTrue($result, 'Expected ImageStore::update() to return true');
-        $this->assertSame($new_name, $image->getName());
-
-        $result = $this->image_store->get($id);
-        $this->assertInstanceOf('Ace\Photos\Image', $result, "Expected ImageStore::get() to return an Image");
-        $this->assertEquals($id, $result->getId());
-        $this->assertSame($new_name, $result->getName());
-    }
-
-    public function testFailureToUpdateImageReturnsFalse()
-    {
-        $this->givenAMockImage(1);
-        $this->mock_image->expects($this->any())
-            ->method('save')
-            ->will($this->returnValue(['err' => 'an error']));
-
-        $result = $this->image_store->update($this->mock_image);
-        $this->assertFalse($result, 'Expected ImageStore to return false for update');
     }
 
     public function testCanRemoveImage()
     {
         $image = new Image;
-        $this->image_store->add($image);
-        $id = $image->getId();
+        $this->mock_dm->expects($this->once())
+            ->method('remove')
+            ->with($image);
         $result = $this->image_store->remove($image);
-        $this->assertSame(true, $result);
-
-        $result = $this->image_store->get($id);
-        $this->assertTrue(is_null($result));
     }
 }

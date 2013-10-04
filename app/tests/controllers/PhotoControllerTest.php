@@ -23,7 +23,7 @@ class PhotoControllerTest extends TestCase
 
     public function tearDown()
     {
-        $image_store = new DoctrineODMImageStore;
+        //$image_store = new DoctrineODMImageStore;
         /*
         foreach($image_store->all() as $image) {
             $image_store->remove($image);
