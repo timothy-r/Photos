@@ -114,10 +114,9 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         #'Way\Console\GuardLaravelServiceProvider',
-        'Ace\Photos\MongoDbImageServiceProvider',
+        'Ace\Photos\DoctrineODMImageServiceProvider',
         'Annotatecms\Debugger\DebuggerServiceProvider',
         'Ace\Photos\ImageViewServiceProvider',
-        'Ace\Photos\ImageFactoryServiceProvider',
 	),
 
 	/*

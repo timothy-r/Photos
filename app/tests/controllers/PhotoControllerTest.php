@@ -1,7 +1,7 @@
 <?php
 
 use Ace\Photos\Image;
-use Ace\Photos\MongoDbImageStore;
+use Ace\Photos\DoctrineODMImageStore;
 use Way\Tests\Assert;
 use Ace\Photos\AssertTrait;
 use Ace\Photos\MockTrait;
@@ -23,10 +23,12 @@ class PhotoControllerTest extends TestCase
 
     public function tearDown()
     {
-        $image_store = new MongoDbImageStore;
+        $image_store = new DoctrineODMImageStore;
+        /*
         foreach($image_store->all() as $image) {
             $image_store->remove($image);
         }
+        */
     }
 
 	/**

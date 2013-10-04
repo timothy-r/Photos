@@ -20,9 +20,11 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
+        /*
         foreach($this->image_store->all() as $image) {
             $this->image_store->remove($image);
         }
+        */
     }
 
     public function testCanAddAnImage()
