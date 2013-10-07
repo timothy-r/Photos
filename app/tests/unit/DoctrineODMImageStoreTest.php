@@ -19,6 +19,8 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     protected $mock_query;
 
+    protected $mock_cursor;
+
     public function setUp()
     {
         $this->mock_dm = $this->getMock('MockDocumentManager', ['persist', 'find', 'createQueryBuilder', 'remove', 'flush']);
@@ -32,7 +34,13 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
         $this->mock_query_builder->expects($this->any())
             ->method('getQuery')
             ->will($this->returnValue($this->mock_query));
-        
+       
+        $this->mock_cursor = $this->getMock('MockCursor', ['toArray']);
+
+        $this->mock_query->expects($this->any())
+            ->method('execute')
+            ->will($this->returnValue($this->mock_cursor));
+
         $mock_config = $this->getMock('Ace\Photos\IDoctrineODMConfig', ['getDocumentManager']);
         $mock_config->expects($this->any())
             ->method('getDocumentManager')
@@ -52,8 +60,8 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function testCanListImages()
     {
-        $this->mock_query->expects($this->any())
-            ->method('execute')
+        $this->mock_cursor->expects($this->any())
+            ->method('toArray')
             ->will($this->returnValue([new Image]));
         $images = $this->image_store->all();
         $this->assertTrue(is_array($images));
@@ -65,10 +73,10 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
         $image = new Image;
         $this->mock_dm->expects($this->once())
             ->method('find')
-            ->with('Image', 'abcdef')
+            ->with('Ace\Photos\DoctrineODMImage', 'abcdef')
             ->will($this->returnValue($image));
         $result = $this->image_store->get('abcdef');
-        $this->assertInstanceOf('Ace\Photos\DoctrineODMImage', $image);
+        $this->assertSame($image, $result);
     }
 
     public function testCanUpdateImage()
