@@ -1,34 +1,35 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
-* @Document
+* @ODM\Document
 */
 class DoctrineODMImage implements IImage
 {
     /**
-    * @Id
+    * @ODM\Id
     */
     private $id;
 
     /**
-    * @Field(type="string")
+    * @ODM\Field(type="string")
     */
     private $name = '';
 
     /**
-    * @Field(type="string")
+    * @ODM\Field(type="string")
     */
     private $hash = '';
 
     /**
-    * @Field(type="int")
+    * @ODM\Field(type="int")
     */
     private $last_modified;
 
     /**
-    * @Field(type="int")
+    * @ODM\Field(type="int")
     */
     private $size = 0;
 

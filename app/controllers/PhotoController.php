@@ -33,9 +33,6 @@ class PhotoController extends \BaseController
             'image-does-not-match', 
             ['only' => ['show']]
         );
-
-        // ensure that the Store has read config before creating an Image instance (in factory)
-        ImageStore::init();
     }
 
 	/**
@@ -49,6 +46,8 @@ class PhotoController extends \BaseController
         $images = ImageStore::all();
         
         // call the view to return a reponse based on Accept header in request
+        // var_dump($images);
+
         return ImageView::makeManyAcceptable($images);
     }
 

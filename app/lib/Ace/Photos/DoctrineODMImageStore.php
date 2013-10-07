@@ -50,7 +50,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function all()
     {
-        return $this->dm->createQueryBuilder('Image')->getQuery()->execute();
+        return $this->dm->createQueryBuilder('Ace\Photos\DoctrineODMImage')->getQuery()->execute()->toArray();
     }
 
     /**
@@ -60,7 +60,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function get($id)
     {
-        return $this->dm->find('Image', $id);
+        return $this->dm->find('Ace\Photos\DoctrineODMImage', $id);
     }
 
     /**
