@@ -4,6 +4,8 @@ use Ace\Photos\DoctrineODMImageStore;
 use Ace\Photos\DoctrineODMImage as Image;
 use Ace\Photos\MockTrait;
 
+use Doctrine\ODM\MongoDB\MongoDBException;
+
 /**
 * @group unit
 */
@@ -56,6 +58,17 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
             ->method('persist')
             ->with($image);
         $result = $this->image_store->add($image);
+        $this->assertTrue($result);
+    }
+
+    public function testAddImageReturnsFalseOnFailure()
+    {
+        $image = new Image;
+        $this->mock_dm->expects($this->once())
+            ->method('persist')
+            ->will($this->throwException(new MongoDBException));
+        $result = $this->image_store->add($image);
+        $this->assertFalse($result);
     }
 
     public function testCanListImages()
@@ -86,6 +99,16 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
             ->method('persist')
             ->with($image);
         $result = $this->image_store->update($image);
+    }
+
+    public function testUpdateImageReturnsFalseOnFailure()
+    {
+        $image = new Image;
+        $this->mock_dm->expects($this->once())
+            ->method('persist')
+            ->will($this->throwException(new MongoDBException));
+        $result = $this->image_store->update($image);
+        $this->assertFalse($result);
     }
 
     public function testCanRemoveImage()

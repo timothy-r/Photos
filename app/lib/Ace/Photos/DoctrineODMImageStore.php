@@ -5,6 +5,8 @@ use Ace\Photos\IDoctrineODMConfig;
 use Ace\Photos\DoctrineODMImage as Image;
 use Ace\Photos\IImageStore;
 
+use Doctrine\ODM\MongoDB\MongoDBException;
+
 /**
 * A Doctrine ODM store for Images
 * convert to use a Doctrine repository not the document manager
@@ -30,7 +32,13 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function add(IImage $image)
     {
-        $this->dm->persist($image);
+        try {
+            $this->dm->persist($image);
+            $this->dm->flush();
+            return true;
+        } catch (MongoDBException $ex) {
+            return false;
+        }
     }
 
     /**
@@ -40,7 +48,12 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function update(IImage $image)
     {
-        $this->dm->persist($image);
+        try {
+            $this->dm->persist($image);
+            return true;
+        } catch (MongoDBException $ex) {
+            return false;
+        }
     }
     
     /**
