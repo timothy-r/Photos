@@ -33,6 +33,8 @@ class DoctrineODMImage implements IImage
     */
     private $size = 0;
 
+    private $file = '';
+
     public function getId()
     {
         return $this->id;
@@ -63,13 +65,19 @@ class DoctrineODMImage implements IImage
     {
         return $this->size;
     }
+    
+    public function setFile($filename)
+    {
+        $this->file = $filename;
+        $this->changed(); 
+    }
 
     /**
     * The Image state has changed, update bookkeeping data
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->name}");
+        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->name}:{$this->file}");
         $this->last_modified = time();
     }
 }

@@ -59,4 +59,31 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image = new Image;
         $this->assertSame(null, $image->getLastModified());
     }
+
+    public function testCanSetFile()
+    {
+        $image = new Image;
+        $filename = "dir/path/image.phg";
+        $image->setFile($filename);
+
+    }
+
+    public function testLastModifiedChangesWhenFileSet()
+    {
+        $image = new Image;
+        $modified_1 = $image->getLastModified();
+        $image->setFile('One');
+        $modified_2 = $image->getLastModified();
+        $this->assertTrue($modified_1 != $modified_2);
+    }
+
+    public function testHashChangesWhenFileSet()
+    {
+        $image = new Image;
+        $image->setFile('One');
+        $hash_1 = $image->getHash();
+        $image->setFile('Two');
+        $hash_2 = $image->getHash();
+        $this->assertTrue($hash_1 != $hash_2);
+    }
 }
