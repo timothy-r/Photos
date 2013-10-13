@@ -28,6 +28,12 @@ interface IImage
     public function setPath($path);
 
     /**
+    * store the $file data in gridfs
+    * @param string path to the local file
+    */
+    public function setFile($file);
+
+    /**
     * Returns a hash of this Image's state
     *
     * @return string

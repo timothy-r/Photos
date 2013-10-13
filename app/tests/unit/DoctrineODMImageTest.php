@@ -69,7 +69,7 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image->setFile($filename, $local_file);
     }
 
-    public function testLastModifiedChangesWhenFilenameSet()
+    public function testLastModifiedChangesWhenFileIsSet()
     {
         $local_file = "/tmp/uploads/thing.png";
         $image = new Image;
@@ -79,7 +79,7 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($modified_1 != $modified_2);
     }
-
+/*
     public function testHashChangesWhenFileSet()
     {
         $local_file = "/tmp/uploads/thing.png";
@@ -91,12 +91,33 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($hash_1 != $hash_2);
     }
-
+*/
     public function testCanSetPath()
     {
         $image = new Image;
         $path = "dir/path/image.png";
 
         $image->setPath($path);
+    }
+
+    public function testLastModifiedChangesWhenPathSet()
+    {
+        $image = new Image;
+        $modified_1 = $image->getLastModified();
+        $image->setPath('all-images/one.png');
+        $modified_2 = $image->getLastModified();
+
+        $this->assertTrue($modified_1 != $modified_2);
+    }
+
+    public function testHashChangesWhenPathSet()
+    {
+        $image = new Image;
+        $image->setPath('all-images/one.png');
+        $hash_1 = $image->getHash();
+        $image->setPath('all-images/two.png');
+        $hash_2 = $image->getHash();
+
+        $this->assertTrue($hash_1 != $hash_2);
     }
 }

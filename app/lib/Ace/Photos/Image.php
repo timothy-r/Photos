@@ -74,6 +74,10 @@ class Image extends Model implements IImage
         return $this->hash;
     }
 
+    public function setFile($file)
+    {
+    }
+
     public function getLastModified()
     {
         return $this->last_modified;

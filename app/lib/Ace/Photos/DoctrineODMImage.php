@@ -36,11 +36,6 @@ class DoctrineODMImage implements IImage
     /**
     * @ODM\Field(type="string")
     */
-    private $filename = '';
-   
-    /**
-    * @ODM\Field(type="string")
-    */
     private $path = '';
 
     /**
@@ -81,15 +76,15 @@ class DoctrineODMImage implements IImage
    
     public function setPath($path)
     {
+        $this->path = $path;
+        $this->changed(); 
     }
 
     /**
-    * @param string $filename location of file in 'virtual store'
     * @param string $file - file on disc to store in gridfs
     */
-    public function setFile($filename, $file)
+    public function setFile($file)
     {
-        $this->filename = $filename;
         $this->changed(); 
     }
 
@@ -98,7 +93,7 @@ class DoctrineODMImage implements IImage
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->title}:{$this->filename}");
+        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->title}:{$this->path}");
         $this->last_modified = time();
     }
 }
