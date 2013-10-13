@@ -67,7 +67,6 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $local_file = "/tmp/uploads/thing.png";
 
         $image->setFile($filename, $local_file);
-
     }
 
     public function testLastModifiedChangesWhenFilenameSet()
@@ -91,5 +90,13 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $hash_2 = $image->getHash();
 
         $this->assertTrue($hash_1 != $hash_2);
+    }
+
+    public function testCanSetPath()
+    {
+        $image = new Image;
+        $path = "dir/path/image.png";
+
+        $image->setPath($path);
     }
 }

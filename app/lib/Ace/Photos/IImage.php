@@ -22,6 +22,12 @@ interface IImage
     public function setTitle($name);
 
     /**
+    * set the virtual path to the Image
+    * @param string $path
+    */
+    public function setPath($path);
+
+    /**
     * Returns a hash of this Image's state
     *
     * @return string

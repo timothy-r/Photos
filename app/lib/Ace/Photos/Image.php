@@ -65,6 +65,9 @@ class Image extends Model implements IImage
         $this->changed();
     }
 
+    public function getPath()
+    {
+    }
 
     public function getHash()
     {

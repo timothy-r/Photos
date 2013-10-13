@@ -37,7 +37,12 @@ class DoctrineODMImage implements IImage
     * @ODM\Field(type="string")
     */
     private $filename = '';
-    
+   
+    /**
+    * @ODM\Field(type="string")
+    */
+    private $path = '';
+
     /**
     * @ODM\File
     */
@@ -74,6 +79,10 @@ class DoctrineODMImage implements IImage
         return $this->size;
     }
    
+    public function setPath($path)
+    {
+    }
+
     /**
     * @param string $filename location of file in 'virtual store'
     * @param string $file - file on disc to store in gridfs

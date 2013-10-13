@@ -1,6 +1,5 @@
 <?php
 
-use Ace\Photos\Image;
 use Ace\Photos\DoctrineODMImageStore;
 use Way\Tests\Assert;
 use Ace\Photos\AssertTrait;
