@@ -22,22 +22,13 @@ class ImageDataValidatesFilter
     public function filter(Route $route, Request $request)
     {
         $rules = [
-            'name' => 'required'
+            'title' => 'required'
         ];
 
         $validator = Validator::make($request->only(array_keys($rules)), $rules);
 
         if (!$validator->passes()) {
             return ImgView::badRequest();
-            /*
-            // redirect depends on caller / output type?
-            // @todo put this redirect in a PhotoView method and call from here
-            // should we show create or edit action? test if there is a photo identified in the request
-            return Redirect::action('PhotoController@create')
-                ->withInput()
-                ->withErrors($validator->messages()
-            );
-            */
         }
     }
 }

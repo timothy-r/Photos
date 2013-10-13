@@ -85,6 +85,7 @@ class DoctrineODMImage implements IImage
     */
     public function setFile($file)
     {
+        $this->file = $file;
         $this->changed(); 
     }
 

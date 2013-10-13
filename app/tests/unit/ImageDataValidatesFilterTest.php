@@ -21,7 +21,7 @@ class ImageDataValidatesFilterTest extends FilterTest
     public function getValidImageData()
     {
         return [
-            [['name' => 'The view from the very top of Mont Blanc']]
+            [['title' => 'The view from the very top of Mont Blanc']]
         ];
     }
 
@@ -42,7 +42,7 @@ class ImageDataValidatesFilterTest extends FilterTest
     public function getInvalidImageData()
     {
         return [
-            [['name' => '']],
+            [['title' => '']],
             [['data' => 'abcd']],
             [[]]
         ];
