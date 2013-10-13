@@ -54,7 +54,6 @@ trait MockTrait
     }
 
     protected function givenAMockRequest(array $data){
-        $keys = array_keys($data);
         $this->request = $this->getMock('Illuminate\Http\Request', ['only']);
         $this->request->expects($this->any())
             ->method('only')
