@@ -9,26 +9,26 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image = new Image;
     }
 
-    public function testCanSetName()
+    public function testCanSetTitle()
     {
-        $name = 'Freddy';
+        $title = 'Freddy';
         $image = new Image;
-        $image->setName($name);
-        $this->assertSame($name, $image->getName());
+        $image->setTitle($title);
+        $this->assertSame($title, $image->getTitle());
     }
 
-    public function testNameIsEmptyByDefault()
+    public function testTitleIsEmptyByDefault()
     {
         $image = new Image;
-        $this->assertSame('', $image->getName());
+        $this->assertSame('', $image->getTitle());
     }
 
-    public function testHashChangesWhenNameChanges()
+    public function testHashChangesWhenTitleChanges()
     {
         $image = new Image;
-        $image->setName('One');
+        $image->setTitle('One');
         $hash_1 = $hash = $image->getHash();
-        $image->setName('Two');
+        $image->setTitle('Two');
         $hash_2 = $hash = $image->getHash();
         $this->assertTrue($hash_1 != $hash_2);
     }
@@ -39,11 +39,11 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $this->assertSame('', $image->getHash());
     }
 
-    public function testLastModifiedChangesWhenNameSet()
+    public function testLastModifiedChangesWhenTitleSet()
     {
         $image = new Image;
         $modified_1 = $image->getLastModified();
-        $image->setName('One');
+        $image->setTitle('One');
         $modified_2 = $image->getLastModified();
         $this->assertTrue($modified_1 != $modified_2);
     }

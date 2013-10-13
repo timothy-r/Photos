@@ -8,9 +8,9 @@ class DoctrineODMImageFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new Factory;
         $this->assertInstanceOf('Ace\Photos\IImageFactory', $factory);
-        $name = 'What a wonderful panorama';
-        $result = $factory->create($name);
+        $title = 'What a wonderful panorama';
+        $result = $factory->create($title);
         $this->assertInstanceOf('\Ace\Photos\DoctrineODMImage', $result);
-        $this->assertSame($name, $result->getName());
+        $this->assertSame($title, $result->getTitle());
     }
 }

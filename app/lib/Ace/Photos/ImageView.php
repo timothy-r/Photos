@@ -24,7 +24,7 @@ class ImageView implements IImageView
     {
         $this->get_photo_data = function(IImage $image){
             return [
-                'name' => $image->getName(),
+                'title' => $image->getTitle(),
                 'last_modified' => $image->getLastModified(),
                 'uri' => URL::action('PhotoController@show', [$image->getId()])
             ];

@@ -41,7 +41,7 @@ class FakeImageStore implements IImageStore
 
         // create a new Image
         $image = new Image;
-        $image->setName('Special Effects');
+        $image->setTitle('Special Effects');
         return $image;
     }
 
@@ -57,7 +57,7 @@ class FakeImageStore implements IImageStore
         $id = 1;
         foreach($names as $name) {
             $image = new Image;
-            $image->setName($name);
+            $image->setTitle($name);
             $all []= $image;
         }
         return $all;

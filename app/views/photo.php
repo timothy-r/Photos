@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Photo</h1>
-<div><?php echo $photo['name']; ?></div>
+<div><?php echo $photo['title']; ?></div>
 
 <a href="/photos/create">Add</a>
 <a href="/photos">List</a>

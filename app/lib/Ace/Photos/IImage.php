@@ -14,12 +14,12 @@ interface IImage
     /**
     * @return string
     */
-    public function getName();
+    public function getTitle();
 
     /**
-    * sets the name property of this instance
+    * sets the title property of this instance
     */
-    public function setName($name);
+    public function setTitle($name);
 
     /**
     * Returns a hash of this Image's state

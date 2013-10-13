@@ -37,11 +37,11 @@ class PhotoControllerTest extends TestCase
 	public function testCanListPhotosAsHTML()
 	{
         $id = 1;
-        $name = 'A fantastic panorama';
+        $title = 'A fantastic panorama';
         $this->givenAMockImage($id);
         $this->mock_image->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue($name));
+            ->method('getTitle')
+            ->will($this->returnValue($title));
         
         $photos = [$id => $this->mock_image];
         $this->mock_image_store->expects($this->any())
@@ -56,7 +56,7 @@ class PhotoControllerTest extends TestCase
 
         $data = $response->original->getData();
         $photo = current($data['photos']);
-        $this->assertSame($name, $photo['name']);
+        $this->assertSame($title, $photo['title']);
         // test uri property
 	}
 
@@ -126,7 +126,7 @@ class PhotoControllerTest extends TestCase
             ->method('create')
             ->will($this->returnValue($this->mock_image));
 
-        $data = ['name' => 'Test photo'];
+        $data = ['title' => 'Test photo'];
 		$response = $this->post('/photos', $data);
 
         $this->assertResponseStatus(302);
@@ -146,7 +146,7 @@ class PhotoControllerTest extends TestCase
             ->method('create')
             ->will($this->returnValue($this->mock_image));
 
-        $data = ['name' => 'Test photo'];
+        $data = ['title' => 'Test photo'];
 		$response = $this->post('/photos', $data);
 
         $this->assertResponseStatus(302);
@@ -245,7 +245,7 @@ class PhotoControllerTest extends TestCase
             ->method('update')
             ->with($this->mock_image)
             ->will($this->returnValue(true));
-        $data = ['name' => 'A new name'];
+        $data = ['title' => 'A new title'];
 		$response = $this->put('/photos/' . $id, $data);
 
         // assert redirected to view page

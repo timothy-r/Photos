@@ -15,9 +15,8 @@ class DoctrineODMImage implements IImage
 
     /**
     * @ODM\Field(type="string")
-    * rename to title?/label?
     */
-    private $name = '';
+    private $title = '';
 
     /**
     * @ODM\Field(type="string")
@@ -49,14 +48,14 @@ class DoctrineODMImage implements IImage
         return $this->id;
     }
 
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
         $this->changed();
     }
 
@@ -90,7 +89,7 @@ class DoctrineODMImage implements IImage
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->name}:{$this->filename}");
+        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->title}:{$this->filename}");
         $this->last_modified = time();
     }
 }

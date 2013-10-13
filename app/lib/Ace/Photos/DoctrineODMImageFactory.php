@@ -8,10 +8,10 @@ use Ace\Photos\DoctrineODMImage as Image;
 */
 class DoctrineODMImageFactory implements IImageFactory
 {
-    public function create($name)
+    public function create($title)
     {
         $image = new Image;
-        $image->setName($name);
+        $image->setTitle($title);
         return $image;
     }
 }

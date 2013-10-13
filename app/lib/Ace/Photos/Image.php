@@ -54,6 +54,18 @@ class Image extends Model implements IImage
         $this->changed();
     }
 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        $this->changed();
+    }
+
+
     public function getHash()
     {
         return $this->hash;

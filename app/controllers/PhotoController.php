@@ -70,10 +70,10 @@ class PhotoController extends \BaseController
 	public function store()
 	{
 		// get the input data
-        $name = Input::get('name');
+        $title = Input::get('title');
         
         // create an Image instance
-        $image = ImageFactory::create($name);
+        $image = ImageFactory::create($title);
         
         // store Image
         $result = ImageStore::add($image);
@@ -120,10 +120,10 @@ class PhotoController extends \BaseController
 	{
         $image = ImageStore::get($id);
 
-        $name = Input::get('name');
+        $title = Input::get('title');
 
         // update the Image
-        $image->setName($name);
+        $image->setTitle($title);
 
         // store Image
         ImageStore::update($image);
