@@ -1,10 +1,13 @@
 <?php namespace Ace\Photos;
 
+use SplFileInfo;
+
 interface IImageFactory
 {
     /**
-    * @param string $name
+    * @param string $title
+    * @param SplFileInfo $file the file on the local system
     * @return IImage
     */
-    public function create($name);
+    public function create($title, SplFileInfo $file);
 }

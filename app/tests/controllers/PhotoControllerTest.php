@@ -4,6 +4,7 @@ use Ace\Photos\DoctrineODMImageStore;
 use Way\Tests\Assert;
 use Ace\Photos\AssertTrait;
 use Ace\Photos\MockTrait;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * @group controller
@@ -13,6 +14,8 @@ class PhotoControllerTest extends TestCase
     use AssertTrait;
     
     use MockTrait;
+
+    protected $mock_file;
 
     public function setUp()
     {
@@ -124,9 +127,12 @@ class PhotoControllerTest extends TestCase
         $this->mock_factory->expects($this->once())
             ->method('create')
             ->will($this->returnValue($this->mock_image));
-
+        
+        $this->givenAMockFile();
         $data = ['title' => 'Test photo'];
-		$response = $this->post('/photos', $data);
+        $files = ['file' => $this->mock_file];
+        
+		$response = $this->post('/photos', $data, $files);
 
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
@@ -144,9 +150,12 @@ class PhotoControllerTest extends TestCase
         $this->mock_factory->expects($this->once())
             ->method('create')
             ->will($this->returnValue($this->mock_image));
-
+        
+        $this->givenAMockFile();
         $data = ['title' => 'Test photo'];
-		$response = $this->post('/photos', $data);
+        $files = ['file' => $this->mock_file]; 
+        
+		$response = $this->post('/photos', $data, $files);
 
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@create', []);
@@ -288,5 +297,11 @@ class PhotoControllerTest extends TestCase
         // assert redirected to index page
         $this->assertResponseStatus(302);
         $this->assertRedirectedToAction('PhotoController@show', [$id]);
+    }
+
+    public function givenAMockFile()
+    {
+        $path = __DIR__.'/../fixtures/tux.png';
+        $this->mock_file = new UploadedFile($path, 'image.png');
     }
 }
