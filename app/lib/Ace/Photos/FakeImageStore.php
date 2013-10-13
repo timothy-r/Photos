@@ -2,7 +2,7 @@
 
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImage;
-use Ace\Photos\Image;
+use Ace\Photos\DoctrineODMImage as Image;
 
 /**
 * A fake repository for Images
@@ -41,7 +41,6 @@ class FakeImageStore implements IImageStore
 
         // create a new Image
         $image = new Image;
-        $image->setId($id);
         $image->setName('Special Effects');
         return $image;
     }
@@ -58,11 +57,9 @@ class FakeImageStore implements IImageStore
         $id = 1;
         foreach($names as $name) {
             $image = new Image;
-            $image->setId($id++);
             $image->setName($name);
             $all []= $image;
         }
         return $all;
-
     }
 }
