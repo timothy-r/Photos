@@ -69,7 +69,11 @@ class DoctrineODMImage implements IImage
     {
         return $this->size;
     }
-    
+   
+    /**
+    * @param string $filename location of file in 'virtual store'
+    * @param string $file - file on disc to store in gridfs
+    */
     public function setFile($filename)
     {
         $this->filename = $filename;
