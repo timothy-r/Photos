@@ -15,6 +15,7 @@ class DoctrineODMImage implements IImage
 
     /**
     * @ODM\Field(type="string")
+    * rename to title?/label?
     */
     private $name = '';
 
@@ -33,7 +34,10 @@ class DoctrineODMImage implements IImage
     */
     private $size = 0;
 
-    private $file = '';
+    /**
+    * @ODM\Field(type="string")
+    */
+    private $filename = '';
 
     public function getId()
     {
@@ -68,7 +72,7 @@ class DoctrineODMImage implements IImage
     
     public function setFile($filename)
     {
-        $this->file = $filename;
+        $this->filename = $filename;
         $this->changed(); 
     }
 
@@ -77,7 +81,7 @@ class DoctrineODMImage implements IImage
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->name}:{$this->file}");
+        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->name}:{$this->filename}");
         $this->last_modified = time();
     }
 }
