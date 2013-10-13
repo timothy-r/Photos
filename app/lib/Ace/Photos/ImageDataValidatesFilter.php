@@ -22,7 +22,8 @@ class ImageDataValidatesFilter
     public function filter(Route $route, Request $request)
     {
         $rules = [
-            'title' => 'required'
+            'title' => 'required',
+            'file' => 'required'
         ];
 
         $validator = Validator::make($request->only(array_keys($rules)), $rules);

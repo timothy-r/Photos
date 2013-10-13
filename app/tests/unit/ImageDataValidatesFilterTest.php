@@ -21,7 +21,7 @@ class ImageDataValidatesFilterTest extends FilterTest
     public function getValidImageData()
     {
         return [
-            [['title' => 'The view from the very top of Mont Blanc']]
+            [['title' => 'The view from the very top of Mont Blanc', 'file' => 'image.png']]
         ];
     }
 
@@ -42,7 +42,8 @@ class ImageDataValidatesFilterTest extends FilterTest
     public function getInvalidImageData()
     {
         return [
-            [['title' => '']],
+            [['title' => '', 'file' => 'photo.gif']],
+            [['file' => '', 'title' => 'A photo']],
             [['data' => 'abcd']],
             [[]]
         ];
