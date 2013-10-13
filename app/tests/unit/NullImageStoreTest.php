@@ -1,6 +1,6 @@
 <?php
 use Ace\Photos\NullImageStore;
-use Ace\Photos\Image;
+use Ace\Photos\DoctrineODMImage as Image;
 
 /**
 * @group unit
