@@ -1,15 +1,19 @@
 # scrutinizer config
 #
 tools:
-    php_code_coverage: true
+    external_code_coverage: true
 
     php_code_sniffer: true
 
-    php_cpd: true
+    php_cpd:
+        enabled: true
+        exclude_dirs: [vendor, app/tests]
 
     php_cs_fixer: true
 
-    php_loc: true
+    php_loc: 
+        enabled: true
+        exclude_dirs: [vendor, app/tests]
 
     php_mess_detector: true
 
