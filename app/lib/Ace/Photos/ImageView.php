@@ -44,6 +44,9 @@ class ImageView implements IImageView
         return $this->getResponse('photos', ['photos' => $data], []);
     }
 
+    /**
+    * @todo add support for a reason for the 400 error
+    */
     public function badRequest()
     {
         return Response::make('', 400);

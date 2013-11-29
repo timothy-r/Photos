@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 /**
 * Validates that incoming data is valid to create/update an image
-* Returns a Response object on failure
+* Returns a Response object on failure, null on success
 */
 class ImageDataValidatesFilter
 {
@@ -21,7 +21,8 @@ class ImageDataValidatesFilter
     */
     public function filter(Route $route, Request $request)
     {
-        $rules = [
+        $rules = 
+        [
             'title' => 'required',
             'file' => 'required'
         ];
