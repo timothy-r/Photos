@@ -46,7 +46,7 @@ class PhotoController extends \BaseController
         $images = ImageStore::all();
         
         // call the view to return a reponse based on Accept header in request
-        // var_dump($images);
+        #print_r($images);
 
         return ImageView::makeManyAcceptable($images);
     }
