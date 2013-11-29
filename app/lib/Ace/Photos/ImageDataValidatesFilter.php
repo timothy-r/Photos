@@ -24,7 +24,7 @@ class ImageDataValidatesFilter
         $rules = 
         [
             'title' => 'required',
-            'file' => 'image,required'
+            'file' => 'image|required'
         ];
 
         $validator = Validator::make($request->only(array_keys($rules)), $rules);
