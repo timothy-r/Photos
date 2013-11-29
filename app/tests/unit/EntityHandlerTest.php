@@ -23,4 +23,13 @@ class EntityHandlerTest extends PHPUnit_Framework_TestCase
             ['*', '58be4a190eff']
         ];
     }
+
+    public function testNonMatchingETagIsDetected()
+    {
+        $handler = new EntityHandler;
+        $header = '8b14fec5';
+        $etag = 'a093be2';
+        $result = $handler->matches($header, $etag);
+        $this->assertFalse($result, "Didn't expected '$header' to match '$etag'");
+    }
 }
