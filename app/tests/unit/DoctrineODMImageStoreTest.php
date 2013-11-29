@@ -51,6 +51,13 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
         $this->image_store = new DoctrineODMImageStore($mock_config);
     }
 
+    public function testDocumentManagerIsFlushed()
+    {
+        $this->mock_dm->expects($this->once())
+            ->method('flush');
+        $this->image_store->__destruct();
+    }
+
     public function testCanAddAnImage()
     {
         $image = new Image;

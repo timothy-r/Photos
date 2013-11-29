@@ -8,20 +8,12 @@ class EntityHandler
     /**
     * Tests if the etag param matches the If-Match or If-None-Match request header value
     *
-    * @param string $header
-    * @param string $etag
+    * @param string $header the value from the request header
+    * @param string $etag the etag for the resource
     * @return boolean
     */
     public function matches($header, $etag)
     {
-        if ('*' === $header)
-        {
-            return true;
-        }
-
-        if ($header === $etag)
-        {
-            return true;
-        }
+        return (($header === $etag) || ('*' === $header));
     }
 }
