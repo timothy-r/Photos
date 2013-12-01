@@ -69,6 +69,13 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image->setFile($filename, $local_file);
     }
 
+    public function testImageFileIsNullByDefault()
+    {
+        $image = new Image;
+        $file = $image->getFile();
+        $this->assertSame(null, $file);
+    }
+
     public function testLastModifiedChangesWhenFileIsSet()
     {
         $local_file = "/tmp/uploads/thing.png";

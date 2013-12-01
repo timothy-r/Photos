@@ -90,6 +90,13 @@ class DoctrineODMImage implements IImage
     }
 
     /**
+    * @return the file
+    */
+    public function getFile()
+    {
+        return $this->file;
+    }
+    /**
     * The Image state has changed, update bookkeeping data
     */
     protected function changed()
