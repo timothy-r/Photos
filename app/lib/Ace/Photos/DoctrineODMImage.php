@@ -43,6 +43,12 @@ class DoctrineODMImage implements IImage
     */
     private $file;
 
+    /**
+    * url friendly version of title
+    * @ODM\Field(type="string")
+    */
+    private $slug;
+
     public function getId()
     {
         return $this->id;
@@ -56,6 +62,7 @@ class DoctrineODMImage implements IImage
     public function setTitle($title)
     {
         $this->title = $title;
+        $this->setSlug();
         $this->changed();
     }
 
@@ -96,6 +103,17 @@ class DoctrineODMImage implements IImage
     {
         return $this->file;
     }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    protected function setSlug()
+    {
+        $this->slug = preg_replace('#[\W_]+#', '-', strtolower($this->title));
+    }
+
     /**
     * The Image state has changed, update bookkeeping data
     */

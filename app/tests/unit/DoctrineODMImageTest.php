@@ -127,4 +127,24 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($hash_1 != $hash_2);
     }
+
+    public function getSlugs()
+    {
+        return [
+            ['Title', 'title'],
+            ['A long and informative   title', 'a-long-and-informative-title'],
+            ['a title_with_underscores', 'a-title-with-underscores'],
+            ['&?#image name', '-image-name']
+        ];
+    }
+
+    /**
+    * @dataProvider getSlugs
+    */
+    public function testImageSlugMatchesTitle($title, $slug)
+    {
+        $image = new Image;
+        $image->setTitle($title);
+        $this->assertSame($slug, $image->getSlug());
+    }
 }
