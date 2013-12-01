@@ -47,7 +47,7 @@ class DoctrineODMImage implements IImage
     * Url friendly version of title
     * Must be unique, used as identifier to access the Image
     *
-    * @ODM\Field(type="string")
+    * @ODM\String @ODM\Index(unique="true")
     */
     private $slug;
 
