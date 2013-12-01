@@ -73,7 +73,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function get($slug)
     {
-        return $this->dm->find('Ace\Photos\DoctrineODMImage', $slug);
+        return $this->dm->getRepository('Ace\Photos\DoctrineODMImage')->findOneBy(['slug' => $slug]);
     }
 
     /**

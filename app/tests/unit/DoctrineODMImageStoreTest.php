@@ -17,6 +17,8 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     protected $mock_dm;
 
+    protected $mock_repo;
+
     protected $mock_query_builder;
 
     protected $mock_query;
@@ -25,12 +27,18 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->mock_dm = $this->getMock('MockDocumentManager', ['persist', 'find', 'createQueryBuilder', 'remove', 'flush']);
+        $this->mock_dm = $this->getMock('MockDocumentManager', ['persist', 'getRepository', 'createQueryBuilder', 'remove', 'flush']);
+        $this->mock_repo = $this->getMock('MockRespository', ['findOneBy']);
         
         $this->mock_query_builder = $this->getMock('MockQueryBuilder', ['getQuery']);
+
         $this->mock_dm->expects($this->any())
             ->method('createQueryBuilder')
             ->will($this->returnValue($this->mock_query_builder));
+        $this->mock_dm->expects($this->any())
+            ->method('getRepository')
+            ->will($this->returnValue($this->mock_repo));
+        
         
         $this->mock_query = $this->getMock('MockQuery', ['execute']);
         $this->mock_query_builder->expects($this->any())
@@ -91,9 +99,9 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
     public function testCanGetImage()
     {
         $image = new Image;
-        $this->mock_dm->expects($this->once())
-            ->method('find')
-            ->with('Ace\Photos\DoctrineODMImage', 'abcdef')
+        $this->mock_repo->expects($this->once())
+            ->method('findOneBy')
+            ->with(['slug' => 'abcdef'])
             ->will($this->returnValue($image));
         $result = $this->image_store->get('abcdef');
         $this->assertSame($image, $result);
