@@ -30,6 +30,7 @@ class ImageDataValidatesFilter
         $validator = Validator::make($request->only(array_keys($rules)), $rules);
 
         if (!$validator->passes()) {
+            // display / log $validator->messages() 
             return ImgView::badRequest();
         }
     }

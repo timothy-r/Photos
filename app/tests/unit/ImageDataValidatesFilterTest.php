@@ -2,6 +2,9 @@
 
 use Ace\Photos\ImageDataValidatesFilter;
 
+/**
+* @todo mock the Validator class
+*/
 class ImageDataValidatesFilterTest extends FilterTest
 {
     /**
