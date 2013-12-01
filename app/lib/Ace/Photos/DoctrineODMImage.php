@@ -44,7 +44,9 @@ class DoctrineODMImage implements IImage
     private $file;
 
     /**
-    * url friendly version of title
+    * Url friendly version of title
+    * Must be unique, used as identifier to access the Image
+    *
     * @ODM\Field(type="string")
     */
     private $slug;
@@ -119,7 +121,7 @@ class DoctrineODMImage implements IImage
     */
     protected function changed()
     {
-        $this->hash = md5("Ace\Photos\DoctrineODMImage::{$this->title}:{$this->path}");
+        $this->hash = md5(__CLASS__ . "::{$this->title}:{$this->path}");
         $this->last_modified = time();
     }
 }

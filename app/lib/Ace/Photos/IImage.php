@@ -53,5 +53,7 @@ interface IImage
     * @return integer
     */
     public function getSize();
+
+    public function getSlug();
 }
 
