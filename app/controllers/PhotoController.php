@@ -92,12 +92,12 @@ class PhotoController extends \BaseController
 	/**
 	 * View the photo
 	 *
-	 * @param  int  $id
+	 * @param  string  $slug
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($slug)
 	{
-        $image = ImageStore::get($id);
+        $image = ImageStore::get($slug);
 
         return ImageView::makeAcceptable($image);
 	}

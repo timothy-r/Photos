@@ -26,7 +26,7 @@ class ImageView implements IImageView
             return [
                 'title' => $image->getTitle(),
                 'last_modified' => $image->getLastModified(),
-                'uri' => URL::action('PhotoController@show', [$image->getId()])
+                'uri' => URL::action('PhotoController@show', [$image->getSlug() ? $image->getSlug(): $image->getId()])
             ];
         };
     }

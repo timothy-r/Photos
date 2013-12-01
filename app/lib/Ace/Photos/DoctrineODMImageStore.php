@@ -67,18 +67,17 @@ class DoctrineODMImageStore implements IImageStore
     }
 
     /**
-    * Get an Image by its id 
+    * Get an Image by its slug 
     *
     * @return Image
     */
-    public function get($id)
+    public function get($slug)
     {
-        return $this->dm->find('Ace\Photos\DoctrineODMImage', $id);
+        return $this->dm->find('Ace\Photos\DoctrineODMImage', $slug);
     }
 
     /**
     * Remove the parameter Image from the store
-    * @return boolean
     */
     public function remove(IImage $image)
     {
