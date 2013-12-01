@@ -23,9 +23,11 @@ class Image extends Model implements IImage
     */ 
     protected static $attrs = array(
         'name' => array('type'=>'string', 'default' => ''),
+        'title' => array('type'=>'string', 'default' => ''),
         'hash' => array('type'=>'string', 'default' => ''),
         'last_modified' => array('type'=>'integer'),
         'size' => array('type'=>'integer', 'default' => 0),
+        'slug' => array('type'=>'string', 'default' => ''),
     );
 
     public static function setConfig($config)
@@ -86,6 +88,11 @@ class Image extends Model implements IImage
     public function getSize()
     {
         return $this->size;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
