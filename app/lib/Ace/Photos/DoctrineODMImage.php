@@ -101,6 +101,7 @@ class DoctrineODMImage implements IImage
     public function setFile(UploadedFile $file)
     {
         $this->file = $file;
+        $this->mime_type = $file->getMimeType();
         $this->changed(); 
     }
 
@@ -119,7 +120,7 @@ class DoctrineODMImage implements IImage
     
     public function getMimeType()
     {
-
+        return $this->mime_type;
     }
 
     protected function setSlug()

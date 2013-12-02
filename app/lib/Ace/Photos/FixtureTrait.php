@@ -6,10 +6,9 @@ trait FixtureTrait
 {
     protected $file;
 
-    protected function givenAFile()
+    protected function givenAFile($mime_type = 'image/png')
     {
         $file = __DIR__.'/../../../tests/fixtures/tux.png';
-        $mime_type = 'image/png';
         $this->file = new UploadedFile($file, 'File', $mime_type);
     }
 }
