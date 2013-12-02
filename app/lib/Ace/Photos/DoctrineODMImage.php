@@ -1,6 +1,7 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
+use SplFileInfo;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -97,7 +98,7 @@ class DoctrineODMImage implements IImage
     /**
     * @param string $file - file on disc to store in gridfs
     */
-    public function setFile($file)
+    public function setFile(SplFileInfo $file)
     {
         $this->file = $file;
         $this->changed(); 

@@ -63,10 +63,8 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
     public function testCanSetFile()
     {
         $image = new Image;
-        $filename = "dir/path/image.png";
-        $local_file = "/tmp/uploads/thing.png";
-
-        $image->setFile($filename, $local_file);
+        $file = new SplFileInfo('image.png');
+        $image->setFile($file);
     }
 
     public function testImageFileIsNullByDefault()
@@ -78,10 +76,10 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 
     public function testLastModifiedChangesWhenFileIsSet()
     {
-        $local_file = "/tmp/uploads/thing.png";
+        $file = new SplFileInfo('image.png');
         $image = new Image;
         $modified_1 = $image->getLastModified();
-        $image->setFile('all-images/one.png', $local_file);
+        $image->setFile($file);
         $modified_2 = $image->getLastModified();
 
         $this->assertTrue($modified_1 != $modified_2);

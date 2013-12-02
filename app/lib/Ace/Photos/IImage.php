@@ -1,5 +1,6 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos;
+
+use SplFileInfo;
 
 /**
 * The interface that Images must implement
@@ -31,7 +32,7 @@ interface IImage
     * store the $file data in gridfs
     * @param string path to the local file
     */
-    public function setFile($file);
+    public function setFile(SplFileInfo $file);
 
     /**
     * Returns a hash of this Image's state
