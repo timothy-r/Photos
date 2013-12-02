@@ -95,6 +95,10 @@ class Image extends Model implements IImage
         return $this->slug;
     }
 
+    public function getMimeType()
+    {
+    }
+
     /**
     * The Image state has changed, update bookkeeping data
     */

@@ -116,6 +116,11 @@ class DoctrineODMImage implements IImage
     {
         return $this->slug;
     }
+    
+    public function getMimeType()
+    {
+
+    }
 
     protected function setSlug()
     {
