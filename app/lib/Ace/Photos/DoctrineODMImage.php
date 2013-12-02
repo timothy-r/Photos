@@ -44,6 +44,11 @@ class DoctrineODMImage implements IImage
     private $file;
 
     /**
+    * @ODM\Field(type="string")
+    */
+    private $mime_type;
+
+    /**
     * Url friendly version of title
     * Must be unique, used as identifier to access the Image
     *
