@@ -22,7 +22,10 @@ class DoctrineODMImageStore implements IImageStore
 
     public function __destruct()
     {
-        $this->dm->flush();
+        if ($this->dm){
+            $this->dm->flush();
+            $this->dm = null;
+        }
     }
 
     /**
