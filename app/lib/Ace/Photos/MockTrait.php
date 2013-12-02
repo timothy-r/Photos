@@ -10,7 +10,7 @@ trait MockTrait
     protected $mock_factory;
     protected $mock_route;
     protected $request;
-
+    
     protected function givenAMockRoute($id)
     {
         $this->mock_route = $this->getMock('Illuminate\Routing\Route', ['getParameter'], [], '', false);
@@ -73,5 +73,10 @@ trait MockTrait
         $mock = $this->getMock($class, $methods);
         App::instance($class, $mock);
         return $mock;
+    }
+
+    protected function givenAMockFile()
+    {
+        $this->mock_file = $this->getMock('Symfony\Component\HttpFoundation\File\UploadedFile', ['getMimeType'], [], '', false);
     }
 }

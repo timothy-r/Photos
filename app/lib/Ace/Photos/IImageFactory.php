@@ -1,13 +1,13 @@
 <?php namespace Ace\Photos;
 
-use SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface IImageFactory
 {
     /**
     * @param string $title
-    * @param SplFileInfo $file the file on the local system
+    * @param UploadedFile $file the file on the local system
     * @return IImage
     */
-    public function create($title, SplFileInfo $file);
+    public function create($title, UploadedFile $file);
 }

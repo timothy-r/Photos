@@ -1,6 +1,6 @@
 <?php namespace Ace\Photos;
 
-use SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Ace\Photos\IImageFactory;
 use Ace\Photos\DoctrineODMImage as Image;
 
@@ -9,7 +9,7 @@ use Ace\Photos\DoctrineODMImage as Image;
 */
 class DoctrineODMImageFactory implements IImageFactory
 {
-    public function create($title, SplFileInfo $file)
+    public function create($title, UploadedFile $file)
     {
         $image = new Image;
         $image->setTitle($title);

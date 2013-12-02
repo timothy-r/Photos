@@ -1,7 +1,7 @@
 <?php namespace Ace\Photos;
 
 use Ace\Photos\IImage;
-use SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -98,7 +98,7 @@ class DoctrineODMImage implements IImage
     /**
     * @param string $file - file on disc to store in gridfs
     */
-    public function setFile(SplFileInfo $file)
+    public function setFile(UploadedFile $file)
     {
         $this->file = $file;
         $this->changed(); 

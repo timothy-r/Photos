@@ -1,9 +1,12 @@
 <?php
 
 use Ace\Photos\DoctrineODMImage as Image;
+use Ace\Photos\FixtureTrait;
 
 class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 {
+    use FixtureTrait;
+
     public function testCreate()
     {
         $image = new Image;
@@ -63,8 +66,8 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
     public function testCanSetFile()
     {
         $image = new Image;
-        $file = new SplFileInfo('image.png');
-        $image->setFile($file);
+        $this->givenAFile();
+        $image->setFile($this->file);
     }
 
     public function testImageFileIsNullByDefault()
@@ -76,10 +79,10 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
 
     public function testLastModifiedChangesWhenFileIsSet()
     {
-        $file = new SplFileInfo('image.png');
         $image = new Image;
+        $this->givenAFile();
         $modified_1 = $image->getLastModified();
-        $image->setFile($file);
+        $image->setFile($this->file);
         $modified_2 = $image->getLastModified();
 
         $this->assertTrue($modified_1 != $modified_2);
@@ -144,5 +147,20 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image = new Image;
         $image->setTitle($title);
         $this->assertSame($slug, $image->getSlug());
+    }
+    
+    public function getMimeTypes()
+    {
+        return [
+            'image/png'
+        ];
+    }
+
+    /**
+    * @dataProvider getMimeTypes
+    */
+    public function testMimeTypeComesFromFile($mime_type)
+    {
+        //$file = new UploadedFile;
     }
 }

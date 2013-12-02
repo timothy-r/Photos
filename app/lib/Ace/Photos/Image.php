@@ -4,6 +4,7 @@ use Purekid\Mongodm\Model;
 use Ace\Photos\IImage;
 use Log;
 use Config;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * Represents a single Image document
@@ -76,7 +77,7 @@ class Image extends Model implements IImage
         return $this->hash;
     }
 
-    public function setFile($file)
+    public function setFile(UploadedFile $file)
     {
     }
 

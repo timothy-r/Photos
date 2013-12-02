@@ -1,6 +1,6 @@
 <?php namespace Ace\Photos;
 
-use SplFileInfo;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
 * The interface that Images must implement
@@ -32,7 +32,7 @@ interface IImage
     * store the $file data in gridfs
     * @param string path to the local file
     */
-    public function setFile(SplFileInfo $file);
+    public function setFile(UploadedFile $file);
 
     /**
     * Returns a hash of this Image's state
