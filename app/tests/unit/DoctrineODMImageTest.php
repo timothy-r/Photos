@@ -152,7 +152,7 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
     public function getMimeTypes()
     {
         return [
-            'image/png'
+            ['image/png']
         ];
     }
 
@@ -161,6 +161,9 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
     */
     public function testMimeTypeComesFromFile($mime_type)
     {
-        //$file = new UploadedFile;
+        $this->givenAFile($mime_type);
+        $image = new Image;
+        $image->setFile($this->file);
+        $this->assertSame($mime_type, $image->getMimeType());
     }
 }
