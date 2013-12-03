@@ -57,6 +57,11 @@ class DoctrineODMImage implements IImage
     */
     private $slug;
 
+    /**
+    * @ODM\Field(type="string")
+    */
+    private $extension;
+
     public function getId()
     {
         return $this->id;
@@ -102,6 +107,7 @@ class DoctrineODMImage implements IImage
     {
         $this->file = $file;
         $this->mime_type = $file->getMimeType();
+        $this->extension = $file->getExtension();
         $this->changed(); 
     }
 
@@ -125,6 +131,7 @@ class DoctrineODMImage implements IImage
 
     public function getExtension()
     {
+        return $this->extension;
     }
 
     protected function setSlug()
@@ -137,7 +144,7 @@ class DoctrineODMImage implements IImage
     */
     protected function changed()
     {
-        $this->hash = md5(__CLASS__ . "::{$this->title}:{$this->path}");
+        $this->hash = md5(__CLASS__ . "::{$this->title}:{$this->path}:{$this->mime_type}:{$this->extension}");
         $this->last_modified = time();
     }
 }

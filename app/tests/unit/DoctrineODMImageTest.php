@@ -156,4 +156,12 @@ class DoctrineODMImageTest extends PHPUnit_Framework_TestCase
         $image->setFile($this->file);
         $this->assertSame($this->file->getMimeType(), $image->getMimeType());
     }
+    
+    public function testExtensionComesFromFile()
+    {
+        $this->givenAFile();
+        $image = new Image;
+        $image->setFile($this->file);
+        $this->assertSame($this->file->getExtension(), $image->getExtension());
+    }
 }
