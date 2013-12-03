@@ -123,6 +123,10 @@ class DoctrineODMImage implements IImage
         return $this->mime_type;
     }
 
+    public function getExtension()
+    {
+    }
+
     protected function setSlug()
     {
         $this->slug = preg_replace('#[\W_]+#', '-', strtolower($this->title));

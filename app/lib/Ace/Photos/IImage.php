@@ -54,12 +54,20 @@ interface IImage
     * @return integer
     */
     public function getSize();
-
+    
+    /**
+    * @return string
+    */
     public function getSlug();
 
     /**
     * @return string the Image's mime type, eg. image/png
     */
     public function getMimeType();
+
+    /**
+    * @return string the Image's file extension eg. gif
+    */
+    public function getExtension();
 }
 

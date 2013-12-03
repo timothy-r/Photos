@@ -100,6 +100,10 @@ class Image extends Model implements IImage
     {
     }
 
+    public function getExtension()
+    {
+    }
+
     /**
     * The Image state has changed, update bookkeeping data
     */
