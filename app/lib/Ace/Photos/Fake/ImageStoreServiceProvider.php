@@ -1,5 +1,5 @@
 <?php
-namespace Ace\Photos;
+namespace Ace\Photos\Fake;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 * Binds the FakeImageStore class to the IImageStore interface
 * This is how IImageStore is resolved by the dic
 */
-class FakeImageStoreServiceProvider extends ServiceProvider
+class ImageStoreServiceProvider extends ServiceProvider
 {
     public function register()
     {
