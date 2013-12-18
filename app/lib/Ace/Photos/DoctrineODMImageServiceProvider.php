@@ -18,7 +18,7 @@ class DoctrineODMImageServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Ace\Photos\IDoctrineODMConfig',
-            'Ace\Photos\DoctrineODMConfig'
+            'Ace\Photos\Doctrine\ODMConfig'
         );
 
         $this->app->bind(
@@ -28,7 +28,7 @@ class DoctrineODMImageServiceProvider extends ServiceProvider
         
         $this->app->bind(
             'Ace\Photos\IImageFactory',
-            'Ace\Photos\DoctrineODMImageFactory'
+            'Ace\Photos\Doctrine\ODMImageFactory'
         );
     }
 }
