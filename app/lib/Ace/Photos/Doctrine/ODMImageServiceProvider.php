@@ -7,22 +7,22 @@ use Illuminate\Support\ServiceProvider;
 *
 * Consider this to be a version of abstract factory
 *
-* Binds the DoctrineODMConfig to the IDoctrineODMConfig interface
-* Binds the DoctrineODMImageStore class to the IImageStore interface
-* Binds the DoctrineODMImageFactory class to the IImageFactory interface
+* Binds the Doctrine\ODMConfig to the Doctrine\IODMConfig interface
+* Binds the Doctrine\ODMImageStore class to the IImageStore interface
+* Binds the Doctrine\ODMImageFactory class to the IImageFactory interface
 */
 class ODMImageServiceProvider extends ServiceProvider
 {
     public function register()
     {
         $this->app->bind(
-            'Ace\Photos\IDoctrineODMConfig',
+            'Ace\Photos\Doctrine\IODMConfig',
             'Ace\Photos\Doctrine\ODMConfig'
         );
 
         $this->app->bind(
             'Ace\Photos\IImageStore',
-            'Ace\Photos\DoctrineODMImageStore'
+            'Ace\Photos\Doctrine\ODMImageStore'
         );
         
         $this->app->bind(

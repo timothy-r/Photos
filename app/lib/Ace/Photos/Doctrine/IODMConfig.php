@@ -1,9 +1,9 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Doctrine;
 
 /**
 * @todo add a getRepository($name) method
 */
-interface IDoctrineODMConfig
+interface IODMConfig
 {
     public function getDocumentManager();
 }
