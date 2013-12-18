@@ -1,6 +1,6 @@
 <?php
 
-use Ace\Photos\DoctrineODMImageStore;
+use Ace\Photos\Doctrine\ODMImageStore as ImageStore;
 use Ace\Photos\Doctrine\ODMImage as Image;
 use Ace\Photos\MockTrait;
 
@@ -9,7 +9,7 @@ use Doctrine\ODM\MongoDB\MongoDBException;
 /**
 * @group unit
 */
-class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
+class ImageStoreTest extends \PHPUnit_Framework_TestCase
 {
     use MockTrait;
 
@@ -56,7 +56,7 @@ class DoctrineODMImageStoreTest extends \PHPUnit_Framework_TestCase
             ->method('getDocumentManager')
             ->will($this->returnValue($this->mock_dm));
 
-        $this->image_store = new DoctrineODMImageStore($mock_config);
+        $this->image_store = new ImageStore($mock_config);
     }
 
     public function testDocumentManagerIsFlushed()
