@@ -1,5 +1,5 @@
 <?php
-use Ace\Photos\FakeImageStore;
+use Ace\Photos\Fake\ImageStore;
 use Ace\Photos\Doctrine\ODMImage as Image;
 
 /**
@@ -11,7 +11,7 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->image_store = new FakeImageStore;
+        $this->image_store = new ImageStore;
     }
 
     public function testCanAddAnImage()

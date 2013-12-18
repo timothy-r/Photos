@@ -13,7 +13,7 @@ class FakeImageStoreServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Ace\Photos\IImageStore',
-            'Ace\Photos\FakeImageStore'
+            'Ace\Photos\Fake\ImageStore'
         );
     }
 }

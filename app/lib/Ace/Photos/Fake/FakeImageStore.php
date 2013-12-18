@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Fake;
 
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImage;
@@ -7,7 +7,7 @@ use Ace\Photos\Doctrine\ODMImage as Image;
 /**
 * A fake repository for Images
 */
-class FakeImageStore implements IImageStore
+class ImageStore implements IImageStore
 {
     
     public function init(){}
