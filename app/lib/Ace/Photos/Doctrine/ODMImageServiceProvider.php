@@ -1,5 +1,4 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos\Doctrine;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +11,7 @@ use Illuminate\Support\ServiceProvider;
 * Binds the DoctrineODMImageStore class to the IImageStore interface
 * Binds the DoctrineODMImageFactory class to the IImageFactory interface
 */
-class DoctrineODMImageServiceProvider extends ServiceProvider
+class ODMImageServiceProvider extends ServiceProvider
 {
     public function register()
     {
