@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Doctrine;
 
 use Ace\Photos\IDoctrineODMConfig;
 
@@ -9,7 +9,7 @@ use Doctrine\Common\ClassLoader,
     Doctrine\ODM\MongoDB\Configuration,
     Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 
-class DoctrineODMConfig implements IDoctrineODMConfig
+class ODMConfig implements IDoctrineODMConfig
 {
     /**
     * @return Doctrine\ODM\MongoDB\DocumentManager

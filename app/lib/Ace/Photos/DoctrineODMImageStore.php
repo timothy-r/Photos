@@ -2,7 +2,7 @@
 
 use Ace\Photos\IImage;
 use Ace\Photos\IDoctrineODMConfig;
-use Ace\Photos\DoctrineODMImage as Image;
+use Ace\Photos\Doctrine\ODMImage as Image;
 use Ace\Photos\IImageStore;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -66,7 +66,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function all()
     {
-        return $this->dm->createQueryBuilder('Ace\Photos\DoctrineODMImage')->getQuery()->execute()->toArray();
+        return $this->dm->createQueryBuilder('Ace\Photos\Doctrine\ODMImage')->getQuery()->execute()->toArray();
     }
 
     /**
@@ -76,7 +76,7 @@ class DoctrineODMImageStore implements IImageStore
     */
     public function get($slug)
     {
-        return $this->dm->getRepository('Ace\Photos\DoctrineODMImage')->findOneBy(['slug' => $slug]);
+        return $this->dm->getRepository('Ace\Photos\Doctrine\ODMImage')->findOneBy(['slug' => $slug]);
     }
 
     /**

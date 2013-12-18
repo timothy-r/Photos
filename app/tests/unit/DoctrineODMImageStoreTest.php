@@ -1,7 +1,7 @@
 <?php
 
 use Ace\Photos\DoctrineODMImageStore;
-use Ace\Photos\DoctrineODMImage as Image;
+use Ace\Photos\Doctrine\ODMImage as Image;
 use Ace\Photos\MockTrait;
 
 use Doctrine\ODM\MongoDB\MongoDBException;

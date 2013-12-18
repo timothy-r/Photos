@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Ace\Photos\IImageFactory;
-use Ace\Photos\DoctrineODMImage as Image;
+use Ace\Photos\Doctrine\ODMImage as Image;
 
 /**
 * Creates instances of Image
