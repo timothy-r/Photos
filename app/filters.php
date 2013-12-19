@@ -85,7 +85,7 @@ Route::filter('csrf', function()
 /**
 * Adds a filter to validate incoming Image data and meta-data
 */
-Route::filter('image-validate', 'Ace\Photos\ImageDataValidatesFilter');
+Route::filter('image-validate', 'Ace\Photos\Filter\ImageDataValidates');
 
 /**
 * Adds a filter to validate Images exist

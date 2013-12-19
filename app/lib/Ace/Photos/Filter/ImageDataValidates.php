@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Filter;
 
 // @todo investigate the class name clash with Ace\Photos\ImageView
 use Ace\Facades\ImageView as ImgView;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 * Validates that incoming data is valid to create/update an image
 * Returns a Response object on failure, null on success
 */
-class ImageDataValidatesFilter
+class ImageDataValidates
 {
     /**
     * @param Illuminate\Routing\Route $route

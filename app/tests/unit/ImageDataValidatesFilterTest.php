@@ -1,11 +1,11 @@
 <?php
 
-use Ace\Photos\ImageDataValidatesFilter;
+use Ace\Photos\Filter\ImageDataValidates;
 
 /**
 * @todo mock the Validator class
 */
-class ImageDataValidatesFilterTest extends FilterTest
+class ImageDataValidatesTest extends FilterTest
 {
     /**
     * @dataProvider getValidImageData
@@ -16,7 +16,7 @@ class ImageDataValidatesFilterTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockRequest($data);
 
-        $this->filter = new ImageDataValidatesFilter;
+        $this->filter = new ImageDataValidates;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterPassed();
     }
@@ -37,7 +37,7 @@ class ImageDataValidatesFilterTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockRequest($data);
 
-        $this->filter = new ImageDataValidatesFilter;
+        $this->filter = new ImageDataValidates;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterFailed(400);
     }
