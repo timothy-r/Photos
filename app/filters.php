@@ -90,7 +90,7 @@ Route::filter('image-validate', 'Ace\Photos\ImageDataValidatesFilter');
 /**
 * Adds a filter to validate Images exist
 */
-Route::filter('image-exists', 'Ace\Photos\ImageExistsFilter');
+Route::filter('image-exists', 'Ace\Photos\Filter\ImageExists');
 
 /**
 * Adds a filter to validate that the incoming If-Matches header is valid for the requested Image

@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Filter;
 
 use Ace\Facades\ImageStore;
 // @todo investigate the class name clash with Ace\Photos\ImageView
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 * Validates that an image exists
 * Returns a Response object on failure
 */
-class ImageExistsFilter
+class ImageExists
 {
     /**
     * @param Illuminate\Routing\Route $route

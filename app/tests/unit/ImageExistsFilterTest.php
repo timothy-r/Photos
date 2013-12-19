@@ -1,6 +1,5 @@
 <?php
-
-use Ace\Photos\ImageExistsFilter;
+use Ace\Photos\Filter\ImageExists;
 
 class ImageExistsFilterTest extends FilterTest
 {
@@ -13,7 +12,7 @@ class ImageExistsFilterTest extends FilterTest
         $this->givenARequest();
         $this->givenAMockImage();
 
-        $this->filter = new ImageExistsFilter;
+        $this->filter = new ImageExists;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterPassed();
     }
@@ -25,7 +24,7 @@ class ImageExistsFilterTest extends FilterTest
         $this->givenAMockImageStore();
         $this->givenARequest();
 
-        $this->filter = new ImageExistsFilter;
+        $this->filter = new ImageExists;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterFailed(404);
     }
