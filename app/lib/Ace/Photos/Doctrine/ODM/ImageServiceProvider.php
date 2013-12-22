@@ -17,7 +17,7 @@ class ImageServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Ace\Photos\Doctrine\ODM\IConfig',
-            'Ace\Photos\Doctrine\ODMConfig'
+            'Ace\Photos\Doctrine\ODM\Config'
         );
 
         $this->app->bind(
