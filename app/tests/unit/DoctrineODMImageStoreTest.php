@@ -51,7 +51,7 @@ class ImageStoreTest extends \PHPUnit_Framework_TestCase
             ->method('execute')
             ->will($this->returnValue($this->mock_cursor));
 
-        $mock_config = $this->getMock('Ace\Photos\Doctrine\IODMConfig', ['getDocumentManager']);
+        $mock_config = $this->getMock('Ace\Photos\Doctrine\ODM\IConfig', ['getDocumentManager']);
         $mock_config->expects($this->any())
             ->method('getDocumentManager')
             ->will($this->returnValue($this->mock_dm));

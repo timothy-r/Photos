@@ -1,7 +1,7 @@
 <?php namespace Ace\Photos\Doctrine\ODM;
 
 use Ace\Photos\IImage;
-use Ace\Photos\Doctrine\IODMConfig;
+use Ace\Photos\Doctrine\ODM\IConfig;
 use Ace\Photos\IImageStore;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -14,7 +14,7 @@ class ImageStore implements IImageStore
 {
     protected $dm;
 
-    public function __construct(IODMConfig $config)
+    public function __construct(IConfig $config)
     {
         $this->dm = $config->getDocumentManager();
     }
