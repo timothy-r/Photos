@@ -1,5 +1,5 @@
 <?php
-use Ace\Photos\NullImageStore;
+use Ace\Photos\Null\ImageStore;
 use Ace\Photos\Doctrine\ODMImage as Image;
 
 /**
@@ -11,7 +11,7 @@ class NullImageStoreTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->image_store = new NullImageStore;
+        $this->image_store = new ImageStore;
     }
 
     public function testCanAddAnImage()

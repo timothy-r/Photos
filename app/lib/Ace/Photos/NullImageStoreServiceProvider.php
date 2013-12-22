@@ -1,5 +1,4 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +11,7 @@ class NullImageStoreServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Ace\Photos\IImageStore',
-            'Ace\Photos\NullImageStore'
+            'Ace\Photos\Null\ImageStore'
         );
     }
 }

@@ -1,12 +1,12 @@
-<?php
-namespace Ace\Photos;
+<?php namespace Ace\Photos\Null;
+
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImage;
 
 /**
 * A null repository for Images
 */
-class NullImageStore implements IImageStore
+class ImageStore implements IImageStore
 {
     
     public function init(){}
