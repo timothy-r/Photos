@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Test;
 
 use Illuminate\Http\Request;
 use App;

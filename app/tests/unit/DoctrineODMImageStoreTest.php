@@ -2,7 +2,7 @@
 
 use Ace\Photos\Doctrine\ODMImageStore as ImageStore;
 use Ace\Photos\Doctrine\ODMImage as Image;
-use Ace\Photos\MockTrait;
+use Ace\Photos\Test\MockTrait;
 
 use Doctrine\ODM\MongoDB\MongoDBException;
 

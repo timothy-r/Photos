@@ -1,7 +1,7 @@
 <?php
 
 use Ace\Photos\AssertTrait;
-use Ace\Photos\MockTrait;
+use Ace\Photos\Test\MockTrait;
 
 abstract class FilterTest extends TestCase
 {

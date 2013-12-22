@@ -3,7 +3,7 @@
 use Ace\Photos\Image;
 use Ace\Photos\ImageView;
 use Ace\Photos\AssertTrait;
-use Ace\Photos\MockTrait;
+use Ace\Photos\Test\MockTrait;
 
 require_once(__DIR__.'/../../lib/Ace/Photos/AssertTrait.php');
 

@@ -3,7 +3,7 @@
 use Ace\Photos\Doctrine\ODMImageStore;
 use Way\Tests\Assert;
 use Ace\Photos\AssertTrait;
-use Ace\Photos\MockTrait;
+use Ace\Photos\Test\MockTrait;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
