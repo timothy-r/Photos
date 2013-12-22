@@ -1,6 +1,6 @@
 <?php
 
-use Ace\Photos\Doctrine\ODMImageFactory as Factory;
+use Ace\Photos\Doctrine\ODM\ImageFactory as Factory;
 use Ace\Photos\Test\FixtureTrait;
 
 class DoctrineODMImageFactoryTest extends \PHPUnit_Framework_TestCase

@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos\Doctrine;
+<?php namespace Ace\Photos\Doctrine\ODM;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Ace\Photos\IImageFactory;
@@ -7,7 +7,7 @@ use Ace\Photos\Doctrine\ODMImage as Image;
 /**
 * Creates instances of Image
 */
-class ODMImageFactory implements IImageFactory
+class ImageFactory implements IImageFactory
 {
     public function create($title, UploadedFile $file)
     {

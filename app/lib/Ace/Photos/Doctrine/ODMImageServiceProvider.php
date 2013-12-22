@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 *
 * Binds the Doctrine\ODMConfig to the Doctrine\IODMConfig interface
 * Binds the Doctrine\ODM\ImageStore class to the IImageStore interface
-* Binds the Doctrine\ODMImageFactory class to the IImageFactory interface
+* Binds the Doctrine\ODM\ImageFactory class to the IImageFactory interface
 */
 class ODMImageServiceProvider extends ServiceProvider
 {
@@ -27,7 +27,7 @@ class ODMImageServiceProvider extends ServiceProvider
         
         $this->app->bind(
             'Ace\Photos\IImageFactory',
-            'Ace\Photos\Doctrine\ODMImageFactory'
+            'Ace\Photos\Doctrine\ODM\ImageFactory'
         );
     }
 }
