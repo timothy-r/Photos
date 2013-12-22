@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Test;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -11,7 +11,7 @@ trait FixtureTrait
 
     protected function givenAFile()
     {
-        $file = __DIR__.'/../../../tests/fixtures/tux.png';
+        $file = __DIR__.'/../../../../tests/fixtures/tux.png';
         // UploadedFile extracts the mime-type from the file itself
         // the one passed to the constructor is available from getClientMimeType()
         $mime_type = 'image/png';
