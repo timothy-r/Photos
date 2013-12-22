@@ -1,7 +1,7 @@
 <?php
-use Ace\Photos\ImageIfNoneMatchFilter;
+use Ace\Photos\Filter\ImageIfNoneMatch;
 
-class ImageIfNoneMatchFilterTest extends FilterTest
+class ImageIfNoneMatchTest extends FilterTest
 {
     public function testNoneMatchingImageIsValid()
     {
@@ -13,7 +13,7 @@ class ImageIfNoneMatchFilterTest extends FilterTest
         $this->givenAMockEntityHandler(false);
         $this->givenAMockImage();
 
-        $this->filter = new ImageIfNoneMatchFilter;
+        $this->filter = new ImageIfNoneMatch;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterPassed();
     }
@@ -28,7 +28,7 @@ class ImageIfNoneMatchFilterTest extends FilterTest
         $this->givenAMockEntityHandler(true);
         $this->givenAMockImage();
         
-        $this->filter = new ImageIfNoneMatchFilter;
+        $this->filter = new ImageIfNoneMatch;
         $this->whenTheFilterIsRun();
         $this->thenTheFilterFailed(304);
     }

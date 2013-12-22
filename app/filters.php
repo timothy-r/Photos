@@ -101,4 +101,4 @@ Route::filter('image-matches', 'Ace\Photos\Filter\ImageIfMatch');
 * Adds a filter to validate that the incoming If-None-Matches header does not match the requested Image
 * returns a NotModified response if they match
 */
-Route::filter('image-does-not-match', 'Ace\Photos\ImageIfNoneMatchFilter');
+Route::filter('image-does-not-match', 'Ace\Photos\Filter\ImageIfNoneMatch');

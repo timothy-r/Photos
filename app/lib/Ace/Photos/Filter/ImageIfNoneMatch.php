@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Filter;
 
 use Ace\Facades\ImageStore;
 // @todo investigate the class name clash with Ace\Photos\ImageView
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 * Depends on the image existing
 * Returns a Response object on failure
 */
-class ImageIfNoneMatchFilter
+class ImageIfNoneMatch
 {
     /**
     * for If-None-Match header set : check that ETag does not matches and if it does then return a not modified response
