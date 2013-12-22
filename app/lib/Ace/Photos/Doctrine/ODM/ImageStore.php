@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos\Doctrine;
+<?php namespace Ace\Photos\Doctrine\ODM;
 
 use Ace\Photos\IImage;
 use Ace\Photos\Doctrine\IODMConfig;
@@ -10,7 +10,7 @@ use Doctrine\ODM\MongoDB\MongoDBException;
 * A Doctrine ODM store for Images
 * convert to use a Doctrine repository not the document manager
 */
-class ODMImageStore implements IImageStore
+class ImageStore implements IImageStore
 {
     protected $dm;
 

@@ -1,6 +1,6 @@
 <?php
 
-use Ace\Photos\Doctrine\ODMImageStore as ImageStore;
+use Ace\Photos\Doctrine\ODM\ImageStore;
 use Ace\Photos\Doctrine\ODMImage as Image;
 use Ace\Photos\Test\MockTrait;
 
