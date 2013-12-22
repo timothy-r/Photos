@@ -13,8 +13,10 @@ class DoctrineODMImageFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Ace\Photos\IImageFactory', $factory);
         $title = 'What a wonderful panorama';
         $this->givenAFile();
+
         $result = $factory->create($title, $this->file);
-        $this->assertInstanceOf('\Ace\Photos\Doctrine\ODMImage', $result);
+
+        $this->assertInstanceOf('\Ace\Photos\Doctrine\ODM\Image', $result);
         $this->assertSame($title, $result->getTitle());
     }
 }

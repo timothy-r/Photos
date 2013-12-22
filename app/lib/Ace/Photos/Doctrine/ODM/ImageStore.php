@@ -65,7 +65,7 @@ class ImageStore implements IImageStore
     */
     public function all()
     {
-        return $this->dm->createQueryBuilder('Ace\Photos\Doctrine\ODMImage')->getQuery()->execute()->toArray();
+        return $this->dm->createQueryBuilder('Ace\Photos\Doctrine\ODM\Image')->getQuery()->execute()->toArray();
     }
 
     /**
@@ -75,7 +75,7 @@ class ImageStore implements IImageStore
     */
     public function get($slug)
     {
-        return $this->dm->getRepository('Ace\Photos\Doctrine\ODMImage')->findOneBy(['slug' => $slug]);
+        return $this->dm->getRepository('Ace\Photos\Doctrine\ODM\Image')->findOneBy(['slug' => $slug]);
     }
 
     /**

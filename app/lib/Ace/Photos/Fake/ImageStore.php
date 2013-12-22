@@ -2,7 +2,7 @@
 
 use Ace\Photos\IImageStore;
 use Ace\Photos\IImage;
-use Ace\Photos\Doctrine\ODMImage as Image;
+use Ace\Photos\Doctrine\ODM\Image;
 
 /**
 * A fake repository for Images

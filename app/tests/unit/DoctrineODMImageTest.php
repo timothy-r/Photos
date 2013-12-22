@@ -1,6 +1,6 @@
 <?php
 
-use Ace\Photos\Doctrine\ODMImage as Image;
+use Ace\Photos\Doctrine\ODM\Image;
 use Ace\Photos\Test\FixtureTrait;
 
 class DoctrineODMImageTest extends PHPUnit_Framework_TestCase

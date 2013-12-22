@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos\Doctrine;
+<?php namespace Ace\Photos\Doctrine\ODM;
 
 use Ace\Photos\IImage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -7,7 +7,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
 * @ODM\Document
 */
-class ODMImage implements IImage
+class Image implements IImage
 {
     /**
     * @ODM\Id

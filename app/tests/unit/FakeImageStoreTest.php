@@ -1,6 +1,6 @@
 <?php
 use Ace\Photos\Fake\ImageStore;
-use Ace\Photos\Doctrine\ODMImage as Image;
+use Ace\Photos\Doctrine\ODM\Image as Image;
 
 /**
 * @group unit
@@ -26,7 +26,7 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
         $images = $this->image_store->all();
         $this->assertTrue(is_array($images));
         foreach ($images as $image) {
-            $this->assertInstanceOf('Ace\Photos\Doctrine\ODMImage', $image);
+            $this->assertInstanceOf('Ace\Photos\Doctrine\ODM\Image', $image);
         }
     }
 
@@ -44,7 +44,7 @@ class FakeImageStoreTest extends \PHPUnit_Framework_TestCase
     public function testCanGetAnImage($id)
     {
         $image = $this->image_store->get($id);
-        $this->assertInstanceOf('Ace\Photos\Doctrine\ODMImage', $image);
+        $this->assertInstanceOf('Ace\Photos\Doctrine\ODM\Image', $image);
     }
 
     public function getInvalidImageIds()
