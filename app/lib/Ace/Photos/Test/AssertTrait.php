@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos;
+<?php namespace Ace\Photos\Test;
 
 use Ace\Photos\IImage;
 use Illuminate\Http\Response;

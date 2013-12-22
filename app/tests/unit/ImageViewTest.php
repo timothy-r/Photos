@@ -2,10 +2,8 @@
 
 use Ace\Photos\Image;
 use Ace\Photos\ImageView;
-use Ace\Photos\AssertTrait;
+use Ace\Photos\Test\AssertTrait;
 use Ace\Photos\Test\MockTrait;
-
-require_once(__DIR__.'/../../lib/Ace/Photos/AssertTrait.php');
 
 class ImageViewTest extends PHPUnit_Framework_TestCase
 {
