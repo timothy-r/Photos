@@ -1,4 +1,4 @@
-<?php namespace Ace\Photos\Doctrine;
+<?php namespace Ace\Photos\Doctrine\ODM;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -11,7 +11,7 @@ use Illuminate\Support\ServiceProvider;
 * Binds the Doctrine\ODM\ImageStore class to the IImageStore interface
 * Binds the Doctrine\ODM\ImageFactory class to the IImageFactory interface
 */
-class ODMImageServiceProvider extends ServiceProvider
+class ImageServiceProvider extends ServiceProvider
 {
     public function register()
     {

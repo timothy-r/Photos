@@ -114,7 +114,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         #'Way\Console\GuardLaravelServiceProvider',
-        'Ace\Photos\Doctrine\ODMImageServiceProvider',
+        'Ace\Photos\Doctrine\ODM\ImageServiceProvider',
         'Annotatecms\Debugger\DebuggerServiceProvider',
         'Ace\Photos\ImageViewServiceProvider',
 	),
