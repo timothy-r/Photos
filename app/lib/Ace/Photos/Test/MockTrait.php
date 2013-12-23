@@ -30,6 +30,9 @@ trait MockTrait
             ->method('getId')
             ->will($this->returnValue($id));
         $this->mock_image->expects($this->any())
+            ->method('getSlug')
+            ->will($this->returnValue($id));
+        $this->mock_image->expects($this->any())
             ->method('getHash')
             ->will($this->returnValue('52063fab1e'));
         $this->mock_image->expects($this->any())
