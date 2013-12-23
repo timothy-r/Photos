@@ -16,7 +16,11 @@ class ImageDataValidatesTest extends FilterTest
         $this->givenAMockRoute($id);
         $this->givenAMockRequest($data);
 
-        $this->filter = new ImageDataValidates;
+        $this->filter = $this->getMock('Ace\Photos\Filter\ImageDataValidates', ['getInput']);
+        $this->filter->expects($this->any())
+            ->method('getInput')
+            ->will($this->returnValue($data));
+
         $this->whenTheFilterIsRun();
         $this->thenTheFilterPassed();
     }

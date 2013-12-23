@@ -6,6 +6,7 @@ use Illuminate\Routing\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
 
 /**
 * Validates that incoming data is valid to create/update an image
@@ -26,12 +27,20 @@ class ImageDataValidates
             'title' => 'required',
             'file' => 'image|required'
         ];
-
-        $validator = Validator::make($request->only(array_keys($rules)), $rules);
+        
+        $validator = Validator::make($this->getInput(), $rules);
 
         if (!$validator->passes()) {
             // display / log $validator->messages() 
             return ImgView::badRequest();
         }
+    }
+    
+    /**
+    * Wraps call to Input::all() to make mocking easy
+    */
+    protected function getInput()
+    {
+        return Input::all();
     }
 }
