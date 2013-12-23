@@ -82,7 +82,7 @@ class PhotoController extends \BaseController
         $result = ImageStore::add($image);
         if ($result) {
             // redirect to view Photo
-            return Redirect::action('PhotoController@show', [$image->getId()]);
+            return Redirect::action('PhotoController@show', [$image->getSlug()]);
         }
 
         // re-show create form & errors 
